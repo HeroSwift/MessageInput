@@ -13,6 +13,13 @@
 		9DF4EFCE2172176F00CA4DE7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9DF4EFCD2172176F00CA4DE7 /* Assets.xcassets */; };
 		9DF4EFD12172176F00CA4DE7 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9DF4EFCF2172176F00CA4DE7 /* LaunchScreen.storyboard */; };
 		9DF4EFD9217218BC00CA4DE7 /* MessageInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DF4EFD8217218BC00CA4DE7 /* MessageInput.swift */; };
+		9DF4EFDB21721BDC00CA4DE7 /* CircleView.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9DF4EFDA21721BDC00CA4DE7 /* CircleView.framework */; };
+		9DF4EFDC21721BDC00CA4DE7 /* CircleView.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 9DF4EFDA21721BDC00CA4DE7 /* CircleView.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		9DF4EFE021721FAA00CA4DE7 /* CircleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DF4EFDE21721FA900CA4DE7 /* CircleView.swift */; };
+		9DF4EFE121721FAA00CA4DE7 /* CircleViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DF4EFDF21721FAA00CA4DE7 /* CircleViewDelegate.swift */; };
+		9DF4EFE321722EC000CA4DE7 /* FeatureItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DF4EFE221722EC000CA4DE7 /* FeatureItem.swift */; };
+		9DF4EFE52172348900CA4DE7 /* Configuration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DF4EFE42172348900CA4DE7 /* Configuration.swift */; };
+		9DF4EFE72172453400CA4DE7 /* SimpleButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DF4EFE62172453400CA4DE7 /* SimpleButton.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -25,6 +32,20 @@
 		};
 /* End PBXContainerItemProxy section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		9DF4EFDD21721BDC00CA4DE7 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				9DF4EFDC21721BDC00CA4DE7 /* CircleView.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
 		9DF4EFB52172175200CA4DE7 /* MessageInput.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = MessageInput.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		9DF4EFB92172175200CA4DE7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -36,6 +57,12 @@
 		9DF4EFD02172176F00CA4DE7 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		9DF4EFD22172176F00CA4DE7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		9DF4EFD8217218BC00CA4DE7 /* MessageInput.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageInput.swift; sourceTree = "<group>"; };
+		9DF4EFDA21721BDC00CA4DE7 /* CircleView.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CircleView.framework; path = Carthage/Build/iOS/CircleView.framework; sourceTree = "<group>"; };
+		9DF4EFDE21721FA900CA4DE7 /* CircleView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CircleView.swift; sourceTree = "<group>"; };
+		9DF4EFDF21721FAA00CA4DE7 /* CircleViewDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CircleViewDelegate.swift; sourceTree = "<group>"; };
+		9DF4EFE221722EC000CA4DE7 /* FeatureItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeatureItem.swift; sourceTree = "<group>"; };
+		9DF4EFE42172348900CA4DE7 /* Configuration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Configuration.swift; sourceTree = "<group>"; };
+		9DF4EFE62172453400CA4DE7 /* SimpleButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SimpleButton.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -50,6 +77,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9DF4EFDB21721BDC00CA4DE7 /* CircleView.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -59,6 +87,7 @@
 		9DF4EFAB2172175200CA4DE7 = {
 			isa = PBXGroup;
 			children = (
+				9DF4EFDA21721BDC00CA4DE7 /* CircleView.framework */,
 				9DF4EFB72172175200CA4DE7 /* MessageInput */,
 				9DF4EFC52172176D00CA4DE7 /* Example */,
 				9DF4EFB62172175200CA4DE7 /* Products */,
@@ -78,7 +107,12 @@
 			isa = PBXGroup;
 			children = (
 				9DF4EFB92172175200CA4DE7 /* Info.plist */,
+				9DF4EFDE21721FA900CA4DE7 /* CircleView.swift */,
+				9DF4EFDF21721FAA00CA4DE7 /* CircleViewDelegate.swift */,
+				9DF4EFE62172453400CA4DE7 /* SimpleButton.swift */,
 				9DF4EFD8217218BC00CA4DE7 /* MessageInput.swift */,
+				9DF4EFE221722EC000CA4DE7 /* FeatureItem.swift */,
+				9DF4EFE42172348900CA4DE7 /* Configuration.swift */,
 			);
 			path = MessageInput;
 			sourceTree = "<group>";
@@ -134,6 +168,7 @@
 				9DF4EFC02172176D00CA4DE7 /* Sources */,
 				9DF4EFC12172176D00CA4DE7 /* Frameworks */,
 				9DF4EFC22172176D00CA4DE7 /* Resources */,
+				9DF4EFDD21721BDC00CA4DE7 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -208,7 +243,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9DF4EFE021721FAA00CA4DE7 /* CircleView.swift in Sources */,
+				9DF4EFE52172348900CA4DE7 /* Configuration.swift in Sources */,
+				9DF4EFE121721FAA00CA4DE7 /* CircleViewDelegate.swift in Sources */,
 				9DF4EFD9217218BC00CA4DE7 /* MessageInput.swift in Sources */,
+				9DF4EFE321722EC000CA4DE7 /* FeatureItem.swift in Sources */,
+				9DF4EFE72172453400CA4DE7 /* SimpleButton.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -432,6 +472,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = N276SVAZ33;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
 				INFOPLIST_FILE = Example/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -451,6 +495,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = N276SVAZ33;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
 				INFOPLIST_FILE = Example/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = (
