@@ -1,28 +1,6 @@
 
 import UIKit
 
-let Configuration_featureGrid_paddingHorizontal: CGFloat = 20
-let Configuration_featureGrid_paddingVertical: CGFloat = 20
-let Configuration_featureCell_spacingHorizontal: CGFloat = 20
-
-// 图标按钮
-let Configuration_featureItem_iconButtonWidth: CGFloat = 50
-let Configuration_featureItem_iconButtonHeight: CGFloat = 50
-let Configuration_featureItem_iconButtonBackgroundColorNormal: UIColor = .white
-let Configuration_featureItem_iconButtonBackgroundColorPressed: UIColor = UIColor(red: 200 / 255, green: 200 / 255, blue: 200 / 255, alpha: 1)
-let Configuration_featureItem_iconButtonBorderWidth: CGFloat = 1 / UIScreen.main.scale
-let Configuration_featureItem_iconButtonBorderColor: UIColor = UIColor(red: 160 / 255, green: 160 / 255, blue: 160 / 255, alpha: 160 / 255)
-let Configuration_featureItem_iconButtonBorderRadius: CGFloat = 8
-
-// 特性按钮文本与图标的距离
-let Configuration_featureItem_titleTextMarginTop: CGFloat = 8
-
-// 特性按钮文本字体
-let Configuration_featureItem_titleTextFont: UIFont = UIFont.systemFont(ofSize: 12)
-
-// 特性按钮文本颜色
-let Configuration_featureItem_titleTextColor: UIColor = UIColor(red: 120 / 255, green: 120 / 255, blue: 120 / 255, alpha: 1)
-
 public class Configuration {
     
     // 输入栏的边框大小
@@ -57,6 +35,34 @@ public class Configuration {
     
     // 内容面板的背景色
     public var contentPanelBackgroundColor = UIColor(red: 200 / 255, green: 200 / 255, blue: 200 / 255, alpha: 1)
+    
+    // 特性面板内边距
+    public var featurePanelPaddingHorizontal: CGFloat = 20
+    public var featurePanelPaddingVertical: CGFloat = 20
+    
+    // 特性按钮之间的间距
+    public var featureItemSpacing: CGFloat = 20
+    
+    // 图标按钮尺寸
+    public var featureItemButtonWidth: CGFloat = 50
+    public var featureItemButtonHeight: CGFloat = 50
+    
+    // 按钮背景色
+    public var featureItemButtonBackgroundColorNormal: UIColor = .white
+    public var featureItemButtonBackgroundColorPressed: UIColor = UIColor(red: 200 / 255, green: 200 / 255, blue: 200 / 255, alpha: 1)
+    
+    // 图标按钮边框
+    public var featureItemButtonBorderRadius: CGFloat = 8
+    public var featureItemButtonBorderWidth: CGFloat = 1 / UIScreen.main.scale
+    public var featureItemButtonBorderColor = UIColor(red: 160 / 255, green: 160 / 255, blue: 160 / 255, alpha: 160 / 255)
+    
+    // 特性按钮标题
+    public var featureItemTitleTextMarginTop: CGFloat = 8
+    public var featureItemTitleTextFont = UIFont.systemFont(ofSize: 12)
+    public var featureItemTitleTextColor = UIColor(red: 120 / 255, green: 120 / 255, blue: 120 / 255, alpha: 1)
+
+    
+    
     
     public init() {}
 }

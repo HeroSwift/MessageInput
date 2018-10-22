@@ -213,31 +213,29 @@ extension MessageInput {
         contentPanel.addSubview(morePanel)
         
         let imageFeature = FeatureItem()
+        imageFeature.setup(title: "图片", image: UIImage(named: "image")!, configuration: configuration)
         imageFeature.translatesAutoresizingMaskIntoConstraints = false
-        imageFeature.title = "图片"
-        imageFeature.image = UIImage(named: "image")
         imageFeature.onClick = {
             self.openPhotoBrowser()
         }
         morePanel.addSubview(imageFeature)
         
         let cameraFeature = FeatureItem()
+        cameraFeature.setup(title: "拍摄", image: UIImage(named: "camera")!, configuration: configuration)
         cameraFeature.translatesAutoresizingMaskIntoConstraints = false
-        cameraFeature.title = "拍摄"
-        cameraFeature.image = UIImage(named: "camera")
         morePanel.addSubview(cameraFeature)
         
         addConstraints([
-            NSLayoutConstraint(item: morePanel, attribute: .left, relatedBy: .equal, toItem: contentPanel, attribute: .left, multiplier: 1.0, constant: 0),
-            NSLayoutConstraint(item: morePanel, attribute: .right, relatedBy: .equal, toItem: contentPanel, attribute: .right, multiplier: 1.0, constant: 0),
-            NSLayoutConstraint(item: morePanel, attribute: .top, relatedBy: .equal, toItem: contentPanel, attribute: .top, multiplier: 1.0, constant: 0),
-            NSLayoutConstraint(item: morePanel, attribute: .bottom, relatedBy: .equal, toItem: contentPanel, attribute: .bottom, multiplier: 1.0, constant: 0),
+            NSLayoutConstraint(item: morePanel, attribute: .left, relatedBy: .equal, toItem: contentPanel, attribute: .left, multiplier: 1, constant: configuration.featurePanelPaddingHorizontal),
+            NSLayoutConstraint(item: morePanel, attribute: .right, relatedBy: .equal, toItem: contentPanel, attribute: .right, multiplier: 1, constant: configuration.featurePanelPaddingHorizontal),
+            NSLayoutConstraint(item: morePanel, attribute: .top, relatedBy: .equal, toItem: contentPanel, attribute: .top, multiplier: 1, constant: configuration.featurePanelPaddingVertical),
+            NSLayoutConstraint(item: morePanel, attribute: .bottom, relatedBy: .equal, toItem: contentPanel, attribute: .bottom, multiplier: 1, constant: configuration.featurePanelPaddingVertical),
             
-            NSLayoutConstraint(item: imageFeature, attribute: .top, relatedBy: .equal, toItem: morePanel, attribute: .top, multiplier: 1.0, constant: Configuration_featureGrid_paddingVertical),
-            NSLayoutConstraint(item: imageFeature, attribute: .left, relatedBy: .equal, toItem: morePanel, attribute: .left, multiplier: 1.0, constant: Configuration_featureGrid_paddingHorizontal),
+            NSLayoutConstraint(item: imageFeature, attribute: .top, relatedBy: .equal, toItem: morePanel, attribute: .top, multiplier: 1.0, constant: 0),
+            NSLayoutConstraint(item: imageFeature, attribute: .left, relatedBy: .equal, toItem: morePanel, attribute: .left, multiplier: 1.0, constant: 0),
             
-            NSLayoutConstraint(item: cameraFeature, attribute: .top, relatedBy: .equal, toItem: morePanel, attribute: .top, multiplier: 1.0, constant: Configuration_featureGrid_paddingVertical),
-            NSLayoutConstraint(item: cameraFeature, attribute: .left, relatedBy: .equal, toItem: morePanel, attribute: .left, multiplier: 1.0, constant: Configuration_featureGrid_paddingHorizontal + imageFeature.intrinsicContentSize.width + Configuration_featureCell_spacingHorizontal),
+            NSLayoutConstraint(item: cameraFeature, attribute: .top, relatedBy: .equal, toItem: morePanel, attribute: .top, multiplier: 1.0, constant: 0),
+            NSLayoutConstraint(item: cameraFeature, attribute: .left, relatedBy: .equal, toItem: morePanel, attribute: .left, multiplier: 1.0, constant: configuration.featureItemButtonWidth + configuration.featureItemSpacing),
         ])
         
     }
@@ -271,7 +269,7 @@ extension MessageInput {
         if let keyboardFrame: NSValue = notification.userInfo?[UIKeyboardFrameEndUserInfoKey] as? NSValue {
             let keyboardHeight = keyboardFrame.cgRectValue.height
             
-            contentPanelHeightConstraint.constant = keyboardHeight
+            contentPanelHeightConstraint.constant = keyboardHeight * 2
             
             UITextView.animate(withDuration: 0.2, animations: {
                 self.layoutIfNeeded()
