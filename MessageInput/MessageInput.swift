@@ -3,7 +3,6 @@ import UIKit
 
 public class MessageInput: UIView {
 
-    private let inputBar = UIView()
     private let inputBarTopBorder = UIView()
     private let inputBarBottomBorder = UIView()
     
@@ -16,26 +15,9 @@ public class MessageInput: UIView {
     
     private let morePanel = UIView()
     
-    var inputBarBorderWidth = 1 / UIScreen.main.scale
-    var inputBarBorderColor = UIColor(red: 200 / 255, green: 200 / 255, blue: 200 / 255, alpha: 1)
-    var inputBarBackgroundColor: UIColor = .white
+    var textViewHeightConstraint: NSLayoutConstraint!
+    var contentPanelHeightConstraint: NSLayoutConstraint!
     
-    var inputBarPaddingVertical: CGFloat = 10
-    var inputBarPaddingHorizontal: CGFloat = 10
-    
-    var inputBarItemSpacing: CGFloat = 8
-    
-    
-    var voiceButtonRadius = CGFloat(15)
-    var voiceButtonImage = UIImage(named: "speech_normal")
-    
-    var emotionButtonRadius = CGFloat(15)
-    var emotionButtonImage = UIImage(named: "emotion_normal")
-    
-    var moreButtonRadius = CGFloat(15)
-    var moreButtonImage = UIImage(named: "more_normal")
-    
-    private var isContentPanelHidden = true
     private var configuration: Configuration!
     
     public convenience init(configuration: Configuration) {
@@ -74,26 +56,8 @@ public class MessageInput: UIView {
      
     }
     
-    @objc func onKeyboardShown(notification: NSNotification) {
-        
-        if let keyboardFrame: NSValue = notification.userInfo?[UIKeyboardFrameEndUserInfoKey] as? NSValue {
-            let keyboardHeight = keyboardFrame.cgRectValue.height
-            isContentPanelHidden = false
-            invalidateIntrinsicContentSize()
-            
-            UITextView.animate(withDuration: 0.1, animations: {
-                let frame = self.contentPanel.frame
-                self.contentPanel.frame = CGRect(origin: frame.origin, size: CGSize(width: frame.size.width, height: keyboardHeight))
-            })
-        }
-        
-    }
-    
-    @objc func onKeyboardHiden(notification: NSNotification) {
-        
-        isContentPanelHidden = true
-        invalidateIntrinsicContentSize()
-        
+    public func hideKeyboard() {
+        textView.resignFirstResponder()
     }
     
 }
@@ -102,130 +66,141 @@ extension MessageInput {
     
     private func addInputBar() {
         
-        inputBarTopBorder.backgroundColor = inputBarBorderColor
-        inputBarTopBorder.translatesAutoresizingMaskIntoConstraints = false
+        backgroundColor = configuration.inputBarBackgroundColor
         
-        inputBar.backgroundColor = inputBarBackgroundColor
-        inputBar.translatesAutoresizingMaskIntoConstraints = false
-        
-        inputBarBottomBorder.backgroundColor = inputBarBorderColor
-        inputBarBottomBorder.translatesAutoresizingMaskIntoConstraints = false
-        
-        addSubview(inputBarTopBorder)
-        addSubview(inputBar)
-        addSubview(inputBarBottomBorder)
-        
-        addConstraints([
-            
-            // top border
-            NSLayoutConstraint(item: inputBarTopBorder, attribute: .top, relatedBy: .equal, toItem: self, attribute: .top, multiplier: 1.0, constant: 0),
-            NSLayoutConstraint(item: inputBarTopBorder, attribute: .left, relatedBy: .equal, toItem: self, attribute: .left, multiplier: 1.0, constant: 0),
-            NSLayoutConstraint(item: inputBarTopBorder, attribute: .right, relatedBy: .equal, toItem: self, attribute: .right, multiplier: 1.0, constant: 0),
-            NSLayoutConstraint(item: inputBarTopBorder, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .height, multiplier: 1.0, constant: inputBarBorderWidth),
-            
-            // input bar
-            NSLayoutConstraint(item: inputBar, attribute: .top, relatedBy: .equal, toItem: inputBarTopBorder, attribute: .bottom, multiplier: 1.0, constant: 0),
-            NSLayoutConstraint(item: inputBar, attribute: .left, relatedBy: .equal, toItem: self, attribute: .left, multiplier: 1.0, constant: 0),
-            NSLayoutConstraint(item: inputBar, attribute: .right, relatedBy: .equal, toItem: self, attribute: .right, multiplier: 1.0, constant: 0),
-            NSLayoutConstraint(item: inputBar, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .height, multiplier: 1.0, constant: voiceButtonRadius * 2 + inputBarPaddingVertical * 2),
-            
-            // bottom border
-            NSLayoutConstraint(item: inputBarBottomBorder, attribute: .top, relatedBy: .equal, toItem: inputBar, attribute: .bottom, multiplier: 1.0, constant: 0),
-            NSLayoutConstraint(item: inputBarBottomBorder, attribute: .left, relatedBy: .equal, toItem: self, attribute: .left, multiplier: 1.0, constant: 0),
-            NSLayoutConstraint(item: inputBarBottomBorder, attribute: .right, relatedBy: .equal, toItem: self, attribute: .right, multiplier: 1.0, constant: 0),
-            NSLayoutConstraint(item: inputBarBottomBorder, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .height, multiplier: 1.0, constant: inputBarBorderWidth),
-            
-        ])
-        
+        addInputBarTopBorder()
         addVoiceButton()
         addMoreButton()
         addEmotionButton()
         addTextView()
+        addInputBarBottomBorder()
+        
+    }
+    
+    private func addInputBarTopBorder() {
+        
+        inputBarTopBorder.backgroundColor = configuration.inputBarBorderColor
+        inputBarTopBorder.translatesAutoresizingMaskIntoConstraints = false
+        addSubview(inputBarTopBorder)
+        
+        addConstraints([
+            NSLayoutConstraint(item: inputBarTopBorder, attribute: .top, relatedBy: .equal, toItem: self, attribute: .top, multiplier: 1, constant: 0),
+            NSLayoutConstraint(item: inputBarTopBorder, attribute: .left, relatedBy: .equal, toItem: self, attribute: .left, multiplier: 1, constant: 0),
+            NSLayoutConstraint(item: inputBarTopBorder, attribute: .right, relatedBy: .equal, toItem: self, attribute: .right, multiplier: 1, constant: 0),
+            NSLayoutConstraint(item: inputBarTopBorder, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .height, multiplier: 1, constant: configuration.inputBarBorderWidth),
+        ])
+        
+    }
+    
+    private func addInputBarBottomBorder() {
+        
+        inputBarBottomBorder.backgroundColor = configuration.inputBarBorderColor
+        inputBarBottomBorder.translatesAutoresizingMaskIntoConstraints = false
+        addSubview(inputBarBottomBorder)
+        
+        addConstraints([
+            NSLayoutConstraint(item: inputBarBottomBorder, attribute: .top, relatedBy: .equal, toItem: voiceButton, attribute: .bottom, multiplier: 1, constant: configuration.inputBarPaddingVertical),
+            NSLayoutConstraint(item: inputBarBottomBorder, attribute: .left, relatedBy: .equal, toItem: self, attribute: .left, multiplier: 1, constant: 0),
+            NSLayoutConstraint(item: inputBarBottomBorder, attribute: .right, relatedBy: .equal, toItem: self, attribute: .right, multiplier: 1, constant: 0),
+            NSLayoutConstraint(item: inputBarBottomBorder, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .height, multiplier: 1, constant: configuration.inputBarBorderWidth),
+        ])
         
     }
     
     private func addVoiceButton() {
         
-        voiceButton.centerRadius = voiceButtonRadius
-        voiceButton.centerImage = voiceButtonImage
+        voiceButton.centerRadius = configuration.circleButtonRadius
+        voiceButton.centerImage = configuration.voiceButtonImage
         voiceButton.ringWidth = 0
         voiceButton.trackWidth = 0
         
         voiceButton.sizeToFit()
         voiceButton.translatesAutoresizingMaskIntoConstraints = false
         
-        inputBar.addSubview(voiceButton)
+        addSubview(voiceButton)
         
         addConstraints([
-            NSLayoutConstraint(item: voiceButton, attribute: .centerY, relatedBy: .equal, toItem: inputBar, attribute: .centerY, multiplier: 1.0, constant: 0),
-            NSLayoutConstraint(item: voiceButton, attribute: .left, relatedBy: .equal, toItem: inputBar, attribute: .left, multiplier: 1.0, constant: inputBarPaddingHorizontal),
-        ])
-        
-    }
-    
-    private func addEmotionButton() {
-        
-        emotionButton.centerRadius = emotionButtonRadius
-        emotionButton.centerImage = emotionButtonImage
-        emotionButton.ringWidth = 0
-        emotionButton.trackWidth = 0
-        
-        emotionButton.sizeToFit()
-        emotionButton.translatesAutoresizingMaskIntoConstraints = false
-        
-        inputBar.addSubview(emotionButton)
-        
-        addConstraints([
-            NSLayoutConstraint(item: emotionButton, attribute: .centerY, relatedBy: .equal, toItem: inputBar, attribute: .centerY, multiplier: 1.0, constant: 0),
-            NSLayoutConstraint(item: emotionButton, attribute: .right, relatedBy: .equal, toItem: moreButton, attribute: .left, multiplier: 1.0, constant: -inputBarItemSpacing),
+            NSLayoutConstraint(item: voiceButton, attribute: .top, relatedBy: .equal, toItem: inputBarTopBorder, attribute: .bottom, multiplier: 1, constant: configuration.inputBarPaddingVertical),
+            NSLayoutConstraint(item: voiceButton, attribute: .left, relatedBy: .equal, toItem: self, attribute: .left, multiplier: 1, constant: configuration.inputBarPaddingHorizontal),
         ])
         
     }
     
     private func addMoreButton() {
         
-        moreButton.centerRadius = moreButtonRadius
-        moreButton.centerImage = moreButtonImage
+        moreButton.centerRadius = configuration.circleButtonRadius
+        moreButton.centerImage = configuration.moreButtonImage
         moreButton.ringWidth = 0
         moreButton.trackWidth = 0
         
         moreButton.sizeToFit()
         moreButton.translatesAutoresizingMaskIntoConstraints = false
+        moreButton.delegate = self
         
-        inputBar.addSubview(moreButton)
+        addSubview(moreButton)
         
         addConstraints([
-            NSLayoutConstraint(item: moreButton, attribute: .centerY, relatedBy: .equal, toItem: inputBar, attribute: .centerY, multiplier: 1.0, constant: 0),
-            NSLayoutConstraint(item: moreButton, attribute: .right, relatedBy: .equal, toItem: inputBar, attribute: .right, multiplier: 1.0, constant: -inputBarPaddingHorizontal),
+            NSLayoutConstraint(item: moreButton, attribute: .top, relatedBy: .equal, toItem: inputBarTopBorder, attribute: .bottom, multiplier: 1, constant: configuration.inputBarPaddingVertical),
+            NSLayoutConstraint(item: moreButton, attribute: .right, relatedBy: .equal, toItem: self, attribute: .right, multiplier: 1, constant: -configuration.inputBarPaddingHorizontal),
         ])
         
     }
     
-    private func addTextView() {
+    
+    private func addEmotionButton() {
         
-        textView.translatesAutoresizingMaskIntoConstraints = false
-        textView.text = "123123"
-        inputBar.addSubview(textView)
+        emotionButton.centerRadius = configuration.circleButtonRadius
+        emotionButton.centerImage = configuration.emotionButtonImage
+        emotionButton.ringWidth = 0
+        emotionButton.trackWidth = 0
+        
+        emotionButton.sizeToFit()
+        emotionButton.translatesAutoresizingMaskIntoConstraints = false
+        
+        addSubview(emotionButton)
         
         addConstraints([
-            NSLayoutConstraint(item: textView, attribute: .centerY, relatedBy: .equal, toItem: inputBar, attribute: .centerY, multiplier: 1.0, constant: 0),
-            NSLayoutConstraint(item: textView, attribute: .left, relatedBy: .equal, toItem: voiceButton, attribute: .right, multiplier: 1.0, constant: inputBarItemSpacing),
-            NSLayoutConstraint(item: textView, attribute: .right, relatedBy: .equal, toItem: emotionButton, attribute: .left, multiplier: 1.0, constant: -inputBarItemSpacing),
-            NSLayoutConstraint(item: textView, attribute: .bottom, relatedBy: .equal, toItem: inputBar, attribute: .bottom, multiplier: 1.0, constant: -inputBarPaddingVertical),
+            NSLayoutConstraint(item: emotionButton, attribute: .top, relatedBy: .equal, toItem: inputBarTopBorder, attribute: .bottom, multiplier: 1, constant: configuration.inputBarPaddingVertical),
+            NSLayoutConstraint(item: emotionButton, attribute: .right, relatedBy: .equal, toItem: moreButton, attribute: .left, multiplier: 1, constant: -configuration.inputBarItemSpacing),
+        ])
+        
+    }
+
+    private func addTextView() {
+        
+        textView.text = "text"
+        textView.backgroundColor = .gray
+        
+        textView.translatesAutoresizingMaskIntoConstraints = false
+        textView.sizeToFit()
+        addSubview(textView)
+        
+        textViewHeightConstraint = NSLayoutConstraint(item: textView, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .height, multiplier: 1, constant: 16)
+        
+        addConstraints([
+            NSLayoutConstraint(item: textView, attribute: .top, relatedBy: .equal, toItem: inputBarTopBorder, attribute: .bottom, multiplier: 1, constant: configuration.inputBarPaddingVertical),
+            NSLayoutConstraint(item: textView, attribute: .left, relatedBy: .equal, toItem: voiceButton, attribute: .right, multiplier: 1, constant: configuration.inputBarItemSpacing),
+            NSLayoutConstraint(item: textView, attribute: .right, relatedBy: .equal, toItem: emotionButton, attribute: .left, multiplier: 1, constant: -configuration.inputBarItemSpacing),
+            textViewHeightConstraint
         ])
         
     }
     
     private func addContentPanel() {
         
-        contentPanel.backgroundColor = .red
+        contentPanel.backgroundColor = configuration.contentPanelBackgroundColor
         contentPanel.translatesAutoresizingMaskIntoConstraints = false
+        
         addSubview(contentPanel)
 
+        contentPanelHeightConstraint = NSLayoutConstraint(item: contentPanel, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .height, multiplier: 1, constant: 0)
+        
         addConstraints([
-            NSLayoutConstraint(item: contentPanel, attribute: .left, relatedBy: .equal, toItem: self, attribute: .left, multiplier: 1.0, constant: 0),
-            NSLayoutConstraint(item: contentPanel, attribute: .right, relatedBy: .equal, toItem: self, attribute: .right, multiplier: 1.0, constant: 0),
-            NSLayoutConstraint(item: contentPanel, attribute: .top, relatedBy: .equal, toItem: inputBarBottomBorder, attribute: .bottom, multiplier: 1.0, constant: 0),
+            NSLayoutConstraint(item: contentPanel, attribute: .left, relatedBy: .equal, toItem: self, attribute: .left, multiplier: 1, constant: 0),
+            NSLayoutConstraint(item: contentPanel, attribute: .right, relatedBy: .equal, toItem: self, attribute: .right, multiplier: 1, constant: 0),
+            NSLayoutConstraint(item: contentPanel, attribute: .top, relatedBy: .equal, toItem: inputBarBottomBorder, attribute: .bottom, multiplier: 1, constant: 0),
+            NSLayoutConstraint(item: contentPanel, attribute: .bottom, relatedBy: .equal, toItem: self, attribute: .bottom, multiplier: 1, constant: 0),
+            contentPanelHeightConstraint
         ])
         
         addMorePanel()
@@ -234,7 +209,6 @@ extension MessageInput {
     
     func addMorePanel() {
         
-        morePanel.backgroundColor = .blue
         morePanel.translatesAutoresizingMaskIntoConstraints = false
         contentPanel.addSubview(morePanel)
         
@@ -287,6 +261,37 @@ extension MessageInput {
 }
 
 //
+// MARK: - 处理软键盘显示和隐藏
+//
+
+extension MessageInput {
+    
+    @objc func onKeyboardShown(notification: NSNotification) {
+        
+        if let keyboardFrame: NSValue = notification.userInfo?[UIKeyboardFrameEndUserInfoKey] as? NSValue {
+            let keyboardHeight = keyboardFrame.cgRectValue.height
+            
+            contentPanelHeightConstraint.constant = keyboardHeight
+            
+            UITextView.animate(withDuration: 0.2, animations: {
+                self.layoutIfNeeded()
+            })
+        }
+        
+    }
+    
+    @objc func onKeyboardHiden(notification: NSNotification) {
+        
+        contentPanelHeightConstraint.constant = 0
+        
+        UITextView.animate(withDuration: 0.2, animations: {
+            self.layoutIfNeeded()
+        })
+    }
+    
+}
+
+//
 // MARK: - UIImagePickerController 代理
 //
 
@@ -310,12 +315,12 @@ extension MessageInput: UIImagePickerControllerDelegate, UINavigationControllerD
 extension MessageInput: CircleViewDelegate {
     
     public func circleViewDidTouchDown(_ circleView: CircleView) {
-        
+        print(circleView)
     }
     
     public func circleViewDidTouchUp(_ circleView: CircleView, _ inside: Bool) {
         if circleView == moreButton {
-            
+            hideKeyboard()
         }
     }
     

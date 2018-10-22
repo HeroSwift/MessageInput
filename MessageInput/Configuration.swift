@@ -43,18 +43,20 @@ public class Configuration {
     // 输入栏每一项的间距
     var inputBarItemSpacing: CGFloat = 8
     
+    // 圆形按钮的半径
+    var circleButtonRadius: CGFloat = 15
     
-    var voiceButtonRadius = CGFloat(15)
+    // 语音按钮图片
     var voiceButtonImage = UIImage(named: "speech_normal")
     
-    var emotionButtonRadius = CGFloat(15)
+    // 表情按钮图片
     var emotionButtonImage = UIImage(named: "emotion_normal")
     
-    var moreButtonRadius = CGFloat(15)
+    // 更多按钮图片
     var moreButtonImage = UIImage(named: "more_normal")
     
-    // 内容面板的高度
-    public var contentPanelHeight: CGFloat = 258
+    // 内容面板的背景色
+    public var contentPanelBackgroundColor = UIColor(red: 200 / 255, green: 200 / 255, blue: 200 / 255, alpha: 1)
     
     public init() {}
 }
