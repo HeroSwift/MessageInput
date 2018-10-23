@@ -13,16 +13,20 @@ public class MessageInput: UIView {
     
     private let contentPanel = UIView()
     
+    private let voicePanel = UIView()
+    private let emotionPanel = UIView()
     private let morePanel = UIView()
     
-    var textViewHeightConstraint: NSLayoutConstraint!
-    var contentPanelHeightConstraint: NSLayoutConstraint!
+    private var keyboardHeight: CGFloat!
+    private var textViewHeightConstraint: NSLayoutConstraint!
+    private var contentPanelHeightConstraint: NSLayoutConstraint!
     
     private var configuration: Configuration!
     
     public convenience init(configuration: Configuration) {
         self.init()
-        self.configuration = Configuration()
+        self.configuration = configuration
+        self.keyboardHeight = configuration.defaultKeyboardHeight
         setup()
     }
     
@@ -56,8 +60,78 @@ public class MessageInput: UIView {
      
     }
     
+    public func showKeyboard() {
+        textView.becomeFirstResponder()
+    }
+    
     public func hideKeyboard() {
         textView.resignFirstResponder()
+    }
+    
+    public func showVoicePanel() {
+        
+        voicePanel.isHidden = false
+        emotionPanel.isHidden = true
+        morePanel.isHidden = true
+        
+        hideKeyboard()
+        showContentPanel()
+        
+    }
+    
+    public func showEmotionPanel() {
+        
+        voicePanel.isHidden = true
+        emotionPanel.isHidden = false
+        morePanel.isHidden = true
+        
+        hideKeyboard()
+        showContentPanel()
+        
+    }
+    
+    public func showMorePanel() {
+        
+        voicePanel.isHidden = true
+        emotionPanel.isHidden = true
+        morePanel.isHidden = false
+        
+        hideKeyboard()
+        showContentPanel()
+        
+    }
+
+    
+    public func showContentPanel() {
+        
+        guard contentPanelHeightConstraint.constant == 0 else {
+            return
+        }
+        
+        contentPanelHeightConstraint.constant = keyboardHeight
+        
+        UITextView.animate(withDuration: 0.2, animations: {
+            self.layoutIfNeeded()
+        })
+        
+    }
+    
+    public func hideContentPanel() {
+        
+        guard contentPanelHeightConstraint.constant > 0 else {
+            return
+        }
+        
+        voicePanel.isHidden = true
+        emotionPanel.isHidden = true
+        morePanel.isHidden = true
+        
+        contentPanelHeightConstraint.constant = 0
+        
+        UITextView.animate(withDuration: 0.2, animations: {
+            self.layoutIfNeeded()
+        })
+        
     }
     
 }
@@ -116,6 +190,7 @@ extension MessageInput {
         
         voiceButton.sizeToFit()
         voiceButton.translatesAutoresizingMaskIntoConstraints = false
+        voiceButton.delegate = self
         
         addSubview(voiceButton)
         
@@ -156,6 +231,7 @@ extension MessageInput {
         
         emotionButton.sizeToFit()
         emotionButton.translatesAutoresizingMaskIntoConstraints = false
+        emotionButton.delegate = self
         
         addSubview(emotionButton)
         
@@ -203,12 +279,48 @@ extension MessageInput {
             contentPanelHeightConstraint
         ])
         
+        addVoicePanel()
+        addEmotionPanel()
         addMorePanel()
         
     }
     
-    func addMorePanel() {
+    private func addVoicePanel() {
         
+        voicePanel.backgroundColor = .red
+        voicePanel.isHidden = true
+        voicePanel.translatesAutoresizingMaskIntoConstraints = false
+        contentPanel.addSubview(voicePanel)
+        
+        addConstraints([
+            NSLayoutConstraint(item: voicePanel, attribute: .left, relatedBy: .equal, toItem: contentPanel, attribute: .left, multiplier: 1, constant: 0),
+            NSLayoutConstraint(item: voicePanel, attribute: .right, relatedBy: .equal, toItem: contentPanel, attribute: .right, multiplier: 1, constant: 0),
+            NSLayoutConstraint(item: voicePanel, attribute: .top, relatedBy: .equal, toItem: contentPanel, attribute: .top, multiplier: 1, constant: 0),
+            NSLayoutConstraint(item: voicePanel, attribute: .bottom, relatedBy: .equal, toItem: contentPanel, attribute: .bottom, multiplier: 1, constant: 0),
+        ])
+        
+    }
+    
+    private func addEmotionPanel() {
+        
+        emotionPanel.backgroundColor = .green
+        emotionPanel.isHidden = true
+        emotionPanel.translatesAutoresizingMaskIntoConstraints = false
+        contentPanel.addSubview(emotionPanel)
+        
+        addConstraints([
+            NSLayoutConstraint(item: emotionPanel, attribute: .left, relatedBy: .equal, toItem: contentPanel, attribute: .left, multiplier: 1, constant: 0),
+            NSLayoutConstraint(item: emotionPanel, attribute: .right, relatedBy: .equal, toItem: contentPanel, attribute: .right, multiplier: 1, constant: 0),
+            NSLayoutConstraint(item: emotionPanel, attribute: .top, relatedBy: .equal, toItem: contentPanel, attribute: .top, multiplier: 1, constant: 0),
+            NSLayoutConstraint(item: emotionPanel, attribute: .bottom, relatedBy: .equal, toItem: contentPanel, attribute: .bottom, multiplier: 1, constant: 0),
+        ])
+        
+    }
+    
+    private func addMorePanel() {
+        
+        morePanel.backgroundColor = .blue
+        morePanel.isHidden = true
         morePanel.translatesAutoresizingMaskIntoConstraints = false
         contentPanel.addSubview(morePanel)
         
@@ -226,15 +338,15 @@ extension MessageInput {
         
         addConstraints([
             NSLayoutConstraint(item: morePanel, attribute: .left, relatedBy: .equal, toItem: contentPanel, attribute: .left, multiplier: 1, constant: configuration.featurePanelPaddingHorizontal),
-            NSLayoutConstraint(item: morePanel, attribute: .right, relatedBy: .equal, toItem: contentPanel, attribute: .right, multiplier: 1, constant: configuration.featurePanelPaddingHorizontal),
+            NSLayoutConstraint(item: morePanel, attribute: .right, relatedBy: .equal, toItem: contentPanel, attribute: .right, multiplier: 1, constant: -configuration.featurePanelPaddingHorizontal),
             NSLayoutConstraint(item: morePanel, attribute: .top, relatedBy: .equal, toItem: contentPanel, attribute: .top, multiplier: 1, constant: configuration.featurePanelPaddingVertical),
-            NSLayoutConstraint(item: morePanel, attribute: .bottom, relatedBy: .equal, toItem: contentPanel, attribute: .bottom, multiplier: 1, constant: configuration.featurePanelPaddingVertical),
+            NSLayoutConstraint(item: morePanel, attribute: .bottom, relatedBy: .equal, toItem: contentPanel, attribute: .bottom, multiplier: 1, constant: -configuration.featurePanelPaddingVertical),
             
-            NSLayoutConstraint(item: imageFeature, attribute: .top, relatedBy: .equal, toItem: morePanel, attribute: .top, multiplier: 1.0, constant: 0),
-            NSLayoutConstraint(item: imageFeature, attribute: .left, relatedBy: .equal, toItem: morePanel, attribute: .left, multiplier: 1.0, constant: 0),
+            NSLayoutConstraint(item: imageFeature, attribute: .top, relatedBy: .equal, toItem: morePanel, attribute: .top, multiplier: 1, constant: 0),
+            NSLayoutConstraint(item: imageFeature, attribute: .left, relatedBy: .equal, toItem: morePanel, attribute: .left, multiplier: 1, constant: 0),
             
-            NSLayoutConstraint(item: cameraFeature, attribute: .top, relatedBy: .equal, toItem: morePanel, attribute: .top, multiplier: 1.0, constant: 0),
-            NSLayoutConstraint(item: cameraFeature, attribute: .left, relatedBy: .equal, toItem: morePanel, attribute: .left, multiplier: 1.0, constant: configuration.featureItemButtonWidth + configuration.featureItemSpacing),
+            NSLayoutConstraint(item: cameraFeature, attribute: .top, relatedBy: .equal, toItem: morePanel, attribute: .top, multiplier: 1, constant: 0),
+            NSLayoutConstraint(item: cameraFeature, attribute: .left, relatedBy: .equal, toItem: morePanel, attribute: .left, multiplier: 1, constant: configuration.featureItemButtonWidth + configuration.featureItemSpacing),
         ])
         
     }
@@ -266,24 +378,24 @@ extension MessageInput {
     @objc func onKeyboardShown(notification: NSNotification) {
         
         if let keyboardFrame: NSValue = notification.userInfo?[UIKeyboardFrameEndUserInfoKey] as? NSValue {
-            let keyboardHeight = keyboardFrame.cgRectValue.height
+
+            // 保存，方便设置 voicePanel/emotionPanel/morePanel 的高度
+            keyboardHeight = keyboardFrame.cgRectValue.height
             
-            contentPanelHeightConstraint.constant = keyboardHeight * 2
+            showContentPanel()
             
-            UITextView.animate(withDuration: 0.2, animations: {
-                self.layoutIfNeeded()
-            })
         }
         
     }
     
     @objc func onKeyboardHiden(notification: NSNotification) {
         
-        contentPanelHeightConstraint.constant = 0
+        guard voicePanel.isHidden, emotionPanel.isHidden, morePanel.isHidden else {
+            return
+        }
         
-        UITextView.animate(withDuration: 0.2, animations: {
-            self.layoutIfNeeded()
-        })
+        hideContentPanel()
+        
     }
     
 }
@@ -316,8 +428,14 @@ extension MessageInput: CircleViewDelegate {
     }
     
     public func circleViewDidTouchUp(_ circleView: CircleView, _ inside: Bool) {
-        if circleView == moreButton {
-            hideKeyboard()
+        if circleView == voiceButton {
+            showVoicePanel()
+        }
+        else if circleView == emotionButton {
+            showEmotionPanel()
+        }
+        else if circleView == moreButton {
+            showMorePanel()
         }
     }
     

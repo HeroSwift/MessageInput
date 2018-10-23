@@ -61,7 +61,8 @@ public class Configuration {
     public var featureItemTitleTextFont = UIFont.systemFont(ofSize: 12)
     public var featureItemTitleTextColor = UIColor(red: 120 / 255, green: 120 / 255, blue: 120 / 255, alpha: 1)
 
-    
+    // 默认的键盘高度
+    public var defaultKeyboardHeight: CGFloat = 258
     
     
     public init() {}
