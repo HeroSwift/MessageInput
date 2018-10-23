@@ -7,8 +7,11 @@ class FeatureItem: UIView {
     
     private let imageView = UIImageView()
     private let titleView = UILabel()
-    
-    var onClick: (() -> Void)?
+
+    public convenience init(title: String, image: UIImage, configuration: Configuration, onClick: @escaping () -> Void) {
+        self.init()
+        setup(title: title, image: image, configuration: configuration, onClick: onClick)
+    }
     
     public override init(frame: CGRect) {
         super.init(frame: frame)
@@ -18,16 +21,14 @@ class FeatureItem: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func setup(title: String, image: UIImage, configuration: Configuration) {
+    private func setup(title: String, image: UIImage, configuration: Configuration, onClick: @escaping () -> Void) {
 
         buttonView.translatesAutoresizingMaskIntoConstraints = false
         buttonView.backgroundColor = configuration.featureItemButtonBackgroundColorNormal
         buttonView.layer.cornerRadius = configuration.featureItemButtonBorderRadius
         buttonView.layer.borderWidth = configuration.featureItemButtonBorderWidth
         buttonView.layer.borderColor = configuration.featureItemButtonBorderColor.cgColor
-        buttonView.onClick = {
-            self.onClick?()
-        }
+        buttonView.onClick = onClick
         
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.image = image

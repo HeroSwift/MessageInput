@@ -212,16 +212,15 @@ extension MessageInput {
         morePanel.translatesAutoresizingMaskIntoConstraints = false
         contentPanel.addSubview(morePanel)
         
-        let imageFeature = FeatureItem()
-        imageFeature.setup(title: "图片", image: UIImage(named: "image")!, configuration: configuration)
-        imageFeature.translatesAutoresizingMaskIntoConstraints = false
-        imageFeature.onClick = {
+        let imageFeature = FeatureItem(title: "图片", image: UIImage(named: "image")!, configuration: configuration, onClick: {
             self.openPhotoBrowser()
-        }
+        })
+        imageFeature.translatesAutoresizingMaskIntoConstraints = false
         morePanel.addSubview(imageFeature)
         
-        let cameraFeature = FeatureItem()
-        cameraFeature.setup(title: "拍摄", image: UIImage(named: "camera")!, configuration: configuration)
+        let cameraFeature = FeatureItem(title: "拍摄", image: UIImage(named: "camera")!, configuration: configuration, onClick: {
+            self.openPhotoBrowser()
+        })
         cameraFeature.translatesAutoresizingMaskIntoConstraints = false
         morePanel.addSubview(cameraFeature)
         
