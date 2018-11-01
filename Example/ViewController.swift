@@ -15,7 +15,7 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         
-        let input = MessageInput(configuration: Configuration())
+        let input = MessageInput(configuration: MessageInputConfiguration())
         input.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(input)
         

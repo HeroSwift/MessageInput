@@ -19,7 +19,7 @@
 		9DF4EFD12172176F00CA4DE7 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9DF4EFCF2172176F00CA4DE7 /* LaunchScreen.storyboard */; };
 		9DF4EFD9217218BC00CA4DE7 /* MessageInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DF4EFD8217218BC00CA4DE7 /* MessageInput.swift */; };
 		9DF4EFE321722EC000CA4DE7 /* FeatureItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DF4EFE221722EC000CA4DE7 /* FeatureItem.swift */; };
-		9DF4EFE52172348900CA4DE7 /* Configuration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DF4EFE42172348900CA4DE7 /* Configuration.swift */; };
+		9DF4EFE52172348900CA4DE7 /* MessageInputConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DF4EFE42172348900CA4DE7 /* MessageInputConfiguration.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -49,7 +49,7 @@
 		9DF4EFD8217218BC00CA4DE7 /* MessageInput.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageInput.swift; sourceTree = "<group>"; };
 		9DF4EFDA21721BDC00CA4DE7 /* CircleView.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CircleView.framework; path = Carthage/Build/iOS/CircleView.framework; sourceTree = "<group>"; };
 		9DF4EFE221722EC000CA4DE7 /* FeatureItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeatureItem.swift; sourceTree = "<group>"; };
-		9DF4EFE42172348900CA4DE7 /* Configuration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Configuration.swift; sourceTree = "<group>"; };
+		9DF4EFE42172348900CA4DE7 /* MessageInputConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageInputConfiguration.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -120,7 +120,7 @@
 				9D86CADD2189442A00C8F5CB /* view */,
 				9DF4EFB92172175200CA4DE7 /* Info.plist */,
 				9DF4EFD8217218BC00CA4DE7 /* MessageInput.swift */,
-				9DF4EFE42172348900CA4DE7 /* Configuration.swift */,
+				9DF4EFE42172348900CA4DE7 /* MessageInputConfiguration.swift */,
 			);
 			path = MessageInput;
 			sourceTree = "<group>";
@@ -272,7 +272,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9DF4EFE52172348900CA4DE7 /* Configuration.swift in Sources */,
+				9DF4EFE52172348900CA4DE7 /* MessageInputConfiguration.swift in Sources */,
 				9DF4EFD9217218BC00CA4DE7 /* MessageInput.swift in Sources */,
 				9DF4EFE321722EC000CA4DE7 /* FeatureItem.swift in Sources */,
 			);

@@ -25,9 +25,9 @@ public class MessageInput: UIView {
     private var textViewHeightConstraint: NSLayoutConstraint!
     private var contentPanelHeightConstraint: NSLayoutConstraint!
     
-    private var configuration: Configuration!
+    private var configuration: MessageInputConfiguration!
     
-    public convenience init(configuration: Configuration) {
+    public convenience init(configuration: MessageInputConfiguration) {
         self.init()
         self.configuration = configuration
         self.keyboardHeight = configuration.defaultKeyboardHeight
@@ -44,9 +44,8 @@ public class MessageInput: UIView {
     
     func setup() {
         
-        backgroundColor = UIColor.gray
-        addInputBar()
         addContentPanel()
+        addInputBar()
         
         NotificationCenter.default.addObserver(
             self,
@@ -146,30 +145,18 @@ extension MessageInput {
         
         backgroundColor = configuration.inputBarBackgroundColor
         
-        addInputBarTopBorder()
+        // 从下往上添加
+        addInputBarBottomBorder()
+        
         addVoiceButton()
         addMoreButton()
         addEmotionButton()
         addTextView()
-        addInputBarBottomBorder()
+        
+        addInputBarTopBorder()
         
     }
-    
-    private func addInputBarTopBorder() {
-        
-        inputBarTopBorder.backgroundColor = configuration.inputBarBorderColor
-        inputBarTopBorder.translatesAutoresizingMaskIntoConstraints = false
-        addSubview(inputBarTopBorder)
-        
-        addConstraints([
-            NSLayoutConstraint(item: inputBarTopBorder, attribute: .top, relatedBy: .equal, toItem: self, attribute: .top, multiplier: 1, constant: 0),
-            NSLayoutConstraint(item: inputBarTopBorder, attribute: .left, relatedBy: .equal, toItem: self, attribute: .left, multiplier: 1, constant: 0),
-            NSLayoutConstraint(item: inputBarTopBorder, attribute: .right, relatedBy: .equal, toItem: self, attribute: .right, multiplier: 1, constant: 0),
-            NSLayoutConstraint(item: inputBarTopBorder, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .height, multiplier: 1, constant: configuration.inputBarBorderWidth),
-        ])
-        
-    }
-    
+
     private func addInputBarBottomBorder() {
         
         inputBarBottomBorder.backgroundColor = configuration.inputBarBorderColor
@@ -177,7 +164,7 @@ extension MessageInput {
         addSubview(inputBarBottomBorder)
         
         addConstraints([
-            NSLayoutConstraint(item: inputBarBottomBorder, attribute: .top, relatedBy: .equal, toItem: voiceButton, attribute: .bottom, multiplier: 1, constant: configuration.inputBarPaddingVertical),
+            NSLayoutConstraint(item: inputBarBottomBorder, attribute: .bottom, relatedBy: .equal, toItem: contentPanel, attribute: .top, multiplier: 1, constant: -configuration.inputBarBorderWidth),
             NSLayoutConstraint(item: inputBarBottomBorder, attribute: .left, relatedBy: .equal, toItem: self, attribute: .left, multiplier: 1, constant: 0),
             NSLayoutConstraint(item: inputBarBottomBorder, attribute: .right, relatedBy: .equal, toItem: self, attribute: .right, multiplier: 1, constant: 0),
             NSLayoutConstraint(item: inputBarBottomBorder, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .height, multiplier: 1, constant: configuration.inputBarBorderWidth),
@@ -198,11 +185,10 @@ extension MessageInput {
         addSubview(voiceButton)
         
         addConstraints([
-            NSLayoutConstraint(item: voiceButton, attribute: .top, relatedBy: .equal, toItem: inputBarTopBorder, attribute: .bottom, multiplier: 1, constant: configuration.inputBarPaddingVertical),
             NSLayoutConstraint(item: voiceButton, attribute: .left, relatedBy: .equal, toItem: self, attribute: .left, multiplier: 1, constant: configuration.inputBarPaddingHorizontal),
-            
             NSLayoutConstraint(item: voiceButton, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .width, multiplier: 1, constant: 2 * configuration.circleButtonRadius),
             NSLayoutConstraint(item: voiceButton, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .height, multiplier: 1, constant: 2 * configuration.circleButtonRadius),
+            NSLayoutConstraint(item: voiceButton, attribute: .bottom, relatedBy: .equal, toItem: inputBarBottomBorder, attribute: .top, multiplier: 1, constant: -(configuration.inputBarPaddingVertical + configuration.circleButtonMarginBottom)),
         ])
         
     }
@@ -220,11 +206,10 @@ extension MessageInput {
         addSubview(moreButton)
         
         addConstraints([
-            NSLayoutConstraint(item: moreButton, attribute: .top, relatedBy: .equal, toItem: inputBarTopBorder, attribute: .bottom, multiplier: 1, constant: configuration.inputBarPaddingVertical),
             NSLayoutConstraint(item: moreButton, attribute: .right, relatedBy: .equal, toItem: self, attribute: .right, multiplier: 1, constant: -configuration.inputBarPaddingHorizontal),
-            
             NSLayoutConstraint(item: moreButton, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .width, multiplier: 1, constant: 2 * configuration.circleButtonRadius),
             NSLayoutConstraint(item: moreButton, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .height, multiplier: 1, constant: 2 * configuration.circleButtonRadius),
+            NSLayoutConstraint(item: moreButton, attribute: .bottom, relatedBy: .equal, toItem: inputBarBottomBorder, attribute: .top, multiplier: 1, constant: -(configuration.inputBarPaddingVertical + configuration.circleButtonMarginBottom)),
         ])
         
     }
@@ -243,11 +228,10 @@ extension MessageInput {
         addSubview(emotionButton)
         
         addConstraints([
-            NSLayoutConstraint(item: emotionButton, attribute: .top, relatedBy: .equal, toItem: inputBarTopBorder, attribute: .bottom, multiplier: 1, constant: configuration.inputBarPaddingVertical),
             NSLayoutConstraint(item: emotionButton, attribute: .right, relatedBy: .equal, toItem: moreButton, attribute: .left, multiplier: 1, constant: -configuration.inputBarItemSpacing),
-            
             NSLayoutConstraint(item: emotionButton, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .width, multiplier: 1, constant: 2 * configuration.circleButtonRadius),
             NSLayoutConstraint(item: emotionButton, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .height, multiplier: 1, constant: 2 * configuration.circleButtonRadius),
+            NSLayoutConstraint(item: emotionButton, attribute: .bottom, relatedBy: .equal, toItem: inputBarBottomBorder, attribute: .top, multiplier: 1, constant: -(configuration.inputBarPaddingVertical + configuration.circleButtonMarginBottom)),
         ])
         
     }
@@ -260,9 +244,24 @@ extension MessageInput {
         addConstraints([
             NSLayoutConstraint(item: textView, attribute: .left, relatedBy: .equal, toItem: voiceButton, attribute: .right, multiplier: 1, constant: configuration.inputBarItemSpacing),
             NSLayoutConstraint(item: textView, attribute: .right, relatedBy: .equal, toItem: emotionButton, attribute: .left, multiplier: 1, constant: -configuration.inputBarItemSpacing),
-            NSLayoutConstraint(item: textView, attribute: .bottom, relatedBy: .equal, toItem: emotionButton, attribute: .bottom, multiplier: 1, constant: configuration.textViewBottomOffset),
+            NSLayoutConstraint(item: textView, attribute: .bottom, relatedBy: .equal, toItem: inputBarBottomBorder, attribute: .top, multiplier: 1, constant: -configuration.inputBarPaddingVertical),
         ])
 
+    }
+    
+    private func addInputBarTopBorder() {
+        
+        inputBarTopBorder.backgroundColor = configuration.inputBarBorderColor
+        inputBarTopBorder.translatesAutoresizingMaskIntoConstraints = false
+        addSubview(inputBarTopBorder)
+        
+        addConstraints([
+            NSLayoutConstraint(item: inputBarTopBorder, attribute: .bottom, relatedBy: .equal, toItem: textView, attribute: .top, multiplier: 1, constant: -configuration.inputBarPaddingVertical),
+            NSLayoutConstraint(item: inputBarTopBorder, attribute: .left, relatedBy: .equal, toItem: self, attribute: .left, multiplier: 1, constant: 0),
+            NSLayoutConstraint(item: inputBarTopBorder, attribute: .right, relatedBy: .equal, toItem: self, attribute: .right, multiplier: 1, constant: 0),
+            NSLayoutConstraint(item: inputBarTopBorder, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .height, multiplier: 1, constant: configuration.inputBarBorderWidth),
+        ])
+        
     }
     
     private func addContentPanel() {
@@ -272,12 +271,11 @@ extension MessageInput {
         
         addSubview(contentPanel)
 
-        contentPanelHeightConstraint = NSLayoutConstraint(item: contentPanel, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .height, multiplier: 1, constant: 0)
+        contentPanelHeightConstraint = NSLayoutConstraint(item: contentPanel, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .height, multiplier: 1, constant: 250)
         
         addConstraints([
             NSLayoutConstraint(item: contentPanel, attribute: .left, relatedBy: .equal, toItem: self, attribute: .left, multiplier: 1, constant: 0),
             NSLayoutConstraint(item: contentPanel, attribute: .right, relatedBy: .equal, toItem: self, attribute: .right, multiplier: 1, constant: 0),
-            NSLayoutConstraint(item: contentPanel, attribute: .top, relatedBy: .equal, toItem: inputBarBottomBorder, attribute: .bottom, multiplier: 1, constant: 0),
             NSLayoutConstraint(item: contentPanel, attribute: .bottom, relatedBy: .equal, toItem: self, attribute: .bottom, multiplier: 1, constant: 0),
             contentPanelHeightConstraint
         ])
@@ -300,7 +298,6 @@ extension MessageInput {
             NSLayoutConstraint(item: voicePanel, attribute: .right, relatedBy: .equal, toItem: contentPanel, attribute: .right, multiplier: 1, constant: 0),
             NSLayoutConstraint(item: voicePanel, attribute: .top, relatedBy: .equal, toItem: contentPanel, attribute: .top, multiplier: 1, constant: 0),
             NSLayoutConstraint(item: voicePanel, attribute: .bottom, relatedBy: .equal, toItem: contentPanel, attribute: .bottom, multiplier: 1, constant: 0),
-            
         ])
         
     }

@@ -10,7 +10,7 @@ class FeatureItem: UIView {
     private let imageView = UIImageView()
     private let titleView = UILabel()
 
-    public convenience init(title: String, image: UIImage, configuration: Configuration, onClick: @escaping () -> Void) {
+    public convenience init(title: String, image: UIImage, configuration: MessageInputConfiguration, onClick: @escaping () -> Void) {
         self.init()
         setup(title: title, image: image, configuration: configuration, onClick: onClick)
     }
@@ -23,7 +23,7 @@ class FeatureItem: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    private func setup(title: String, image: UIImage, configuration: Configuration, onClick: @escaping () -> Void) {
+    private func setup(title: String, image: UIImage, configuration: MessageInputConfiguration, onClick: @escaping () -> Void) {
 
         buttonView.translatesAutoresizingMaskIntoConstraints = false
         buttonView.backgroundColor = configuration.featureItemButtonBackgroundColorNormal
