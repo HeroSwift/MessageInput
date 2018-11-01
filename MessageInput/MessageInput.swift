@@ -64,11 +64,27 @@ public class MessageInput: UIView {
     }
     
     public func showKeyboard() {
+        
+        guard !textView.isFirstResponder else {
+            return
+        }
+        
         textView.becomeFirstResponder()
+        
     }
     
     public func hideKeyboard() {
+        
+        guard textView.isFirstResponder else {
+            return
+        }
+        
+        voicePanel.isHidden = true
+        emotionPanel.isHidden = true
+        morePanel.isHidden = true
+        
         textView.resignFirstResponder()
+        
     }
     
     public func showVoicePanel() {
@@ -77,7 +93,7 @@ public class MessageInput: UIView {
         emotionPanel.isHidden = true
         morePanel.isHidden = true
         
-        hideKeyboard()
+        textView.resignFirstResponder()
         showContentPanel()
         
     }
@@ -88,7 +104,7 @@ public class MessageInput: UIView {
         emotionPanel.isHidden = false
         morePanel.isHidden = true
         
-        hideKeyboard()
+        textView.resignFirstResponder()
         showContentPanel()
         
     }
@@ -99,7 +115,7 @@ public class MessageInput: UIView {
         emotionPanel.isHidden = true
         morePanel.isHidden = false
         
-        hideKeyboard()
+        textView.resignFirstResponder()
         showContentPanel()
         
     }
@@ -111,11 +127,11 @@ public class MessageInput: UIView {
             return
         }
         
-        contentPanelHeightConstraint.constant = keyboardHeight
-        
-        UITextView.animate(withDuration: 0.2, animations: {
-            self.layoutIfNeeded()
-        })
+//        contentPanelHeightConstraint.constant = keyboardHeight
+//        
+//        UITextView.animate(withDuration: 10, animations: {
+//            self.layoutIfNeeded()
+//        })
         
     }
     
@@ -129,11 +145,11 @@ public class MessageInput: UIView {
         emotionPanel.isHidden = true
         morePanel.isHidden = true
         
-        contentPanelHeightConstraint.constant = 0
-        
-        UITextView.animate(withDuration: 0.2, animations: {
-            self.layoutIfNeeded()
-        })
+//        contentPanelHeightConstraint.constant = 0
+//
+//        UITextView.animate(withDuration: 0.2, animations: {
+//            self.layoutIfNeeded()
+//        })
         
     }
     
@@ -256,6 +272,7 @@ extension MessageInput {
         addSubview(inputBarTopBorder)
         
         addConstraints([
+            NSLayoutConstraint(item: inputBarTopBorder, attribute: .top, relatedBy: .equal, toItem: self, attribute: .top, multiplier: 1, constant: 0),
             NSLayoutConstraint(item: inputBarTopBorder, attribute: .bottom, relatedBy: .equal, toItem: textView, attribute: .top, multiplier: 1, constant: -configuration.inputBarPaddingVertical),
             NSLayoutConstraint(item: inputBarTopBorder, attribute: .left, relatedBy: .equal, toItem: self, attribute: .left, multiplier: 1, constant: 0),
             NSLayoutConstraint(item: inputBarTopBorder, attribute: .right, relatedBy: .equal, toItem: self, attribute: .right, multiplier: 1, constant: 0),
@@ -271,7 +288,7 @@ extension MessageInput {
         
         addSubview(contentPanel)
 
-        contentPanelHeightConstraint = NSLayoutConstraint(item: contentPanel, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .height, multiplier: 1, constant: 250)
+        contentPanelHeightConstraint = NSLayoutConstraint(item: contentPanel, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .height, multiplier: 1, constant: keyboardHeight)
         
         addConstraints([
             NSLayoutConstraint(item: contentPanel, attribute: .left, relatedBy: .equal, toItem: self, attribute: .left, multiplier: 1, constant: 0),
@@ -381,6 +398,10 @@ extension MessageInput {
 
             // 保存，方便设置 voicePanel/emotionPanel/morePanel 的高度
             keyboardHeight = keyboardFrame.cgRectValue.height
+            
+            contentPanelHeightConstraint.constant = keyboardHeight
+            
+            layoutIfNeeded()
 
             showContentPanel()
             
@@ -435,12 +456,13 @@ extension MessageInput: CircleViewDelegate {
         print(circleView)
     }
     
-    public func circleViewDidTouchUp(_ circleView: CircleView, _ inside: Bool) {
+    public func circleViewDidTouchUp(_ circleView: CircleView, _ inside: Bool, _ isLongPress: Bool) {
         if circleView == voiceButton {
             showVoicePanel()
         }
         else if circleView == emotionButton {
-            showEmotionPanel()
+            hideKeyboard()
+//            showEmotionPanel()
         }
         else if circleView == moreButton {
             showMorePanel()
