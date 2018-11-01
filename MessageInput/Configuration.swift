@@ -1,6 +1,7 @@
 
 import UIKit
 
+// 配置
 public class Configuration {
     
     // 输入栏的边框大小
@@ -65,5 +66,5 @@ public class Configuration {
     public var defaultKeyboardHeight: CGFloat = 258
     
     
-    public init() {}
+    public init() { }
 }

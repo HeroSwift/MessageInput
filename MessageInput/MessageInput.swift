@@ -1,20 +1,23 @@
 
 import UIKit
 
+import VoiceInput
+import EmotionInput
+
 public class MessageInput: UIView {
 
     private let inputBarTopBorder = UIView()
     private let inputBarBottomBorder = UIView()
     
     private let voiceButton = CircleView()
-    private let textView = UITextView()
+    private let textView = EmotionTextarea(configuration: EmotionInputConfiguration())
     private let emotionButton = CircleView()
     private let moreButton = CircleView()
     
     private let contentPanel = UIView()
     
-    private let voicePanel = UIView()
-    private let emotionPanel = UIView()
+    private let voicePanel = VoiceInput(configuration: VoiceInputConfiguration())
+    private let emotionPanel = EmotionPager(configuration: EmotionInputConfiguration())
     private let morePanel = UIView()
     
     private var keyboardHeight: CGFloat!
@@ -188,7 +191,6 @@ extension MessageInput {
         voiceButton.ringWidth = 0
         voiceButton.trackWidth = 0
         
-        voiceButton.sizeToFit()
         voiceButton.translatesAutoresizingMaskIntoConstraints = false
         voiceButton.delegate = self
         
@@ -208,7 +210,6 @@ extension MessageInput {
         moreButton.ringWidth = 0
         moreButton.trackWidth = 0
         
-        moreButton.sizeToFit()
         moreButton.translatesAutoresizingMaskIntoConstraints = false
         moreButton.delegate = self
         
@@ -229,7 +230,6 @@ extension MessageInput {
         emotionButton.ringWidth = 0
         emotionButton.trackWidth = 0
         
-        emotionButton.sizeToFit()
         emotionButton.translatesAutoresizingMaskIntoConstraints = false
         emotionButton.delegate = self
         
@@ -244,20 +244,16 @@ extension MessageInput {
 
     private func addTextView() {
         
-        textView.text = "text"
-        textView.backgroundColor = .gray
-        
         textView.translatesAutoresizingMaskIntoConstraints = false
-        textView.sizeToFit()
         addSubview(textView)
         
         textViewHeightConstraint = NSLayoutConstraint(item: textView, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .height, multiplier: 1, constant: 16)
         
         addConstraints([
             NSLayoutConstraint(item: textView, attribute: .top, relatedBy: .equal, toItem: inputBarTopBorder, attribute: .bottom, multiplier: 1, constant: configuration.inputBarPaddingVertical),
-            NSLayoutConstraint(item: textView, attribute: .left, relatedBy: .equal, toItem: voiceButton, attribute: .right, multiplier: 1, constant: configuration.inputBarItemSpacing),
-            NSLayoutConstraint(item: textView, attribute: .right, relatedBy: .equal, toItem: emotionButton, attribute: .left, multiplier: 1, constant: -configuration.inputBarItemSpacing),
-            textViewHeightConstraint
+//            NSLayoutConstraint(item: textView, attribute: .left, relatedBy: .equal, toItem: voiceButton, attribute: .right, multiplier: 1, constant: configuration.inputBarItemSpacing),
+//            NSLayoutConstraint(item: textView, attribute: .right, relatedBy: .equal, toItem: emotionButton, attribute: .left, multiplier: 1, constant: -configuration.inputBarItemSpacing),
+//            textViewHeightConstraint
         ])
         
     }
@@ -287,7 +283,7 @@ extension MessageInput {
     
     private func addVoicePanel() {
         
-        voicePanel.backgroundColor = .red
+        voicePanel.delegate = self
         voicePanel.isHidden = true
         voicePanel.translatesAutoresizingMaskIntoConstraints = false
         contentPanel.addSubview(voicePanel)
@@ -303,7 +299,6 @@ extension MessageInput {
     
     private func addEmotionPanel() {
         
-        emotionPanel.backgroundColor = .green
         emotionPanel.isHidden = true
         emotionPanel.translatesAutoresizingMaskIntoConstraints = false
         contentPanel.addSubview(emotionPanel)
@@ -381,7 +376,7 @@ extension MessageInput {
 
             // 保存，方便设置 voicePanel/emotionPanel/morePanel 的高度
             keyboardHeight = keyboardFrame.cgRectValue.height
-            
+
             showContentPanel()
             
         }
@@ -397,6 +392,14 @@ extension MessageInput {
         hideContentPanel()
         
     }
+    
+}
+
+//
+// MARK: - VoiceInputDelegate 代理
+//
+
+extension MessageInput: VoiceInputDelegate {
     
 }
 
