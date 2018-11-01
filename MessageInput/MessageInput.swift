@@ -256,7 +256,7 @@ extension MessageInput {
         ])
         
         textView.translatesAutoresizingMaskIntoConstraints = false
-        textView.backgroundColor = UIColor(red: 220, green: 220, blue: 220, alpha: 1)
+        textView.backgroundColor = UIColor(red: 200, green: 200, blue: 200, alpha: 1)
         view.addSubview(textView)
         
         view.addConstraints([
