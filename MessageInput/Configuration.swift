@@ -11,13 +11,15 @@ public class Configuration {
     var inputBarBorderColor = UIColor(red: 200 / 255, green: 200 / 255, blue: 200 / 255, alpha: 1)
     
     // 输入栏的背景颜色
-    var inputBarBackgroundColor: UIColor = .white
+    var inputBarBackgroundColor = UIColor(red: 0.96, green: 0.96, blue: 0.96, alpha: 1)
     
     // 输入栏的水平内边距
     var inputBarPaddingHorizontal: CGFloat = 10
 
     // 输入栏的垂直内边距
     var inputBarPaddingVertical: CGFloat = 10
+    
+    var textViewBottomOffset: CGFloat = 4
     
     // 输入栏每一项的间距
     var inputBarItemSpacing: CGFloat = 8

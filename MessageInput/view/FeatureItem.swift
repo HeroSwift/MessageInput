@@ -1,6 +1,8 @@
 
 import UIKit
 
+import SimpleButton
+
 class FeatureItem: UIView {
     
     private let buttonView = SimpleButton()

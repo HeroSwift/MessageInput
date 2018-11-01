@@ -1,6 +1,7 @@
 
 import UIKit
 
+import CircleView
 import VoiceInput
 import EmotionInput
 
@@ -10,7 +11,7 @@ public class MessageInput: UIView {
     private let inputBarBottomBorder = UIView()
     
     private let voiceButton = CircleView()
-    private let textView = EmotionTextarea(configuration: EmotionInputConfiguration())
+    private let textView = EmotionTextarea(configuration: EmotionTextareaConfiguration())
     private let emotionButton = CircleView()
     private let moreButton = CircleView()
     
@@ -199,6 +200,9 @@ extension MessageInput {
         addConstraints([
             NSLayoutConstraint(item: voiceButton, attribute: .top, relatedBy: .equal, toItem: inputBarTopBorder, attribute: .bottom, multiplier: 1, constant: configuration.inputBarPaddingVertical),
             NSLayoutConstraint(item: voiceButton, attribute: .left, relatedBy: .equal, toItem: self, attribute: .left, multiplier: 1, constant: configuration.inputBarPaddingHorizontal),
+            
+            NSLayoutConstraint(item: voiceButton, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .width, multiplier: 1, constant: 2 * configuration.circleButtonRadius),
+            NSLayoutConstraint(item: voiceButton, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .height, multiplier: 1, constant: 2 * configuration.circleButtonRadius),
         ])
         
     }
@@ -218,6 +222,9 @@ extension MessageInput {
         addConstraints([
             NSLayoutConstraint(item: moreButton, attribute: .top, relatedBy: .equal, toItem: inputBarTopBorder, attribute: .bottom, multiplier: 1, constant: configuration.inputBarPaddingVertical),
             NSLayoutConstraint(item: moreButton, attribute: .right, relatedBy: .equal, toItem: self, attribute: .right, multiplier: 1, constant: -configuration.inputBarPaddingHorizontal),
+            
+            NSLayoutConstraint(item: moreButton, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .width, multiplier: 1, constant: 2 * configuration.circleButtonRadius),
+            NSLayoutConstraint(item: moreButton, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .height, multiplier: 1, constant: 2 * configuration.circleButtonRadius),
         ])
         
     }
@@ -238,34 +245,24 @@ extension MessageInput {
         addConstraints([
             NSLayoutConstraint(item: emotionButton, attribute: .top, relatedBy: .equal, toItem: inputBarTopBorder, attribute: .bottom, multiplier: 1, constant: configuration.inputBarPaddingVertical),
             NSLayoutConstraint(item: emotionButton, attribute: .right, relatedBy: .equal, toItem: moreButton, attribute: .left, multiplier: 1, constant: -configuration.inputBarItemSpacing),
+            
+            NSLayoutConstraint(item: emotionButton, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .width, multiplier: 1, constant: 2 * configuration.circleButtonRadius),
+            NSLayoutConstraint(item: emotionButton, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .height, multiplier: 1, constant: 2 * configuration.circleButtonRadius),
         ])
         
     }
 
     private func addTextView() {
         
-        let view = UIView()
-        view.translatesAutoresizingMaskIntoConstraints = false
-        addSubview(view)
+        textView.translatesAutoresizingMaskIntoConstraints = false
+        addSubview(textView)
         
         addConstraints([
-            NSLayoutConstraint(item: view, attribute: .top, relatedBy: .equal, toItem: inputBarTopBorder, attribute: .bottom, multiplier: 1, constant: configuration.inputBarPaddingVertical),
-            NSLayoutConstraint(item: view, attribute: .left, relatedBy: .equal, toItem: voiceButton, attribute: .right, multiplier: 1, constant: configuration.inputBarItemSpacing),
-            NSLayoutConstraint(item: view, attribute: .right, relatedBy: .equal, toItem: emotionButton, attribute: .left, multiplier: 1, constant: -configuration.inputBarItemSpacing),
-            NSLayoutConstraint(item: view, attribute: .bottom, relatedBy: .equal, toItem: emotionButton, attribute: .bottom, multiplier: 1, constant: 0),
+            NSLayoutConstraint(item: textView, attribute: .left, relatedBy: .equal, toItem: voiceButton, attribute: .right, multiplier: 1, constant: configuration.inputBarItemSpacing),
+            NSLayoutConstraint(item: textView, attribute: .right, relatedBy: .equal, toItem: emotionButton, attribute: .left, multiplier: 1, constant: -configuration.inputBarItemSpacing),
+            NSLayoutConstraint(item: textView, attribute: .bottom, relatedBy: .equal, toItem: emotionButton, attribute: .bottom, multiplier: 1, constant: configuration.textViewBottomOffset),
         ])
-        
-        textView.translatesAutoresizingMaskIntoConstraints = false
-        textView.backgroundColor = UIColor(red: 200, green: 200, blue: 200, alpha: 1)
-        view.addSubview(textView)
-        
-        view.addConstraints([
-            NSLayoutConstraint(item: textView, attribute: .left, relatedBy: .equal, toItem: view, attribute: .left, multiplier: 1, constant: 0),
-            NSLayoutConstraint(item: textView, attribute: .right, relatedBy: .equal, toItem: view, attribute: .right, multiplier: 1, constant: 0),
-            NSLayoutConstraint(item: textView, attribute: .top, relatedBy: .equal, toItem: view, attribute: .top, multiplier: 1, constant: 0),
-            NSLayoutConstraint(item: textView, attribute: .bottom, relatedBy: .equal, toItem: view, attribute: .bottom, multiplier: 1, constant: 0),
-        ])
-        
+
     }
     
     private func addContentPanel() {
@@ -303,6 +300,7 @@ extension MessageInput {
             NSLayoutConstraint(item: voicePanel, attribute: .right, relatedBy: .equal, toItem: contentPanel, attribute: .right, multiplier: 1, constant: 0),
             NSLayoutConstraint(item: voicePanel, attribute: .top, relatedBy: .equal, toItem: contentPanel, attribute: .top, multiplier: 1, constant: 0),
             NSLayoutConstraint(item: voicePanel, attribute: .bottom, relatedBy: .equal, toItem: contentPanel, attribute: .bottom, multiplier: 1, constant: 0),
+            
         ])
         
     }
