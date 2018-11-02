@@ -18,7 +18,7 @@ public class MessageInput: UIView {
     private let contentPanel = UIView()
     
     private let voicePanel = VoiceInput(configuration: VoiceInputConfiguration())
-    private let emotionPanel = UIView()
+    private let emotionPanel = EmotionPager(configuration: EmotionPagerConfiguration())
     private let morePanel = UIView()
     
     private var keyboardHeight: CGFloat!
@@ -66,24 +66,12 @@ public class MessageInput: UIView {
     
     public func showKeyboard() {
         
-        guard !textView.isFirstResponder else {
-            return
-        }
-        
         textView.becomeFirstResponder()
-        
+
     }
     
     public func hideKeyboard() {
-        
-        guard textView.isFirstResponder else {
-            return
-        }
-        
-        voicePanel.isHidden = true
-        emotionPanel.isHidden = true
-        morePanel.isHidden = true
-        
+
         textView.resignFirstResponder()
         
     }
@@ -94,7 +82,7 @@ public class MessageInput: UIView {
         emotionPanel.isHidden = true
         morePanel.isHidden = true
         
-        textView.resignFirstResponder()
+        hideKeyboard()
         showContentPanel()
         
     }
@@ -105,7 +93,7 @@ public class MessageInput: UIView {
         emotionPanel.isHidden = false
         morePanel.isHidden = true
         
-        textView.resignFirstResponder()
+        hideKeyboard()
         showContentPanel()
         
     }
@@ -116,41 +104,51 @@ public class MessageInput: UIView {
         emotionPanel.isHidden = true
         morePanel.isHidden = false
         
-        textView.resignFirstResponder()
+        hideKeyboard()
         showContentPanel()
         
     }
-
     
-    public func showContentPanel() {
+    public func showContentPanel(complete: ((Bool) -> Void)? = nil) {
         
         guard contentPanelBottomConstraint.constant > 0 else {
+            complete?(true)
             return
         }
         
         contentPanelBottomConstraint.constant = 0
 
-        UITextView.animate(withDuration: 0.5, animations: {
-            self.layoutIfNeeded()
-        })
+        UIView.animate(
+            withDuration: 0.2,
+            animations: {
+                self.layoutIfNeeded()
+            },
+            completion: complete
+        )
         
     }
     
-    public func hideContentPanel() {
+    public func hideContentPanel(complete: ((Bool) -> Void)? = nil) {
         
         guard contentPanelBottomConstraint.constant == 0 else {
+            complete?(true)
             return
         }
-        
-        voicePanel.isHidden = true
-        emotionPanel.isHidden = true
-        morePanel.isHidden = true
-        
+
         contentPanelBottomConstraint.constant = keyboardHeight
 
-        UITextView.animate(withDuration: 0.2, animations: {
-            self.layoutIfNeeded()
-        })
+        UIView.animate(
+            withDuration: 0.2,
+            animations: {
+                self.layoutIfNeeded()
+            },
+            completion: { finished in
+                self.voicePanel.isHidden = true
+                self.emotionPanel.isHidden = true
+                self.morePanel.isHidden = true
+                complete?(finished)
+            }
+        )
         
     }
     
@@ -398,7 +396,11 @@ extension MessageInput {
             
             contentPanelHeightConstraint.constant = keyboardHeight
 
-            showContentPanel()
+            showContentPanel(complete: { finished in
+                self.voicePanel.isHidden = true
+                self.emotionPanel.isHidden = true
+                self.morePanel.isHidden = true
+            })
             
         }
         
@@ -453,14 +455,28 @@ extension MessageInput: CircleViewDelegate {
     
     public func circleViewDidTouchUp(_ circleView: CircleView, _ inside: Bool, _ isLongPress: Bool) {
         if circleView == voiceButton {
-            showVoicePanel()
+            if voicePanel.isHidden {
+                showVoicePanel()
+            }
+            else {
+                showKeyboard()
+            }
         }
         else if circleView == emotionButton {
-            hideKeyboard()
-//            showEmotionPanel()
+            if emotionPanel.isHidden {
+                showEmotionPanel()
+            }
+            else {
+                showKeyboard()
+            }
         }
         else if circleView == moreButton {
-            showMorePanel()
+            if morePanel.isHidden {
+                showMorePanel()
+            }
+            else {
+                showKeyboard()
+            }
         }
     }
     
