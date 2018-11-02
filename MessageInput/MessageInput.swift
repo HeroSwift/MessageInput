@@ -24,6 +24,7 @@ public class MessageInput: UIView {
     private var keyboardHeight: CGFloat!
     private var textViewHeightConstraint: NSLayoutConstraint!
     private var contentPanelHeightConstraint: NSLayoutConstraint!
+    private var contentPanelBottomConstraint: NSLayoutConstraint!
     
     private var configuration: MessageInputConfiguration!
     
@@ -123,21 +124,21 @@ public class MessageInput: UIView {
     
     public func showContentPanel() {
         
-        guard contentPanelHeightConstraint.constant == 0 else {
+        guard contentPanelBottomConstraint.constant > 0 else {
             return
         }
         
-//        contentPanelHeightConstraint.constant = keyboardHeight
-//        
-//        UITextView.animate(withDuration: 10, animations: {
-//            self.layoutIfNeeded()
-//        })
+        contentPanelBottomConstraint.constant = 0
+
+        UITextView.animate(withDuration: 0.5, animations: {
+            self.layoutIfNeeded()
+        })
         
     }
     
     public func hideContentPanel() {
         
-        guard contentPanelHeightConstraint.constant > 0 else {
+        guard contentPanelBottomConstraint.constant == 0 else {
             return
         }
         
@@ -145,11 +146,11 @@ public class MessageInput: UIView {
         emotionPanel.isHidden = true
         morePanel.isHidden = true
         
-//        contentPanelHeightConstraint.constant = 0
-//
-//        UITextView.animate(withDuration: 0.2, animations: {
-//            self.layoutIfNeeded()
-//        })
+        contentPanelBottomConstraint.constant = keyboardHeight
+
+        UITextView.animate(withDuration: 0.2, animations: {
+            self.layoutIfNeeded()
+        })
         
     }
     
@@ -290,10 +291,12 @@ extension MessageInput {
 
         contentPanelHeightConstraint = NSLayoutConstraint(item: contentPanel, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .height, multiplier: 1, constant: keyboardHeight)
         
+        contentPanelBottomConstraint = NSLayoutConstraint(item: contentPanel, attribute: .bottom, relatedBy: .equal, toItem: self, attribute: .bottom, multiplier: 1, constant: keyboardHeight)
+        
         addConstraints([
             NSLayoutConstraint(item: contentPanel, attribute: .left, relatedBy: .equal, toItem: self, attribute: .left, multiplier: 1, constant: 0),
             NSLayoutConstraint(item: contentPanel, attribute: .right, relatedBy: .equal, toItem: self, attribute: .right, multiplier: 1, constant: 0),
-            NSLayoutConstraint(item: contentPanel, attribute: .bottom, relatedBy: .equal, toItem: self, attribute: .bottom, multiplier: 1, constant: 0),
+            contentPanelBottomConstraint,
             contentPanelHeightConstraint
         ])
         
@@ -368,12 +371,6 @@ extension MessageInput {
         
     }
     
-    
-    
-    public override func layoutSubviews() {
-        
-    }
-    
     func openPhotoBrowser() {
         
         let imagePickerController = UIImagePickerController()
@@ -400,8 +397,6 @@ extension MessageInput {
             keyboardHeight = keyboardFrame.cgRectValue.height
             
             contentPanelHeightConstraint.constant = keyboardHeight
-            
-            layoutIfNeeded()
 
             showContentPanel()
             
