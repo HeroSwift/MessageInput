@@ -109,44 +109,45 @@ public class MessageInput: UIView {
         
     }
     
-    public func showContentPanel(complete: ((Bool) -> Void)? = nil) {
+    public func showContentPanel() {
         
         guard contentPanelBottomConstraint.constant > 0 else {
-            complete?(true)
             return
         }
         
         contentPanelBottomConstraint.constant = 0
 
         UIView.animate(
-            withDuration: 0.2,
+            withDuration: configuration.keyboardAnimationDuration,
+            delay: 0,
+            options: .curveEaseOut,
             animations: {
-                self.layoutIfNeeded()
+                self.contentPanel.layoutIfNeeded()
             },
-            completion: complete
+            completion: nil
         )
         
     }
     
-    public func hideContentPanel(complete: ((Bool) -> Void)? = nil) {
+    public func hideContentPanel() {
         
         guard contentPanelBottomConstraint.constant == 0 else {
-            complete?(true)
             return
         }
 
         contentPanelBottomConstraint.constant = keyboardHeight
 
         UIView.animate(
-            withDuration: 0.2,
+            withDuration: configuration.keyboardAnimationDuration,
+            delay: 0,
+            options: .curveEaseOut,
             animations: {
-                self.layoutIfNeeded()
+                self.contentPanel.layoutIfNeeded()
             },
             completion: { finished in
                 self.voicePanel.isHidden = true
                 self.emotionPanel.isHidden = true
                 self.morePanel.isHidden = true
-                complete?(finished)
             }
         )
         
@@ -396,11 +397,18 @@ extension MessageInput {
             
             contentPanelHeightConstraint.constant = keyboardHeight
 
-            showContentPanel(complete: { finished in
-                self.voicePanel.isHidden = true
-                self.emotionPanel.isHidden = true
-                self.morePanel.isHidden = true
-            })
+            if voicePanel.isHidden && emotionPanel.isHidden && morePanel.isHidden {
+                showContentPanel()
+            }
+            else {
+                Timer.scheduledTimer(
+                    timeInterval: configuration.keyboardAnimationDuration,
+                    target: self,
+                    selector: #selector(onKeyboardAppear),
+                    userInfo: nil,
+                    repeats: false
+                )
+            }
             
         }
         
@@ -413,6 +421,14 @@ extension MessageInput {
         }
         
         hideContentPanel()
+        
+    }
+    
+    @objc func onKeyboardAppear() {
+        
+        voicePanel.isHidden = true
+        emotionPanel.isHidden = true
+        morePanel.isHidden = true
         
     }
     
