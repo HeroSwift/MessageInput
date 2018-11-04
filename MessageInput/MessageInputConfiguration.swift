@@ -41,11 +41,11 @@ public class MessageInputConfiguration {
     public var contentPanelBackgroundColor = UIColor(red: 0.96, green: 0.96, blue: 0.96, alpha: 1)
     
     // 特性面板内边距
-    public var featurePanelPaddingHorizontal: CGFloat = 20
-    public var featurePanelPaddingVertical: CGFloat = 20
+    public var featurePanelPaddingHorizontal: CGFloat = 30
+    public var featurePanelPaddingVertical: CGFloat = 30
     
     // 特性按钮之间的间距
-    public var featureItemSpacing: CGFloat = 20
+    public var featureItemSpacing: CGFloat = 25
     
     // 图标按钮尺寸
     public var featureItemButtonWidth: CGFloat = 50
@@ -64,6 +64,16 @@ public class MessageInputConfiguration {
     public var featureItemTitleTextMarginTop: CGFloat = 8
     public var featureItemTitleTextFont = UIFont.systemFont(ofSize: 12)
     public var featureItemTitleTextColor = UIColor(red: 120 / 255, green: 120 / 255, blue: 120 / 255, alpha: 1)
+    
+    // 图片按钮
+    public var photoImage = UIImage(named: "image")!
+    
+    public var photoText = "图片"
+    
+    // 拍摄按钮
+    public var cameraImage = UIImage(named: "camera")!
+    
+    public var cameraText = "拍摄"
 
     // 默认的键盘高度
     public var defaultKeyboardHeight: CGFloat = 258

@@ -343,14 +343,14 @@ extension MessageInput {
         morePanel.translatesAutoresizingMaskIntoConstraints = false
         contentPanel.addSubview(morePanel)
         
-        let imageFeature = FeatureItem(title: "图片", image: UIImage(named: "image")!, configuration: configuration, onClick: {
+        let imageFeature = FeatureItem(title: configuration.photoText, image: configuration.photoImage, configuration: configuration, onClick: {
             self.openPhotoBrowser()
         })
         imageFeature.translatesAutoresizingMaskIntoConstraints = false
         morePanel.addSubview(imageFeature)
         
-        let cameraFeature = FeatureItem(title: "拍摄", image: UIImage(named: "camera")!, configuration: configuration, onClick: {
-            self.openPhotoBrowser()
+        let cameraFeature = FeatureItem(title: configuration.cameraText, image: configuration.cameraImage, configuration: configuration, onClick: {
+            self.openCamera()
         })
         cameraFeature.translatesAutoresizingMaskIntoConstraints = false
         morePanel.addSubview(cameraFeature)
@@ -377,6 +377,10 @@ extension MessageInput {
         imagePickerController.sourceType = .photoLibrary
         
         UIApplication.shared.keyWindow?.rootViewController?.present(imagePickerController, animated: true, completion: nil)
+        
+    }
+    
+    func openCamera() {
         
     }
     
@@ -450,12 +454,10 @@ extension MessageInput: UIImagePickerControllerDelegate, UINavigationControllerD
     
     public func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
         
-
-//
+        //
         picker.dismiss(animated: true, completion: nil)
-//
-        
-
+        //
+            
     }
 }
 
