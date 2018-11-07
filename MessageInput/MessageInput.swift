@@ -2,6 +2,7 @@
 import UIKit
 
 import CircleView
+import CameraView
 import VoiceInput
 import EmotionInput
 
@@ -20,6 +21,8 @@ public class MessageInput: UIView {
     private let voicePanel = VoiceInput(configuration: VoiceInputConfiguration())
     private let emotionPanel = EmotionPager(configuration: EmotionPagerConfiguration())
     private let morePanel = UIView()
+    
+    private var cameraViewController: CameraViewController?
     
     private var keyboardHeight: CGFloat!
     private var textViewHeightConstraint: NSLayoutConstraint!
@@ -151,6 +154,18 @@ public class MessageInput: UIView {
             }
         )
         
+    }
+    
+    public func setEmotionSetList(_ emotionSetList: [EmotionSet]) {
+        emotionPanel.emotionSetList = emotionSetList
+    }
+    
+    public func addEmotionFilter(_ emotionFilter: EmotionFilter) {
+        textView.addFilter(emotionFilter)
+    }
+    
+    public func removeEmotionFilter(_ emotionFilter: EmotionFilter) {
+        textView.removeFilter(emotionFilter)
     }
     
 }
@@ -326,8 +341,18 @@ extension MessageInput {
         
         emotionPanel.isHidden = true
         emotionPanel.translatesAutoresizingMaskIntoConstraints = false
+
+        emotionPanel.onSendClick = {
+            self.textView.clear()
+        }
+        emotionPanel.onEmotionClick = { emotion in
+            self.textView.insertEmotion(emotion)
+        }
+        emotionPanel.onDeleteClick = {
+            self.textView.deleteBackward()
+        }
         contentPanel.addSubview(emotionPanel)
-        
+
         addConstraints([
             NSLayoutConstraint(item: emotionPanel, attribute: .left, relatedBy: .equal, toItem: contentPanel, attribute: .left, multiplier: 1, constant: 0),
             NSLayoutConstraint(item: emotionPanel, attribute: .right, relatedBy: .equal, toItem: contentPanel, attribute: .right, multiplier: 1, constant: 0),
@@ -344,7 +369,7 @@ extension MessageInput {
         contentPanel.addSubview(morePanel)
         
         let imageFeature = FeatureItem(title: configuration.photoText, image: configuration.photoImage, configuration: configuration, onClick: {
-            self.openPhotoBrowser()
+            self.openPhotoPicker()
         })
         imageFeature.translatesAutoresizingMaskIntoConstraints = false
         morePanel.addSubview(imageFeature)
@@ -370,17 +395,31 @@ extension MessageInput {
         
     }
     
-    func openPhotoBrowser() {
+    func openPhotoPicker() {
+        
+        guard let parentViewController = UIApplication.shared.keyWindow?.rootViewController else {
+            return
+        }
         
         let imagePickerController = UIImagePickerController()
         imagePickerController.delegate = self
         imagePickerController.sourceType = .photoLibrary
         
-        UIApplication.shared.keyWindow?.rootViewController?.present(imagePickerController, animated: true, completion: nil)
+        parentViewController.present(imagePickerController, animated: true, completion: nil)
         
     }
     
     func openCamera() {
+        
+        guard let parentViewController = UIApplication.shared.keyWindow?.rootViewController else {
+            return
+        }
+        
+        let cameraViewController = CameraViewController(configuration: CameraViewConfiguration(), delegate: self)
+        
+        parentViewController.present(cameraViewController, animated: true, completion: nil)
+        
+        self.cameraViewController = cameraViewController
         
     }
     
@@ -443,6 +482,42 @@ extension MessageInput {
 //
 
 extension MessageInput: VoiceInputDelegate {
+    
+}
+
+//
+// MARK: - CameraViewDelegate 代理
+//
+
+extension MessageInput: CameraViewDelegate {
+    
+    public func cameraViewDidExit(_ cameraView: CameraView) {
+        cameraViewController?.dismiss(animated: true, completion: nil)
+    }
+    
+    public func cameraViewDidPickPhoto(_ cameraView: CameraView, photoPath: String, photoWidth: CGFloat, photoHeight: CGFloat) {
+        cameraViewController?.dismiss(animated: true, completion: nil)
+    }
+    
+    public func cameraViewDidPickVideo(_ cameraView: CameraView, videoPath: String, videoDuration: TimeInterval, photoPath: String, photoWidth: CGFloat, photoHeight: CGFloat) {
+        cameraViewController?.dismiss(animated: true, completion: nil)
+    }
+    
+    public func cameraViewWillCaptureWithoutPermissions(_ cameraView: CameraView) {
+        
+    }
+    
+    public func cameraViewDidRecordDurationLessThanMinDuration(_ cameraView: CameraView) {
+        
+    }
+    
+    public func cameraViewDidPermissionsGranted(_ cameraView: CameraView) {
+        
+    }
+    
+    public func cameraViewDidPermissionsDenied(_ cameraView: CameraView) {
+        
+    }
     
 }
 
