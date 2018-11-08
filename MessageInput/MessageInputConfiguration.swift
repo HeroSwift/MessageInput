@@ -60,25 +60,25 @@ public class MessageInputConfiguration {
     public var featurePanelPaddingVertical: CGFloat = 30
     
     // 特性按钮之间的间距
-    public var featureItemSpacing: CGFloat = 25
+    public var featureButtonSpacing: CGFloat = 25
     
     // 图标按钮尺寸
-    public var featureItemButtonWidth: CGFloat = 50
-    public var featureItemButtonHeight: CGFloat = 50
+    public var featureButtonWidth: CGFloat = 50
+    public var featureButtonHeight: CGFloat = 50
     
     // 按钮背景色
-    public var featureItemButtonBackgroundColorNormal: UIColor = .white
-    public var featureItemButtonBackgroundColorPressed: UIColor = UIColor(red: 200 / 255, green: 200 / 255, blue: 200 / 255, alpha: 1)
+    public var featureButtonBackgroundColorNormal: UIColor = .white
+    public var featureButtonBackgroundColorPressed: UIColor = UIColor(red: 225 / 255, green: 225 / 255, blue: 225 / 255, alpha: 1)
     
     // 图标按钮边框
-    public var featureItemButtonBorderRadius: CGFloat = 8
-    public var featureItemButtonBorderWidth: CGFloat = 1 / UIScreen.main.scale
-    public var featureItemButtonBorderColor = UIColor(red: 160 / 255, green: 160 / 255, blue: 160 / 255, alpha: 160 / 255)
+    public var featureButtonBorderRadius: CGFloat = 8
+    public var featureButtonBorderWidth: CGFloat = 1 / UIScreen.main.scale
+    public var featureButtonBorderColor = UIColor(red: 160 / 255, green: 160 / 255, blue: 160 / 255, alpha: 160 / 255)
     
     // 特性按钮标题
-    public var featureItemTitleTextMarginTop: CGFloat = 8
-    public var featureItemTitleTextFont = UIFont.systemFont(ofSize: 12)
-    public var featureItemTitleTextColor = UIColor(red: 120 / 255, green: 120 / 255, blue: 120 / 255, alpha: 1)
+    public var featureButtonTitleMarginTop: CGFloat = 8
+    public var featureButtonTitleTextFont = UIFont.systemFont(ofSize: 12)
+    public var featureButtonTitleTextColor = UIColor(red: 120 / 255, green: 120 / 255, blue: 120 / 255, alpha: 1)
     
     // 图片按钮
     public var photoImage = UIImage(named: "image", in: Bundle(for: MessageInputConfiguration.self), compatibleWith: nil)!

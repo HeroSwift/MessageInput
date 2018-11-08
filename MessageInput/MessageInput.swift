@@ -452,16 +452,18 @@ extension MessageInput {
         morePanel.translatesAutoresizingMaskIntoConstraints = false
         contentPanel.addSubview(morePanel)
         
-        let imageFeature = FeatureItem(title: configuration.photoText, image: configuration.photoImage, configuration: configuration, onClick: {
-            self.openPhotoPicker()
-        })
+        let imageFeature = FeatureButton(title: configuration.photoText, image: configuration.photoImage, configuration: configuration)
         imageFeature.translatesAutoresizingMaskIntoConstraints = false
+        imageFeature.onClick = {
+            self.openPhotoPicker()
+        }
         morePanel.addSubview(imageFeature)
         
-        let cameraFeature = FeatureItem(title: configuration.cameraText, image: configuration.cameraImage, configuration: configuration, onClick: {
-            self.openCamera()
-        })
+        let cameraFeature = FeatureButton(title: configuration.cameraText, image: configuration.cameraImage, configuration: configuration)
         cameraFeature.translatesAutoresizingMaskIntoConstraints = false
+        cameraFeature.onClick = {
+            self.openCamera()
+        }
         morePanel.addSubview(cameraFeature)
         
         addConstraints([
@@ -474,7 +476,7 @@ extension MessageInput {
             NSLayoutConstraint(item: imageFeature, attribute: .left, relatedBy: .equal, toItem: morePanel, attribute: .left, multiplier: 1, constant: 0),
 
             NSLayoutConstraint(item: cameraFeature, attribute: .top, relatedBy: .equal, toItem: morePanel, attribute: .top, multiplier: 1, constant: 0),
-            NSLayoutConstraint(item: cameraFeature, attribute: .left, relatedBy: .equal, toItem: morePanel, attribute: .left, multiplier: 1, constant: configuration.featureItemButtonWidth + configuration.featureItemSpacing),
+            NSLayoutConstraint(item: cameraFeature, attribute: .left, relatedBy: .equal, toItem: morePanel, attribute: .left, multiplier: 1, constant: configuration.featureButtonWidth + configuration.featureButtonSpacing),
         ])
         
     }
