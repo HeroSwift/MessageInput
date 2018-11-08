@@ -25,24 +25,33 @@ public class MessageInputConfiguration {
     // 圆形按钮的半径
     public var circleButtonRadius: CGFloat = 15
     
+    // 圆形按钮的边框大小
+    public var circleButtonBorderWidth = 1 / UIScreen.main.scale
+    
+    // 圆形按钮的边框颜色
+    public var circleButtonBorderColor = UIColor(red: 0.56, green: 0.56, blue: 0.56, alpha: 1)
+    
+    // 圆形按钮的默认背景色
+    public var circleButtonBackgroundColorNormal = UIColor.white
+    
+    // 圆形按钮按下时的背景色
+    public var circleButtonBackgroundColorPressed = UIColor(red: 0.87, green: 0.87, blue: 0.87, alpha: 1)
+    
     // 圆形按钮底部与输入框底部的距离
     public var circleButtonMarginBottom: CGFloat = 4
     
     // 语音按钮图片
-    public var voiceButtonImageNormal = UIImage(named: "speech_normal", in: Bundle(for: MessageInputConfiguration.self), compatibleWith: nil)
-    
-    public var voiceButtonImagePressed = UIImage(named: "speech_pressed", in: Bundle(for: MessageInputConfiguration.self), compatibleWith: nil)
+    public var voiceButtonImage = UIImage(named: "voice", in: Bundle(for: MessageInputConfiguration.self), compatibleWith: nil)
     
     // 表情按钮图片
-    public var emotionButtonImageNormal = UIImage(named: "emotion_normal", in: Bundle(for: MessageInputConfiguration.self), compatibleWith: nil)
-    
-    public var emotionButtonImagePressed = UIImage(named: "emotion_pressed", in: Bundle(for: MessageInputConfiguration.self), compatibleWith: nil)
+    public var emotionButtonImage = UIImage(named: "emotion", in: Bundle(for: MessageInputConfiguration.self), compatibleWith: nil)
     
     // 更多按钮图片
-    public var moreButtonImageNormal = UIImage(named: "more_normal", in: Bundle(for: MessageInputConfiguration.self), compatibleWith: nil)
+    public var moreButtonImage = UIImage(named: "more", in: Bundle(for: MessageInputConfiguration.self), compatibleWith: nil)
     
-    public var moreButtonImagePressed = UIImage(named: "more_pressed", in: Bundle(for: MessageInputConfiguration.self), compatibleWith: nil)
-    
+    // 键盘按钮图片
+    public var keyboardButtonImage = UIImage(named: "keyboard", in: Bundle(for: MessageInputConfiguration.self), compatibleWith: nil)
+
     // 内容面板的背景色
     public var contentPanelBackgroundColor = UIColor(red: 0.96, green: 0.96, blue: 0.96, alpha: 1)
     

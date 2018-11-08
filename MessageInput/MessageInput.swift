@@ -89,6 +89,19 @@ public class MessageInput: UIView {
         emotionPanel.isHidden = true
         morePanel.isHidden = true
         
+        voiceButton.centerImage = configuration.keyboardButtonImage
+        voiceButton.setNeedsDisplay()
+        
+        if emotionButton.centerImage == configuration.keyboardButtonImage {
+            emotionButton.centerImage = configuration.emotionButtonImage
+            emotionButton.setNeedsDisplay()
+        }
+        
+        if moreButton.centerImage == configuration.keyboardButtonImage {
+            moreButton.centerImage = configuration.moreButtonImage
+            moreButton.setNeedsDisplay()
+        }
+        
         hideKeyboard()
         showContentPanel()
         
@@ -100,6 +113,19 @@ public class MessageInput: UIView {
         emotionPanel.isHidden = false
         morePanel.isHidden = true
         
+        emotionButton.centerImage = configuration.keyboardButtonImage
+        emotionButton.setNeedsDisplay()
+        
+        if voiceButton.centerImage == configuration.keyboardButtonImage {
+            voiceButton.centerImage = configuration.voiceButtonImage
+            voiceButton.setNeedsDisplay()
+        }
+        
+        if moreButton.centerImage == configuration.keyboardButtonImage {
+            moreButton.centerImage = configuration.moreButtonImage
+            moreButton.setNeedsDisplay()
+        }
+        
         hideKeyboard()
         showContentPanel()
         
@@ -110,6 +136,19 @@ public class MessageInput: UIView {
         voicePanel.isHidden = true
         emotionPanel.isHidden = true
         morePanel.isHidden = false
+        
+        moreButton.centerImage = configuration.keyboardButtonImage
+        moreButton.setNeedsDisplay()
+        
+        if voiceButton.centerImage == configuration.keyboardButtonImage {
+            voiceButton.centerImage = configuration.voiceButtonImage
+            voiceButton.setNeedsDisplay()
+        }
+        
+        if emotionButton.centerImage == configuration.keyboardButtonImage {
+            emotionButton.centerImage = configuration.emotionButtonImage
+            emotionButton.setNeedsDisplay()
+        }
         
         hideKeyboard()
         showContentPanel()
@@ -152,9 +191,8 @@ public class MessageInput: UIView {
                 self.layoutIfNeeded()
             },
             completion: { finished in
-                self.voicePanel.isHidden = true
-                self.emotionPanel.isHidden = true
-                self.morePanel.isHidden = true
+                self.resetButtons()
+                self.resetPanels()
             }
         )
         
@@ -170,6 +208,33 @@ public class MessageInput: UIView {
     
     public func removeEmotionFilter(_ emotionFilter: EmotionFilter) {
         textView.removeFilter(emotionFilter)
+    }
+    
+    private func resetPanels() {
+        
+        voicePanel.isHidden = true
+        emotionPanel.isHidden = true
+        morePanel.isHidden = true
+        
+    }
+    
+    private func resetButtons() {
+        
+        if voiceButton.centerImage == configuration.keyboardButtonImage {
+            voiceButton.centerImage = configuration.voiceButtonImage
+            voiceButton.setNeedsDisplay()
+        }
+        
+        if emotionButton.centerImage == configuration.keyboardButtonImage {
+            emotionButton.centerImage = configuration.emotionButtonImage
+            emotionButton.setNeedsDisplay()
+        }
+        
+        if moreButton.centerImage == configuration.keyboardButtonImage {
+            moreButton.centerImage = configuration.moreButtonImage
+            moreButton.setNeedsDisplay()
+        }
+        
     }
     
 }
@@ -210,9 +275,11 @@ extension MessageInput {
     
     private func addVoiceButton() {
         
-        voiceButton.centerRadius = configuration.circleButtonRadius
-        voiceButton.centerImage = configuration.voiceButtonImageNormal
-        voiceButton.ringWidth = 0
+        voiceButton.centerImage = configuration.voiceButtonImage
+        voiceButton.centerRadius = configuration.circleButtonRadius - configuration.circleButtonBorderWidth
+        voiceButton.centerColor = configuration.circleButtonBackgroundColorNormal
+        voiceButton.ringWidth = configuration.circleButtonBorderWidth
+        voiceButton.ringColor = configuration.circleButtonBorderColor
         voiceButton.trackWidth = 0
         
         voiceButton.translatesAutoresizingMaskIntoConstraints = false
@@ -231,9 +298,11 @@ extension MessageInput {
     
     private func addMoreButton() {
         
-        moreButton.centerRadius = configuration.circleButtonRadius
-        moreButton.centerImage = configuration.moreButtonImageNormal
-        moreButton.ringWidth = 0
+        moreButton.centerImage = configuration.moreButtonImage
+        moreButton.centerRadius = configuration.circleButtonRadius - configuration.circleButtonBorderWidth
+        moreButton.centerColor = configuration.circleButtonBackgroundColorNormal
+        moreButton.ringWidth = configuration.circleButtonBorderWidth
+        moreButton.ringColor = configuration.circleButtonBorderColor
         moreButton.trackWidth = 0
         
         moreButton.translatesAutoresizingMaskIntoConstraints = false
@@ -253,9 +322,11 @@ extension MessageInput {
     
     private func addEmotionButton() {
         
-        emotionButton.centerRadius = configuration.circleButtonRadius
-        emotionButton.centerImage = configuration.emotionButtonImageNormal
-        emotionButton.ringWidth = 0
+        emotionButton.centerImage = configuration.emotionButtonImage
+        emotionButton.centerRadius = configuration.circleButtonRadius - configuration.circleButtonBorderWidth
+        emotionButton.centerColor = configuration.circleButtonBackgroundColorNormal
+        emotionButton.ringWidth = configuration.circleButtonBorderWidth
+        emotionButton.ringColor = configuration.circleButtonBorderColor
         emotionButton.trackWidth = 0
         
         emotionButton.translatesAutoresizingMaskIntoConstraints = false
@@ -469,7 +540,7 @@ extension MessageInput {
     @objc func onKeyboardShown(notification: NSNotification) {
         
         if let keyboardFrame: NSValue = notification.userInfo?[UIKeyboardFrameEndUserInfoKey] as? NSValue {
-
+            
             // 保存，方便设置 voicePanel/emotionPanel/morePanel 的高度
             keyboardHeight = keyboardFrame.cgRectValue.height
             
@@ -504,9 +575,8 @@ extension MessageInput {
     
     @objc func onKeyboardAppear() {
         
-        voicePanel.isHidden = true
-        emotionPanel.isHidden = true
-        morePanel.isHidden = true
+        resetButtons()
+        resetPanels()
         
     }
     
@@ -590,63 +660,51 @@ extension MessageInput: UIImagePickerControllerDelegate, UINavigationControllerD
 extension MessageInput: CircleViewDelegate {
     
     public func circleViewDidTouchDown(_ circleView: CircleView) {
-        if circleView == voiceButton {
-            circleView.centerImage = configuration.voiceButtonImagePressed
-            circleView.setNeedsDisplay()
-        }
-        else if circleView == emotionButton {
-            circleView.centerImage = configuration.emotionButtonImagePressed
-            circleView.setNeedsDisplay()
-        }
-        else if circleView == moreButton {
-            circleView.centerImage = configuration.moreButtonImagePressed
-            circleView.setNeedsDisplay()
-        }
+        circleView.centerColor = configuration.circleButtonBackgroundColorPressed
+        circleView.setNeedsDisplay()
     }
     
     public func circleViewDidTouchUp(_ circleView: CircleView, _ inside: Bool, _ isLongPress: Bool) {
-        if circleView == voiceButton {
-            circleView.centerImage = configuration.voiceButtonImageNormal
-            circleView.setNeedsDisplay()
-            if voicePanel.isHidden {
-                showVoicePanel()
+        
+        if inside {
+            if circleView == voiceButton {
+                if voicePanel.isHidden {
+                    showVoicePanel()
+                }
+                else {
+                    showKeyboard()
+                }
             }
-            else {
-                showKeyboard()
+            else if circleView == emotionButton {
+                if emotionPanel.isHidden {
+                    showEmotionPanel()
+                }
+                else {
+                    showKeyboard()
+                }
             }
-        }
-        else if circleView == emotionButton {
-            circleView.centerImage = configuration.emotionButtonImageNormal
-            circleView.setNeedsDisplay()
-            if emotionPanel.isHidden {
-                showEmotionPanel()
-            }
-            else {
-                showKeyboard()
-            }
-        }
-        else if circleView == moreButton {
-            circleView.centerImage = configuration.moreButtonImageNormal
-            circleView.setNeedsDisplay()
-            if morePanel.isHidden {
-                showMorePanel()
-            }
-            else {
-                showKeyboard()
+            else if circleView == moreButton {
+                if morePanel.isHidden {
+                    showMorePanel()
+                }
+                else {
+                    showKeyboard()
+                }
             }
         }
+        
+        circleView.centerColor = configuration.circleButtonBackgroundColorNormal
+        circleView.setNeedsDisplay()
     }
     
     public func circleViewDidTouchEnter(_ circleView: CircleView) {
-        
+        circleView.centerColor = configuration.circleButtonBackgroundColorPressed
+        circleView.setNeedsDisplay()
     }
     
     public func circleViewDidTouchLeave(_ circleView: CircleView) {
-        
-    }
-    
-    public func circleViewDidTouchMove(_ circleView: CircleView, _ x: CGFloat, _ y: CGFloat) {
-        
+        circleView.centerColor = configuration.circleButtonBackgroundColorNormal
+        circleView.setNeedsDisplay()
     }
     
 }

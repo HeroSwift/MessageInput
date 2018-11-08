@@ -20,6 +20,8 @@ class ViewController: UIViewController {
         // Do any additional setup after loading the view, typically from a nib.
         
         let input = MessageInput(configuration: MessageInputConfiguration())
+        
+        input.delegate = self
         input.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(input)
         
@@ -121,4 +123,9 @@ class ViewController: UIViewController {
 
 
 }
+
+extension ViewController: MessageInputDelegate {
+    
+}
+
 

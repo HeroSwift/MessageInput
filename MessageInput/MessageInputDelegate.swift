@@ -26,5 +26,16 @@ public protocol MessageInputDelegate {
 
 public extension MessageInputDelegate {
     
+    func messageInputDidSendVoice(_ messageInput: MessageInput, audioPath: String, audioDuration: TimeInterval) { }
+    
+    func messageInputDidSendEmotion(_ messageInput: MessageInput, emotion: Emotion) { }
+    
+    func messageInputDidSendText(_ messageInput: MessageInput, text: String) { }
+    
+    func messageInputDidSendImage(_ messageInput: MessageInput, imagePath: String, imageWidth: CGFloat, imageHeight: CGFloat) { }
+    
+    func messageInputDidSendPhoto(_ messageInput: MessageInput, photoPath: String, photoWidth: CGFloat, photoHeight: CGFloat) { }
+    
+    func messageInputDidSendVideo(_ messageInput: MessageInput, videoPath: String, videoDuration: TimeInterval, photoPath: String, photoWidth: CGFloat, photoHeight: CGFloat) { }
     
 }
