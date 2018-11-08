@@ -49,9 +49,6 @@ public class MessageInputConfiguration {
     // 更多按钮图片
     public var moreButtonImage = UIImage(named: "more", in: Bundle(for: MessageInputConfiguration.self), compatibleWith: nil)
     
-    // 键盘按钮图片
-    public var keyboardButtonImage = UIImage(named: "keyboard", in: Bundle(for: MessageInputConfiguration.self), compatibleWith: nil)
-
     // 内容面板的背景色
     public var contentPanelBackgroundColor = UIColor(red: 0.96, green: 0.96, blue: 0.96, alpha: 1)
     

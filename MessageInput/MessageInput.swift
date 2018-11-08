@@ -89,19 +89,6 @@ public class MessageInput: UIView {
         emotionPanel.isHidden = true
         morePanel.isHidden = true
         
-        voiceButton.centerImage = configuration.keyboardButtonImage
-        voiceButton.setNeedsDisplay()
-        
-        if emotionButton.centerImage == configuration.keyboardButtonImage {
-            emotionButton.centerImage = configuration.emotionButtonImage
-            emotionButton.setNeedsDisplay()
-        }
-        
-        if moreButton.centerImage == configuration.keyboardButtonImage {
-            moreButton.centerImage = configuration.moreButtonImage
-            moreButton.setNeedsDisplay()
-        }
-        
         hideKeyboard()
         showContentPanel()
         
@@ -113,19 +100,6 @@ public class MessageInput: UIView {
         emotionPanel.isHidden = false
         morePanel.isHidden = true
         
-        emotionButton.centerImage = configuration.keyboardButtonImage
-        emotionButton.setNeedsDisplay()
-        
-        if voiceButton.centerImage == configuration.keyboardButtonImage {
-            voiceButton.centerImage = configuration.voiceButtonImage
-            voiceButton.setNeedsDisplay()
-        }
-        
-        if moreButton.centerImage == configuration.keyboardButtonImage {
-            moreButton.centerImage = configuration.moreButtonImage
-            moreButton.setNeedsDisplay()
-        }
-        
         hideKeyboard()
         showContentPanel()
         
@@ -136,20 +110,7 @@ public class MessageInput: UIView {
         voicePanel.isHidden = true
         emotionPanel.isHidden = true
         morePanel.isHidden = false
-        
-        moreButton.centerImage = configuration.keyboardButtonImage
-        moreButton.setNeedsDisplay()
-        
-        if voiceButton.centerImage == configuration.keyboardButtonImage {
-            voiceButton.centerImage = configuration.voiceButtonImage
-            voiceButton.setNeedsDisplay()
-        }
-        
-        if emotionButton.centerImage == configuration.keyboardButtonImage {
-            emotionButton.centerImage = configuration.emotionButtonImage
-            emotionButton.setNeedsDisplay()
-        }
-        
+
         hideKeyboard()
         showContentPanel()
         
@@ -191,7 +152,6 @@ public class MessageInput: UIView {
                 self.layoutIfNeeded()
             },
             completion: { finished in
-                self.resetButtons()
                 self.resetPanels()
             }
         )
@@ -215,25 +175,6 @@ public class MessageInput: UIView {
         voicePanel.isHidden = true
         emotionPanel.isHidden = true
         morePanel.isHidden = true
-        
-    }
-    
-    private func resetButtons() {
-        
-        if voiceButton.centerImage == configuration.keyboardButtonImage {
-            voiceButton.centerImage = configuration.voiceButtonImage
-            voiceButton.setNeedsDisplay()
-        }
-        
-        if emotionButton.centerImage == configuration.keyboardButtonImage {
-            emotionButton.centerImage = configuration.emotionButtonImage
-            emotionButton.setNeedsDisplay()
-        }
-        
-        if moreButton.centerImage == configuration.keyboardButtonImage {
-            moreButton.centerImage = configuration.moreButtonImage
-            moreButton.setNeedsDisplay()
-        }
         
     }
     
@@ -577,7 +518,6 @@ extension MessageInput {
     
     @objc func onKeyboardAppear() {
         
-        resetButtons()
         resetPanels()
         
     }
