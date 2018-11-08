@@ -30,6 +30,7 @@ class FeatureItem: UIView {
         buttonView.layer.cornerRadius = configuration.featureItemButtonBorderRadius
         buttonView.layer.borderWidth = configuration.featureItemButtonBorderWidth
         buttonView.layer.borderColor = configuration.featureItemButtonBorderColor.cgColor
+        buttonView.frame = CGRect(x: 0, y: 0, width: configuration.featureItemButtonWidth, height: configuration.featureItemButtonHeight)
         buttonView.onClick = onClick
         
         imageView.translatesAutoresizingMaskIntoConstraints = false
@@ -63,6 +64,8 @@ class FeatureItem: UIView {
             NSLayoutConstraint(item: titleView, attribute: .top, relatedBy: .equal, toItem: buttonView, attribute: .bottom, multiplier: 1, constant: configuration.featureItemTitleTextMarginTop),
             NSLayoutConstraint(item: titleView, attribute: .bottom, relatedBy: .equal, toItem: self, attribute: .bottom, multiplier: 1, constant: 0),
         ])
+        
+        buttonView.setBackgroundColor(color: configuration.featureItemButtonBackgroundColorPressed, for: .highlighted)
         
     }
     

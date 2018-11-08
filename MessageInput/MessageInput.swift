@@ -6,8 +6,12 @@ import CameraView
 import VoiceInput
 import EmotionInput
 
+import Photos
+
 public class MessageInput: UIView {
 
+    public var delegate: MessageInputDelegate!
+    
     private let inputBarTopBorder = UIView()
     private let inputBarBottomBorder = UIView()
     
@@ -125,7 +129,7 @@ public class MessageInput: UIView {
             delay: 0,
             options: .curveEaseOut,
             animations: {
-                self.contentPanel.layoutIfNeeded()
+                self.layoutIfNeeded()
             },
             completion: nil
         )
@@ -145,7 +149,7 @@ public class MessageInput: UIView {
             delay: 0,
             options: .curveEaseOut,
             animations: {
-                self.contentPanel.layoutIfNeeded()
+                self.layoutIfNeeded()
             },
             completion: { finished in
                 self.voicePanel.isHidden = true
@@ -207,7 +211,7 @@ extension MessageInput {
     private func addVoiceButton() {
         
         voiceButton.centerRadius = configuration.circleButtonRadius
-        voiceButton.centerImage = configuration.voiceButtonImage
+        voiceButton.centerImage = configuration.voiceButtonImageNormal
         voiceButton.ringWidth = 0
         voiceButton.trackWidth = 0
         
@@ -228,7 +232,7 @@ extension MessageInput {
     private func addMoreButton() {
         
         moreButton.centerRadius = configuration.circleButtonRadius
-        moreButton.centerImage = configuration.moreButtonImage
+        moreButton.centerImage = configuration.moreButtonImageNormal
         moreButton.ringWidth = 0
         moreButton.trackWidth = 0
         
@@ -250,7 +254,7 @@ extension MessageInput {
     private func addEmotionButton() {
         
         emotionButton.centerRadius = configuration.circleButtonRadius
-        emotionButton.centerImage = configuration.emotionButtonImage
+        emotionButton.centerImage = configuration.emotionButtonImageNormal
         emotionButton.ringWidth = 0
         emotionButton.trackWidth = 0
         
@@ -343,10 +347,19 @@ extension MessageInput {
         emotionPanel.translatesAutoresizingMaskIntoConstraints = false
 
         emotionPanel.onSendClick = {
-            self.textView.clear()
+            let text = self.textView.plainText
+            if text != "" {
+                self.delegate.messageInputDidSendText(self, text: text)
+                self.textView.clear()
+            }
         }
         emotionPanel.onEmotionClick = { emotion in
-            self.textView.insertEmotion(emotion)
+            if emotion.inline {
+                self.textView.insertEmotion(emotion)
+            }
+            else {
+                self.delegate.messageInputDidSendEmotion(self, emotion: emotion)
+            }
         }
         emotionPanel.onDeleteClick = {
             self.textView.deleteBackward()
@@ -395,17 +408,36 @@ extension MessageInput {
         
     }
     
+    private func requestPhotoPermissions(completion: @escaping (Bool) -> Void) {
+        
+        if PHPhotoLibrary.authorizationStatus() != .authorized {
+            PHPhotoLibrary.requestAuthorization { status in
+                DispatchQueue.main.async {
+                    completion(status == .authorized)
+                }
+            }
+        }
+        else {
+            completion(true)
+        }
+        
+    }
+    
     func openPhotoPicker() {
         
         guard let parentViewController = UIApplication.shared.keyWindow?.rootViewController else {
             return
         }
         
-        let imagePickerController = UIImagePickerController()
-        imagePickerController.delegate = self
-        imagePickerController.sourceType = .photoLibrary
-        
-        parentViewController.present(imagePickerController, animated: true, completion: nil)
+        requestPhotoPermissions { authorized in
+            if authorized {
+                let imagePickerController = UIImagePickerController()
+                imagePickerController.delegate = self
+                imagePickerController.sourceType = .photoLibrary
+                
+                parentViewController.present(imagePickerController, animated: true, completion: nil)
+            }
+        }
         
     }
     
@@ -415,7 +447,10 @@ extension MessageInput {
             return
         }
         
-        let cameraViewController = CameraViewController(configuration: CameraViewConfiguration(), delegate: self)
+        let cameraViewController = CameraViewController()
+        
+        cameraViewController.configuration = CameraViewConfiguration()
+        cameraViewController.delegate = self
         
         parentViewController.present(cameraViewController, animated: true, completion: nil)
         
@@ -483,6 +518,10 @@ extension MessageInput {
 
 extension MessageInput: VoiceInputDelegate {
     
+    public func voiceInputDidFinishRecord(_ voiceInput: VoiceInput, audioPath: String, audioDuration: TimeInterval) {
+        delegate.messageInputDidSendVoice(self, audioPath: audioPath, audioDuration: audioDuration)
+    }
+    
 }
 
 //
@@ -497,10 +536,12 @@ extension MessageInput: CameraViewDelegate {
     
     public func cameraViewDidPickPhoto(_ cameraView: CameraView, photoPath: String, photoWidth: CGFloat, photoHeight: CGFloat) {
         cameraViewController?.dismiss(animated: true, completion: nil)
+        delegate.messageInputDidSendPhoto(self, photoPath: photoPath, photoWidth: photoWidth, photoHeight: photoHeight)
     }
     
     public func cameraViewDidPickVideo(_ cameraView: CameraView, videoPath: String, videoDuration: TimeInterval, photoPath: String, photoWidth: CGFloat, photoHeight: CGFloat) {
         cameraViewController?.dismiss(animated: true, completion: nil)
+        delegate.messageInputDidSendVideo(self, videoPath: videoPath, videoDuration: videoDuration, photoPath: photoPath, photoWidth: photoWidth, photoHeight: photoHeight)
     }
     
     public func cameraViewWillCaptureWithoutPermissions(_ cameraView: CameraView) {
@@ -527,11 +568,17 @@ extension MessageInput: CameraViewDelegate {
 
 extension MessageInput: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
-    public func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
+    @objc public func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
         
-        //
         picker.dismiss(animated: true, completion: nil)
-        //
+        
+        if let pickedImage = info[UIImagePickerControllerOriginalImage] as? UIImage {
+            let imageWidth = pickedImage.size.width
+            let imageHeight = pickedImage.size.height
+            
+            delegate.messageInputDidSendImage(self, imagePath: "", imageWidth: imageWidth, imageHeight: imageHeight)
+            
+        }
             
     }
 }
@@ -543,11 +590,24 @@ extension MessageInput: UIImagePickerControllerDelegate, UINavigationControllerD
 extension MessageInput: CircleViewDelegate {
     
     public func circleViewDidTouchDown(_ circleView: CircleView) {
-        print(circleView)
+        if circleView == voiceButton {
+            circleView.centerImage = configuration.voiceButtonImagePressed
+            circleView.setNeedsDisplay()
+        }
+        else if circleView == emotionButton {
+            circleView.centerImage = configuration.emotionButtonImagePressed
+            circleView.setNeedsDisplay()
+        }
+        else if circleView == moreButton {
+            circleView.centerImage = configuration.moreButtonImagePressed
+            circleView.setNeedsDisplay()
+        }
     }
     
     public func circleViewDidTouchUp(_ circleView: CircleView, _ inside: Bool, _ isLongPress: Bool) {
         if circleView == voiceButton {
+            circleView.centerImage = configuration.voiceButtonImageNormal
+            circleView.setNeedsDisplay()
             if voicePanel.isHidden {
                 showVoicePanel()
             }
@@ -556,6 +616,8 @@ extension MessageInput: CircleViewDelegate {
             }
         }
         else if circleView == emotionButton {
+            circleView.centerImage = configuration.emotionButtonImageNormal
+            circleView.setNeedsDisplay()
             if emotionPanel.isHidden {
                 showEmotionPanel()
             }
@@ -564,6 +626,8 @@ extension MessageInput: CircleViewDelegate {
             }
         }
         else if circleView == moreButton {
+            circleView.centerImage = configuration.moreButtonImageNormal
+            circleView.setNeedsDisplay()
             if morePanel.isHidden {
                 showMorePanel()
             }

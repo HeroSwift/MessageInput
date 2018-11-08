@@ -29,13 +29,19 @@ public class MessageInputConfiguration {
     public var circleButtonMarginBottom: CGFloat = 4
     
     // 语音按钮图片
-    public var voiceButtonImage = UIImage(named: "speech_normal")
+    public var voiceButtonImageNormal = UIImage(named: "speech_normal", in: Bundle(for: MessageInputConfiguration.self), compatibleWith: nil)
+    
+    public var voiceButtonImagePressed = UIImage(named: "speech_pressed", in: Bundle(for: MessageInputConfiguration.self), compatibleWith: nil)
     
     // 表情按钮图片
-    public var emotionButtonImage = UIImage(named: "emotion_normal")
+    public var emotionButtonImageNormal = UIImage(named: "emotion_normal", in: Bundle(for: MessageInputConfiguration.self), compatibleWith: nil)
+    
+    public var emotionButtonImagePressed = UIImage(named: "emotion_pressed", in: Bundle(for: MessageInputConfiguration.self), compatibleWith: nil)
     
     // 更多按钮图片
-    public var moreButtonImage = UIImage(named: "more_normal")
+    public var moreButtonImageNormal = UIImage(named: "more_normal", in: Bundle(for: MessageInputConfiguration.self), compatibleWith: nil)
+    
+    public var moreButtonImagePressed = UIImage(named: "more_pressed", in: Bundle(for: MessageInputConfiguration.self), compatibleWith: nil)
     
     // 内容面板的背景色
     public var contentPanelBackgroundColor = UIColor(red: 0.96, green: 0.96, blue: 0.96, alpha: 1)
@@ -66,12 +72,12 @@ public class MessageInputConfiguration {
     public var featureItemTitleTextColor = UIColor(red: 120 / 255, green: 120 / 255, blue: 120 / 255, alpha: 1)
     
     // 图片按钮
-    public var photoImage = UIImage(named: "image")!
+    public var photoImage = UIImage(named: "image", in: Bundle(for: MessageInputConfiguration.self), compatibleWith: nil)!
     
     public var photoText = "图片"
     
     // 拍摄按钮
-    public var cameraImage = UIImage(named: "camera")!
+    public var cameraImage = UIImage(named: "camera", in: Bundle(for: MessageInputConfiguration.self), compatibleWith: nil)!
     
     public var cameraText = "拍摄"
 
