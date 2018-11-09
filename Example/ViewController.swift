@@ -126,6 +126,30 @@ class ViewController: UIViewController {
 
 extension ViewController: MessageInputDelegate {
     
+    func messageInputDidSendVoice(_ messageInput: MessageInput, audioPath: String, audioDuration: TimeInterval) {
+        print("send voice  \(audioPath) \(audioDuration)")
+    }
+    
+    func messageInputDidSendEmotion(_ messageInput: MessageInput, emotion: Emotion) {
+        print("send emotion  \(emotion.code)")
+    }
+    
+    func messageInputDidSendText(_ messageInput: MessageInput, text: String) {
+        print("send text  \(text)")
+    }
+    
+    func messageInputDidSendImage(_ messageInput: MessageInput, imagePath: String, imageWidth: CGFloat, imageHeight: CGFloat) {
+        print("send image  \(imagePath) \(imageWidth) \(imageHeight)")
+    }
+    
+    func messageInputDidSendPhoto(_ messageInput: MessageInput, photoPath: String, photoWidth: CGFloat, photoHeight: CGFloat) {
+        print("send photo  \(photoPath) \(photoWidth) \(photoHeight)")
+    }
+    
+    func messageInputDidSendVideo(_ messageInput: MessageInput, videoPath: String, videoDuration: TimeInterval, photoPath: String, photoWidth: CGFloat, photoHeight: CGFloat) {
+        print("send video  \(videoPath) \(videoDuration)  \(photoPath) \(photoWidth) \(photoHeight)")
+    }
+    
 }
 
 

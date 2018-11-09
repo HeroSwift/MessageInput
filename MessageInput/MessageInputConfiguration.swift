@@ -40,6 +40,31 @@ public class MessageInputConfiguration {
     // 圆形按钮底部与输入框底部的距离
     public var circleButtonMarginBottom: CGFloat = 4
     
+    // 发送按钮的文本
+    public var sendButtonImage = UIImage(named: "send", in: Bundle(for: MessageInputConfiguration.self), compatibleWith: nil)
+
+    // 发送按钮的宽度
+    public var sendButtonWidth: CGFloat = 40
+    
+    // 发送按钮的文本字体
+    public var sendButtonTextFont = UIFont.systemFont(ofSize: 12)
+    
+    // 发送按钮的文本颜色
+    public var sendButtonTextColor = UIColor.white
+    
+    // 发送按钮的边框的大小
+    public var sendButtonBorderWidth =  1 / UIScreen.main.scale
+    
+    // 发送按钮边框的颜色
+    public var sendButtonBorderColor = UIColor(red: 0.92, green: 0.48, blue: 0, alpha: 1)
+    
+    // 发送按钮的圆角
+    public var sendButtonBorderRadius: CGFloat = 4
+    
+    // 发送按钮的背景颜色
+    public var sendButtonBackgroundColorNormal = UIColor(red: 1.00, green: 0.61, blue: 0.00, alpha: 1)
+    public var sendButtonBackgroundColorPressed = UIColor(red: 0.99, green: 0.56, blue: 0.01, alpha: 1)
+    
     // 语音按钮图片
     public var voiceButtonImage = UIImage(named: "voice", in: Bundle(for: MessageInputConfiguration.self), compatibleWith: nil)
     

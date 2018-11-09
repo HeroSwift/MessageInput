@@ -1,14 +1,18 @@
 
 import UIKit
 
+import RoundView
 import CircleView
 import CameraView
 import VoiceInput
 import EmotionInput
+import SimpleButton
 
 import Photos
 
 public class MessageInput: UIView {
+    
+    private static let KEY_KEYBOARD_HEIGHT = "message_input_keyboard_height"
 
     public var delegate: MessageInputDelegate!
     
@@ -18,7 +22,10 @@ public class MessageInput: UIView {
     private let voiceButton = CircleView()
     private let textView = EmotionTextarea(configuration: EmotionTextareaConfiguration())
     private let emotionButton = CircleView()
+    
+    private let rightButtons = UIView()
     private let moreButton = CircleView()
+    private let sendButton = RoundView()
     
     private let contentPanel = UIView()
     
@@ -36,10 +43,20 @@ public class MessageInput: UIView {
     private var configuration: MessageInputConfiguration!
     
     public convenience init(configuration: MessageInputConfiguration) {
+        
         self.init()
         self.configuration = configuration
-        self.keyboardHeight = configuration.defaultKeyboardHeight
+        
+        let keyboardHeight = readKeyboardHeight()
+        if keyboardHeight > 0 {
+            self.keyboardHeight = keyboardHeight
+        }
+        else {
+            self.keyboardHeight = configuration.defaultKeyboardHeight
+        }
+        
         setup()
+        
     }
     
     public override init(frame: CGRect) {
@@ -169,15 +186,7 @@ public class MessageInput: UIView {
     public func removeEmotionFilter(_ emotionFilter: EmotionFilter) {
         textView.removeFilter(emotionFilter)
     }
-    
-    private func resetPanels() {
-        
-        voicePanel.isHidden = true
-        emotionPanel.isHidden = true
-        morePanel.isHidden = true
-        
-    }
-    
+
 }
 
 extension MessageInput {
@@ -190,7 +199,7 @@ extension MessageInput {
         addInputBarBottomBorder()
         
         addVoiceButton()
-        addMoreButton()
+        addRightButtons()
         addEmotionButton()
         addTextView()
         
@@ -237,6 +246,25 @@ extension MessageInput {
         
     }
     
+    private func addRightButtons() {
+        
+        // 右边要放两个互斥按钮
+        // 当没有内容时，显示更多按钮，当有内容时，显示发送按钮
+        rightButtons.translatesAutoresizingMaskIntoConstraints = false
+        addSubview(rightButtons)
+        
+        addConstraints([
+            NSLayoutConstraint(item: rightButtons, attribute: .right, relatedBy: .equal, toItem: self, attribute: .right, multiplier: 1, constant: -configuration.inputBarPaddingHorizontal),
+            NSLayoutConstraint(item: rightButtons, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .width, multiplier: 1, constant: configuration.sendButtonWidth),
+            NSLayoutConstraint(item: rightButtons, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .height, multiplier: 1, constant: 2 * configuration.circleButtonRadius),
+            NSLayoutConstraint(item: rightButtons, attribute: .bottom, relatedBy: .equal, toItem: inputBarBottomBorder, attribute: .top, multiplier: 1, constant: -(configuration.inputBarPaddingVertical + configuration.circleButtonMarginBottom)),
+        ])
+        
+        addMoreButton()
+        addSendButton()
+        
+    }
+    
     private func addMoreButton() {
         
         moreButton.centerImage = configuration.moreButtonImage
@@ -249,13 +277,36 @@ extension MessageInput {
         moreButton.translatesAutoresizingMaskIntoConstraints = false
         moreButton.delegate = self
         
-        addSubview(moreButton)
+        rightButtons.addSubview(moreButton)
         
-        addConstraints([
-            NSLayoutConstraint(item: moreButton, attribute: .right, relatedBy: .equal, toItem: self, attribute: .right, multiplier: 1, constant: -configuration.inputBarPaddingHorizontal),
+        rightButtons.addConstraints([
             NSLayoutConstraint(item: moreButton, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .width, multiplier: 1, constant: 2 * configuration.circleButtonRadius),
             NSLayoutConstraint(item: moreButton, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .height, multiplier: 1, constant: 2 * configuration.circleButtonRadius),
-            NSLayoutConstraint(item: moreButton, attribute: .bottom, relatedBy: .equal, toItem: inputBarBottomBorder, attribute: .top, multiplier: 1, constant: -(configuration.inputBarPaddingVertical + configuration.circleButtonMarginBottom)),
+            NSLayoutConstraint(item: moreButton, attribute: .centerX, relatedBy: .equal, toItem: rightButtons, attribute: .centerX, multiplier: 1, constant: 0),
+            NSLayoutConstraint(item: moreButton, attribute: .centerY, relatedBy: .equal, toItem: rightButtons, attribute: .centerY, multiplier: 1, constant: 0),
+        ])
+        
+    }
+    
+    private func addSendButton() {
+        
+        sendButton.translatesAutoresizingMaskIntoConstraints = false
+        
+        sendButton.delegate = self
+        sendButton.isHidden = true
+        sendButton.centerImage = configuration.sendButtonImage
+        sendButton.centerColor = configuration.sendButtonBackgroundColorNormal
+        sendButton.borderRadius = configuration.sendButtonBorderRadius
+        sendButton.borderWidth = configuration.sendButtonBorderWidth
+        sendButton.borderColor = configuration.sendButtonBorderColor
+        sendButton.width = configuration.sendButtonWidth
+        sendButton.height = 2 * configuration.circleButtonRadius
+        
+        rightButtons.addSubview(sendButton)
+        
+        rightButtons.addConstraints([
+            NSLayoutConstraint(item: sendButton, attribute: .centerX, relatedBy: .equal, toItem: rightButtons, attribute: .centerX, multiplier: 1, constant: 0),
+            NSLayoutConstraint(item: sendButton, attribute: .centerY, relatedBy: .equal, toItem: rightButtons, attribute: .centerY, multiplier: 1, constant: 0),
         ])
         
     }
@@ -276,7 +327,7 @@ extension MessageInput {
         addSubview(emotionButton)
         
         addConstraints([
-            NSLayoutConstraint(item: emotionButton, attribute: .right, relatedBy: .equal, toItem: moreButton, attribute: .left, multiplier: 1, constant: -configuration.inputBarItemSpacing),
+            NSLayoutConstraint(item: emotionButton, attribute: .right, relatedBy: .equal, toItem: rightButtons, attribute: .left, multiplier: 1, constant: -configuration.inputBarItemSpacing),
             NSLayoutConstraint(item: emotionButton, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .width, multiplier: 1, constant: 2 * configuration.circleButtonRadius),
             NSLayoutConstraint(item: emotionButton, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .height, multiplier: 1, constant: 2 * configuration.circleButtonRadius),
             NSLayoutConstraint(item: emotionButton, attribute: .bottom, relatedBy: .equal, toItem: inputBarBottomBorder, attribute: .top, multiplier: 1, constant: -(configuration.inputBarPaddingVertical + configuration.circleButtonMarginBottom)),
@@ -287,6 +338,10 @@ extension MessageInput {
     private func addTextView() {
         
         textView.translatesAutoresizingMaskIntoConstraints = false
+        textView.onTextChange = {
+            self.onTextChange()
+        }
+        
         addSubview(textView)
         
         addConstraints([
@@ -359,11 +414,7 @@ extension MessageInput {
         emotionPanel.translatesAutoresizingMaskIntoConstraints = false
 
         emotionPanel.onSendClick = {
-            let text = self.textView.plainText
-            if text != "" {
-                self.delegate.messageInputDidSendText(self, text: text)
-                self.textView.clear()
-            }
+            self.sendText()
         }
         emotionPanel.onEmotionClick = { emotion in
             if emotion.inline {
@@ -422,6 +473,58 @@ extension MessageInput {
         
     }
     
+    private func sendText() {
+        
+        let text = textView.plainText
+        if text != "" {
+            delegate.messageInputDidSendText(self, text: text)
+            textView.clear()
+        }
+        
+    }
+    
+    private func onTextChange() {
+        
+        if textView.plainText.count > 0 {
+            showSendButton()
+        }
+        else {
+            hideSendButton()
+        }
+        
+    }
+    
+    private func showSendButton() {
+        
+        sendButton.isHidden = false
+        moreButton.isHidden = true
+        
+    }
+    
+    private func hideSendButton() {
+        
+        sendButton.isHidden = true
+        moreButton.isHidden = false
+        
+    }
+    
+    private func resetPanels() {
+        
+        voicePanel.isHidden = true
+        emotionPanel.isHidden = true
+        morePanel.isHidden = true
+        
+    }
+    
+    private func readKeyboardHeight() -> CGFloat {
+        let value = UserDefaults.standard.float(forKey: MessageInput.KEY_KEYBOARD_HEIGHT)
+        return CGFloat(value)
+    }
+    
+    private func writeKeyboardHeight(_ keyboardHeight: CGFloat) {
+        UserDefaults.standard.set(keyboardHeight, forKey: MessageInput.KEY_KEYBOARD_HEIGHT)
+    }
+
     private func requestPhotoPermissions(completion: @escaping (Bool) -> Void) {
         
         if PHPhotoLibrary.authorizationStatus() != .authorized {
@@ -486,6 +589,8 @@ extension MessageInput {
             
             // 保存，方便设置 voicePanel/emotionPanel/morePanel 的高度
             keyboardHeight = keyboardFrame.cgRectValue.height
+            
+            writeKeyboardHeight(keyboardHeight)
             
             contentPanelHeightConstraint.constant = keyboardHeight
 
@@ -593,6 +698,46 @@ extension MessageInput: UIImagePickerControllerDelegate, UINavigationControllerD
         }
             
     }
+}
+
+//
+// MARK: - 圆角矩形按钮的事件响应
+//
+
+extension MessageInput: RoundViewDelegate {
+    
+    public func roundViewDidTouchDown(_ roundView: RoundView) {
+        if roundView == sendButton {
+            roundView.centerColor = configuration.sendButtonBackgroundColorPressed
+            roundView.setNeedsDisplay()
+        }
+    }
+    
+    public func roundViewDidTouchUp(_ roundView: RoundView, _ inside: Bool) {
+        guard inside else {
+            return
+        }
+        if roundView == sendButton {
+            roundView.centerColor = configuration.sendButtonBackgroundColorNormal
+            roundView.setNeedsDisplay()
+            sendText()
+        }
+    }
+    
+    public func roundViewDidTouchEnter(_ roundView: RoundView) {
+        if roundView == sendButton {
+            roundView.centerColor = configuration.sendButtonBackgroundColorPressed
+            roundView.setNeedsDisplay()
+        }
+    }
+    
+    public func roundViewDidTouchLeave(_ roundView: RoundView) {
+        if roundView == sendButton {
+            roundView.centerColor = configuration.sendButtonBackgroundColorNormal
+            roundView.setNeedsDisplay()
+        }
+    }
+    
 }
 
 //
