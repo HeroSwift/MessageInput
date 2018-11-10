@@ -22,6 +22,12 @@ public protocol MessageInputDelegate {
     // 录制视频
     func messageInputDidSendVideo(_ messageInput: MessageInput, videoPath: String, videoDuration: TimeInterval, photoPath: String, photoWidth: CGFloat, photoHeight: CGFloat)
     
+    // 抬起
+    func messageInputDidLift(_ messageInput: MessageInput)
+    
+    // 落下
+    func messageInputDidFall(_ messageInput: MessageInput)
+    
 }
 
 public extension MessageInputDelegate {
@@ -37,5 +43,9 @@ public extension MessageInputDelegate {
     func messageInputDidSendPhoto(_ messageInput: MessageInput, photoPath: String, photoWidth: CGFloat, photoHeight: CGFloat) { }
     
     func messageInputDidSendVideo(_ messageInput: MessageInput, videoPath: String, videoDuration: TimeInterval, photoPath: String, photoWidth: CGFloat, photoHeight: CGFloat) { }
+    
+    func messageInputDidLift(_ messageInput: MessageInput) { }
+    
+    func messageInputDidFall(_ messageInput: MessageInput) { }
     
 }

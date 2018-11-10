@@ -13,6 +13,18 @@ import Photos
 public class MessageInput: UIView {
     
     private static let KEY_KEYBOARD_HEIGHT = "message_input_keyboard_height"
+    
+    // 打字输入模式
+    private static let VIEW_MODE_KEYBOARD = 0
+    
+    // 语音输入模式
+    private static let VIEW_MODE_VOICE = 1
+    
+    // 表情输入模式
+    private static let VIEW_MODE_EMOTION = 2
+    
+    // 更多输入模式
+    private static let VIEW_MODE_MORE = 3
 
     public var delegate: MessageInputDelegate!
     
@@ -20,7 +32,7 @@ public class MessageInput: UIView {
     private let inputBarBottomBorder = UIView()
     
     private let voiceButton = CircleView()
-    private let textView = EmotionTextarea(configuration: EmotionTextareaConfiguration())
+    private let textarea = EmotionTextarea(configuration: EmotionTextareaConfiguration())
     private let emotionButton = CircleView()
     
     private let rightButtons = UIView()
@@ -36,11 +48,54 @@ public class MessageInput: UIView {
     private var cameraViewController: CameraViewController?
     
     private var keyboardHeight: CGFloat!
-    private var textViewHeightConstraint: NSLayoutConstraint!
+    private var textareaHeightConstraint: NSLayoutConstraint!
     private var contentPanelHeightConstraint: NSLayoutConstraint!
     private var contentPanelBottomConstraint: NSLayoutConstraint!
     
     private var configuration: MessageInputConfiguration!
+    
+    var viewMode = MessageInput.VIEW_MODE_KEYBOARD {
+        didSet {
+            
+            switch viewMode {
+            case MessageInput.VIEW_MODE_VOICE:
+                
+                voicePanel.isHidden = false
+                emotionPanel.isHidden = true
+                morePanel.isHidden = true
+            case MessageInput.VIEW_MODE_EMOTION:
+                voicePanel.isHidden = true
+                emotionPanel.isHidden = false
+                morePanel.isHidden = true
+            default:
+                voicePanel.isHidden = true
+                emotionPanel.isHidden = true
+                morePanel.isHidden = false
+            }
+            
+            // 切换到语音、表情、更多
+            if viewMode != MessageInput.VIEW_MODE_KEYBOARD {
+                showContentPanel()
+                hideKeyboard()
+            }
+            
+        }
+    }
+    
+    var text = "" {
+        didSet {
+            if oldValue.isEmpty || text.isEmpty {
+                if oldValue.isEmpty {
+                    sendButton.isHidden = false
+                    moreButton.isHidden = true
+                }
+                else {
+                    sendButton.isHidden = true
+                    moreButton.isHidden = false
+                }
+            }
+        }
+    }
     
     public convenience init(configuration: MessageInputConfiguration) {
         
@@ -67,7 +122,7 @@ public class MessageInput: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func setup() {
+    private func setup() {
         
         addContentPanel()
         addInputBar()
@@ -88,103 +143,29 @@ public class MessageInput: UIView {
      
     }
     
-    public func showKeyboard() {
-        
-        textView.becomeFirstResponder()
-
-    }
-    
-    public func hideKeyboard() {
-
-        textView.resignFirstResponder()
-        
-    }
-    
-    public func showVoicePanel() {
-        
-        voicePanel.isHidden = false
-        emotionPanel.isHidden = true
-        morePanel.isHidden = true
-        
-        hideKeyboard()
-        showContentPanel()
-        
-    }
-    
-    public func showEmotionPanel() {
-        
-        voicePanel.isHidden = true
-        emotionPanel.isHidden = false
-        morePanel.isHidden = true
-        
-        hideKeyboard()
-        showContentPanel()
-        
-    }
-    
-    public func showMorePanel() {
-        
-        voicePanel.isHidden = true
-        emotionPanel.isHidden = true
-        morePanel.isHidden = false
-
-        hideKeyboard()
-        showContentPanel()
-        
-    }
-    
-    public func showContentPanel() {
-        
-        guard contentPanelBottomConstraint.constant > 0 else {
-            return
-        }
-        
-        contentPanelBottomConstraint.constant = 0
-
-        UIView.animate(
-            withDuration: configuration.keyboardAnimationDuration,
-            delay: 0,
-            options: .curveEaseOut,
-            animations: {
-                self.layoutIfNeeded()
-            },
-            completion: nil
-        )
-        
-    }
-    
-    public func hideContentPanel() {
-        
-        guard contentPanelBottomConstraint.constant == 0 else {
-            return
-        }
-
-        contentPanelBottomConstraint.constant = keyboardHeight
-
-        UIView.animate(
-            withDuration: configuration.keyboardAnimationDuration,
-            delay: 0,
-            options: .curveEaseOut,
-            animations: {
-                self.layoutIfNeeded()
-            },
-            completion: { finished in
-                self.resetPanels()
+    public func minimize() {
+        if viewMode == MessageInput.VIEW_MODE_KEYBOARD {
+            if textarea.isFocused {
+                hideKeyboard()
+                hideContentPanel()
             }
-        )
-        
+        }
+        else {
+            viewMode = MessageInput.VIEW_MODE_KEYBOARD
+            hideContentPanel()
+        }
     }
-    
+
     public func setEmotionSetList(_ emotionSetList: [EmotionSet]) {
         emotionPanel.emotionSetList = emotionSetList
     }
     
     public func addEmotionFilter(_ emotionFilter: EmotionFilter) {
-        textView.addFilter(emotionFilter)
+        textarea.addFilter(emotionFilter)
     }
     
     public func removeEmotionFilter(_ emotionFilter: EmotionFilter) {
-        textView.removeFilter(emotionFilter)
+        textarea.removeFilter(emotionFilter)
     }
 
 }
@@ -201,7 +182,7 @@ extension MessageInput {
         addVoiceButton()
         addRightButtons()
         addEmotionButton()
-        addTextView()
+        addTextarea()
         
         addInputBarTopBorder()
         
@@ -335,19 +316,19 @@ extension MessageInput {
         
     }
 
-    private func addTextView() {
+    private func addTextarea() {
         
-        textView.translatesAutoresizingMaskIntoConstraints = false
-        textView.onTextChange = {
-            self.onTextChange()
+        textarea.translatesAutoresizingMaskIntoConstraints = false
+        textarea.onTextChange = {
+            self.text = self.textarea.plainText
         }
         
-        addSubview(textView)
+        addSubview(textarea)
         
         addConstraints([
-            NSLayoutConstraint(item: textView, attribute: .left, relatedBy: .equal, toItem: voiceButton, attribute: .right, multiplier: 1, constant: configuration.inputBarItemSpacing),
-            NSLayoutConstraint(item: textView, attribute: .right, relatedBy: .equal, toItem: emotionButton, attribute: .left, multiplier: 1, constant: -configuration.inputBarItemSpacing),
-            NSLayoutConstraint(item: textView, attribute: .bottom, relatedBy: .equal, toItem: inputBarBottomBorder, attribute: .top, multiplier: 1, constant: -configuration.inputBarPaddingVertical),
+            NSLayoutConstraint(item: textarea, attribute: .left, relatedBy: .equal, toItem: voiceButton, attribute: .right, multiplier: 1, constant: configuration.inputBarItemSpacing),
+            NSLayoutConstraint(item: textarea, attribute: .right, relatedBy: .equal, toItem: emotionButton, attribute: .left, multiplier: 1, constant: -configuration.inputBarItemSpacing),
+            NSLayoutConstraint(item: textarea, attribute: .bottom, relatedBy: .equal, toItem: inputBarBottomBorder, attribute: .top, multiplier: 1, constant: -configuration.inputBarPaddingVertical),
         ])
 
     }
@@ -360,7 +341,7 @@ extension MessageInput {
         
         addConstraints([
             NSLayoutConstraint(item: inputBarTopBorder, attribute: .top, relatedBy: .equal, toItem: self, attribute: .top, multiplier: 1, constant: 0),
-            NSLayoutConstraint(item: inputBarTopBorder, attribute: .bottom, relatedBy: .equal, toItem: textView, attribute: .top, multiplier: 1, constant: -configuration.inputBarPaddingVertical),
+            NSLayoutConstraint(item: inputBarTopBorder, attribute: .bottom, relatedBy: .equal, toItem: textarea, attribute: .top, multiplier: 1, constant: -configuration.inputBarPaddingVertical),
             NSLayoutConstraint(item: inputBarTopBorder, attribute: .left, relatedBy: .equal, toItem: self, attribute: .left, multiplier: 1, constant: 0),
             NSLayoutConstraint(item: inputBarTopBorder, attribute: .right, relatedBy: .equal, toItem: self, attribute: .right, multiplier: 1, constant: 0),
             NSLayoutConstraint(item: inputBarTopBorder, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .height, multiplier: 1, constant: configuration.inputBarBorderWidth),
@@ -418,14 +399,14 @@ extension MessageInput {
         }
         emotionPanel.onEmotionClick = { emotion in
             if emotion.inline {
-                self.textView.insertEmotion(emotion)
+                self.textarea.insertEmotion(emotion)
             }
             else {
                 self.delegate.messageInputDidSendEmotion(self, emotion: emotion)
             }
         }
         emotionPanel.onDeleteClick = {
-            self.textView.deleteBackward()
+            self.textarea.deleteBackward()
         }
         contentPanel.addSubview(emotionPanel)
 
@@ -473,38 +454,69 @@ extension MessageInput {
         
     }
     
+    private func showKeyboard() {
+        
+        textarea.becomeFirstResponder()
+        
+    }
+    
+    private func hideKeyboard() {
+        
+        textarea.resignFirstResponder()
+        
+    }
+    
+    private func showContentPanel() {
+        
+        guard contentPanelBottomConstraint.constant > 0 else {
+            return
+        }
+        
+        contentPanelBottomConstraint.constant = 0
+        
+        UIView.animate(
+            withDuration: configuration.keyboardAnimationDuration,
+            delay: 0,
+            options: .curveEaseOut,
+            animations: {
+                self.layoutIfNeeded()
+            },
+            completion: { finished in
+                self.delegate.messageInputDidLift(self)
+            }
+        )
+        
+    }
+    
+    private func hideContentPanel() {
+        
+        guard contentPanelBottomConstraint.constant == 0 else {
+            return
+        }
+        
+        contentPanelBottomConstraint.constant = keyboardHeight
+        
+        UIView.animate(
+            withDuration: configuration.keyboardAnimationDuration,
+            delay: 0,
+            options: .curveEaseOut,
+            animations: {
+                self.layoutIfNeeded()
+            },
+            completion: { finished in
+                self.resetPanels()
+                self.delegate.messageInputDidFall(self)
+            }
+        )
+        
+    }
+    
     private func sendText() {
         
-        let text = textView.plainText
         if text != "" {
             delegate.messageInputDidSendText(self, text: text)
-            textView.clear()
+            textarea.clear()
         }
-        
-    }
-    
-    private func onTextChange() {
-        
-        if textView.plainText.count > 0 {
-            showSendButton()
-        }
-        else {
-            hideSendButton()
-        }
-        
-    }
-    
-    private func showSendButton() {
-        
-        sendButton.isHidden = false
-        moreButton.isHidden = true
-        
-    }
-    
-    private func hideSendButton() {
-        
-        sendButton.isHidden = true
-        moreButton.isHidden = false
         
     }
     
@@ -540,7 +552,7 @@ extension MessageInput {
         
     }
     
-    func openPhotoPicker() {
+    private func openPhotoPicker() {
         
         guard let parentViewController = UIApplication.shared.keyWindow?.rootViewController else {
             return
@@ -558,7 +570,7 @@ extension MessageInput {
         
     }
     
-    func openCamera() {
+    private func openCamera() {
         
         guard let parentViewController = UIApplication.shared.keyWindow?.rootViewController else {
             return
@@ -755,27 +767,30 @@ extension MessageInput: CircleViewDelegate {
         
         if inside {
             if circleView == voiceButton {
-                if voicePanel.isHidden {
-                    showVoicePanel()
+                if viewMode == MessageInput.VIEW_MODE_VOICE {
+                    viewMode = MessageInput.VIEW_MODE_KEYBOARD
+                    showKeyboard()
                 }
                 else {
-                    showKeyboard()
+                    viewMode = MessageInput.VIEW_MODE_VOICE
                 }
             }
             else if circleView == emotionButton {
-                if emotionPanel.isHidden {
-                    showEmotionPanel()
+                if viewMode == MessageInput.VIEW_MODE_EMOTION {
+                    viewMode = MessageInput.VIEW_MODE_KEYBOARD
+                    showKeyboard()
                 }
                 else {
-                    showKeyboard()
+                    viewMode = MessageInput.VIEW_MODE_EMOTION
                 }
             }
             else if circleView == moreButton {
-                if morePanel.isHidden {
-                    showMorePanel()
+                if viewMode == MessageInput.VIEW_MODE_MORE {
+                    viewMode = MessageInput.VIEW_MODE_KEYBOARD
+                    showKeyboard()
                 }
                 else {
-                    showKeyboard()
+                    viewMode = MessageInput.VIEW_MODE_MORE
                 }
             }
         }
