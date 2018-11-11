@@ -47,7 +47,6 @@ public class MessageInput: UIView {
     public var viewMode = ViewMode.keyboard {
         didSet {
             
-            print(viewMode)
             switch viewMode {
             case .voice:
                 voicePanel.requestPermissions()
@@ -768,7 +767,6 @@ extension MessageInput: CircleViewDelegate {
         if inside {
             if circleView == voiceButton {
                 if viewMode == .voice {
-                    viewMode = .keyboard
                     showKeyboard()
                 }
                 else {
@@ -777,7 +775,6 @@ extension MessageInput: CircleViewDelegate {
             }
             else if circleView == emotionButton {
                 if viewMode == .emotion {
-                    viewMode = .keyboard
                     showKeyboard()
                 }
                 else {
@@ -786,7 +783,6 @@ extension MessageInput: CircleViewDelegate {
             }
             else if circleView == moreButton {
                 if viewMode == .more {
-                    viewMode = .keyboard
                     showKeyboard()
                 }
                 else {
