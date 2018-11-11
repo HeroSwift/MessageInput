@@ -12,14 +12,15 @@ import EmotionInput
 
 class ViewController: UIViewController {
 
+    let input = MessageInput(configuration: MessageInputConfiguration())
+    
     @IBAction func onClick(_ sender: Any) {
-        print("onClick")
+        input.reset()
     }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
-        
-        let input = MessageInput(configuration: MessageInputConfiguration())
         
         input.delegate = self
         input.translatesAutoresizingMaskIntoConstraints = false

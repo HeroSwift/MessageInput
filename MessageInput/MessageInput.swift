@@ -13,18 +13,6 @@ import Photos
 public class MessageInput: UIView {
     
     private static let KEY_KEYBOARD_HEIGHT = "message_input_keyboard_height"
-    
-    // 打字输入模式
-    private static let VIEW_MODE_KEYBOARD = 0
-    
-    // 语音输入模式
-    private static let VIEW_MODE_VOICE = 1
-    
-    // 表情输入模式
-    private static let VIEW_MODE_EMOTION = 2
-    
-    // 更多输入模式
-    private static let VIEW_MODE_MORE = 3
 
     public var delegate: MessageInputDelegate!
     
@@ -54,27 +42,35 @@ public class MessageInput: UIView {
     
     private var configuration: MessageInputConfiguration!
     
-    var viewMode = MessageInput.VIEW_MODE_KEYBOARD {
+    private var isKeyboardVisible = false
+    
+    public var viewMode = ViewMode.keyboard {
         didSet {
             
+            print(viewMode)
             switch viewMode {
-            case MessageInput.VIEW_MODE_VOICE:
-                
+            case .voice:
+                voicePanel.requestPermissions()
                 voicePanel.isHidden = false
                 emotionPanel.isHidden = true
                 morePanel.isHidden = true
-            case MessageInput.VIEW_MODE_EMOTION:
+                break
+            case .emotion:
                 voicePanel.isHidden = true
                 emotionPanel.isHidden = false
                 morePanel.isHidden = true
-            default:
+                break
+            case .more:
                 voicePanel.isHidden = true
                 emotionPanel.isHidden = true
                 morePanel.isHidden = false
+                break
+            case .keyboard:
+                break
             }
             
             // 切换到语音、表情、更多
-            if viewMode != MessageInput.VIEW_MODE_KEYBOARD {
+            if viewMode != .keyboard {
                 showContentPanel()
                 hideKeyboard()
             }
@@ -129,29 +125,28 @@ public class MessageInput: UIView {
         
         NotificationCenter.default.addObserver(
             self,
-            selector: #selector(onKeyboardShown(notification:)),
+            selector: #selector(onKeyboardVisible(notification:)),
             name: .UIKeyboardWillShow,
             object: nil
         )
         
         NotificationCenter.default.addObserver(
             self,
-            selector: #selector(onKeyboardHiden(notification:)),
+            selector: #selector(onKeyboardHidden(notification:)),
             name: .UIKeyboardWillHide,
             object: nil
         )
      
     }
     
-    public func minimize() {
-        if viewMode == MessageInput.VIEW_MODE_KEYBOARD {
-            if textarea.isFocused {
+    public func reset() {
+        if viewMode == .keyboard {
+            if isKeyboardVisible {
                 hideKeyboard()
-                hideContentPanel()
             }
         }
         else {
-            viewMode = MessageInput.VIEW_MODE_KEYBOARD
+            viewMode = .keyboard
             hideContentPanel()
         }
     }
@@ -595,9 +590,12 @@ extension MessageInput {
 
 extension MessageInput {
     
-    @objc func onKeyboardShown(notification: NSNotification) {
+    @objc func onKeyboardVisible(notification: NSNotification) {
         
         if let keyboardFrame: NSValue = notification.userInfo?[UIKeyboardFrameEndUserInfoKey] as? NSValue {
+            
+            isKeyboardVisible = true
+            viewMode = .keyboard
             
             // 保存，方便设置 voicePanel/emotionPanel/morePanel 的高度
             keyboardHeight = keyboardFrame.cgRectValue.height
@@ -623,11 +621,13 @@ extension MessageInput {
         
     }
     
-    @objc func onKeyboardHiden(notification: NSNotification) {
+    @objc func onKeyboardHidden(notification: NSNotification) {
         
         guard voicePanel.isHidden, emotionPanel.isHidden, morePanel.isHidden else {
             return
         }
+        
+        isKeyboardVisible = false
         
         hideContentPanel()
         
@@ -767,30 +767,30 @@ extension MessageInput: CircleViewDelegate {
         
         if inside {
             if circleView == voiceButton {
-                if viewMode == MessageInput.VIEW_MODE_VOICE {
-                    viewMode = MessageInput.VIEW_MODE_KEYBOARD
+                if viewMode == .voice {
+                    viewMode = .keyboard
                     showKeyboard()
                 }
                 else {
-                    viewMode = MessageInput.VIEW_MODE_VOICE
+                    viewMode = .voice
                 }
             }
             else if circleView == emotionButton {
-                if viewMode == MessageInput.VIEW_MODE_EMOTION {
-                    viewMode = MessageInput.VIEW_MODE_KEYBOARD
+                if viewMode == .emotion {
+                    viewMode = .keyboard
                     showKeyboard()
                 }
                 else {
-                    viewMode = MessageInput.VIEW_MODE_EMOTION
+                    viewMode = .emotion
                 }
             }
             else if circleView == moreButton {
-                if viewMode == MessageInput.VIEW_MODE_MORE {
-                    viewMode = MessageInput.VIEW_MODE_KEYBOARD
+                if viewMode == .more {
+                    viewMode = .keyboard
                     showKeyboard()
                 }
                 else {
-                    viewMode = MessageInput.VIEW_MODE_MORE
+                    viewMode = .more
                 }
             }
         }
