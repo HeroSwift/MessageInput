@@ -647,7 +647,7 @@ extension MessageInput {
 extension MessageInput: VoiceInputDelegate {
     
     public func voiceInputDidFinishRecord(_ voiceInput: VoiceInput, audioPath: String, audioDuration: TimeInterval) {
-        delegate.messageInputDidSendVoice(self, audioPath: audioPath, audioDuration: audioDuration)
+        delegate.messageInputDidSendAudio(self, audioPath: audioPath, audioDuration: audioDuration)
     }
     
 }
@@ -664,12 +664,14 @@ extension MessageInput: CameraViewDelegate {
     
     public func cameraViewDidPickPhoto(_ cameraView: CameraView, photoPath: String, photoWidth: CGFloat, photoHeight: CGFloat) {
         cameraViewController?.dismiss(animated: true, completion: nil)
-        delegate.messageInputDidSendPhoto(self, photoPath: photoPath, photoWidth: photoWidth, photoHeight: photoHeight)
+        let photo = Image(path: photoPath, width: Int(photoWidth), height: Int(photoHeight))
+        delegate.messageInputDidSendPhoto(self, photo: photo)
     }
     
     public func cameraViewDidPickVideo(_ cameraView: CameraView, videoPath: String, videoDuration: TimeInterval, photoPath: String, photoWidth: CGFloat, photoHeight: CGFloat) {
         cameraViewController?.dismiss(animated: true, completion: nil)
-        delegate.messageInputDidSendVideo(self, videoPath: videoPath, videoDuration: videoDuration, photoPath: photoPath, photoWidth: photoWidth, photoHeight: photoHeight)
+        let thumbnail = Image(path: photoPath, width: Int(photoWidth), height: Int(photoHeight))
+        delegate.messageInputDidSendVideo(self, videoPath: videoPath, videoDuration: videoDuration, thumbnail: thumbnail)
     }
     
     public func cameraViewWillCaptureWithoutPermissions(_ cameraView: CameraView) {
@@ -703,8 +705,12 @@ extension MessageInput: UIImagePickerControllerDelegate, UINavigationControllerD
         if let pickedImage = info[UIImagePickerControllerOriginalImage] as? UIImage {
             let imageWidth = pickedImage.size.width
             let imageHeight = pickedImage.size.height
+            let image = Image(path: "", width: Int(imageWidth), height: Int(imageHeight))
             
-            delegate.messageInputDidSendImage(self, imagePath: "", imageWidth: imageWidth, imageHeight: imageHeight)
+            var images = [Image]()
+            images.append(image)
+            
+            delegate.messageInputDidSendImage(self, images: images)
             
         }
             

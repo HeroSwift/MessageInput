@@ -5,7 +5,7 @@ import EmotionInput
 public protocol MessageInputDelegate {
     
     // 发送语音
-    func messageInputDidSendVoice(_ messageInput: MessageInput, audioPath: String, audioDuration: TimeInterval)
+    func messageInputDidSendAudio(_ messageInput: MessageInput, audioPath: String, audioDuration: TimeInterval)
     
     // 发送表情
     func messageInputDidSendEmotion(_ messageInput: MessageInput, emotion: Emotion)
@@ -14,13 +14,13 @@ public protocol MessageInputDelegate {
     func messageInputDidSendText(_ messageInput: MessageInput, text: String)
     
     // 选择照片
-    func messageInputDidSendImage(_ messageInput: MessageInput, imagePath: String, imageWidth: CGFloat, imageHeight: CGFloat)
+    func messageInputDidSendImage(_ messageInput: MessageInput, images: [Image])
     
     // 拍照
-    func messageInputDidSendPhoto(_ messageInput: MessageInput, photoPath: String, photoWidth: CGFloat, photoHeight: CGFloat)
+    func messageInputDidSendPhoto(_ messageInput: MessageInput, photo: Image)
     
     // 录制视频
-    func messageInputDidSendVideo(_ messageInput: MessageInput, videoPath: String, videoDuration: TimeInterval, photoPath: String, photoWidth: CGFloat, photoHeight: CGFloat)
+    func messageInputDidSendVideo(_ messageInput: MessageInput, videoPath: String, videoDuration: TimeInterval, thumbnail: Image)
     
     // 抬起
     func messageInputDidLift(_ messageInput: MessageInput)
@@ -32,17 +32,17 @@ public protocol MessageInputDelegate {
 
 public extension MessageInputDelegate {
     
-    func messageInputDidSendVoice(_ messageInput: MessageInput, audioPath: String, audioDuration: TimeInterval) { }
+    func messageInputDidSendAudio(_ messageInput: MessageInput, audioPath: String, audioDuration: TimeInterval) { }
     
     func messageInputDidSendEmotion(_ messageInput: MessageInput, emotion: Emotion) { }
     
     func messageInputDidSendText(_ messageInput: MessageInput, text: String) { }
     
-    func messageInputDidSendImage(_ messageInput: MessageInput, imagePath: String, imageWidth: CGFloat, imageHeight: CGFloat) { }
+    func messageInputDidSendImage(_ messageInput: MessageInput, images: [Image]) { }
     
-    func messageInputDidSendPhoto(_ messageInput: MessageInput, photoPath: String, photoWidth: CGFloat, photoHeight: CGFloat) { }
+    func messageInputDidSendPhoto(_ messageInput: MessageInput, photo: Image) { }
     
-    func messageInputDidSendVideo(_ messageInput: MessageInput, videoPath: String, videoDuration: TimeInterval, photoPath: String, photoWidth: CGFloat, photoHeight: CGFloat) { }
+    func messageInputDidSendVideo(_ messageInput: MessageInput, videoPath: String, videoDuration: TimeInterval, thumbnail: Image) { }
     
     func messageInputDidLift(_ messageInput: MessageInput) { }
     
