@@ -125,29 +125,29 @@ class ViewController: UIViewController {
 
 }
 
-extension ViewController: MessageInputDelegate {
+extension ViewController: MessageInputDelegate {    
     
-    func messageInputDidSendVoice(_ messageInput: MessageInput, audioPath: String, audioDuration: TimeInterval) {
+    func messageInputDidSendAudio(audioPath: String, audioDuration: TimeInterval) {
         print("send voice  \(audioPath) \(audioDuration)")
     }
     
-    func messageInputDidSendEmotion(_ messageInput: MessageInput, emotion: Emotion) {
+    func messageInputDidSendEmotion(emotion: Emotion) {
         print("send emotion  \(emotion.code)")
     }
     
-    func messageInputDidSendText(_ messageInput: MessageInput, text: String) {
+    func messageInputDidSendText(text: String) {
         print("send text  \(text)")
     }
     
-    func messageInputDidSendImage(_ messageInput: MessageInput, images: [Image]) {
+    func messageInputDidSendImages(images: [Image]) {
         print("send image  \(images)")
     }
     
-    func messageInputDidSendPhoto(_ messageInput: MessageInput, photo: Image) {
+    func messageInputDidSendPhoto(photo: Image) {
         print("send photo  \(photo)")
     }
     
-    func messageInputDidSendVideo(_ messageInput: MessageInput, videoPath: String, videoDuration: TimeInterval, thumbnail: Image) {
+    func messageInputDidSendVideo(videoPath: String, videoDuration: TimeInterval, thumbnail: Image) {
         print("send video  \(videoPath) \(videoDuration)  \(thumbnail)")
     }
     

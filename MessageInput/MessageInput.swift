@@ -83,10 +83,12 @@ public class MessageInput: UIView {
                 if oldValue.isEmpty {
                     sendButton.isHidden = false
                     moreButton.isHidden = true
+                    emotionPanel.isSendButtonEnabled = true
                 }
                 else {
                     sendButton.isHidden = true
                     moreButton.isHidden = false
+                    emotionPanel.isSendButtonEnabled = false
                 }
             }
         }
@@ -396,7 +398,7 @@ extension MessageInput {
                 self.textarea.insertEmotion(emotion)
             }
             else {
-                self.delegate.messageInputDidSendEmotion(self, emotion: emotion)
+                self.delegate.messageInputDidSendEmotion(emotion: emotion)
             }
         }
         emotionPanel.onDeleteClick = {
@@ -419,12 +421,12 @@ extension MessageInput {
         morePanel.translatesAutoresizingMaskIntoConstraints = false
         contentPanel.addSubview(morePanel)
         
-        let imageFeature = FeatureButton(title: configuration.photoText, image: configuration.photoImage, configuration: configuration)
-        imageFeature.translatesAutoresizingMaskIntoConstraints = false
-        imageFeature.onClick = {
+        let photoFeature = FeatureButton(title: configuration.photoText, image: configuration.photoImage, configuration: configuration)
+        photoFeature.translatesAutoresizingMaskIntoConstraints = false
+        photoFeature.onClick = {
             self.openPhotoPicker()
         }
-        morePanel.addSubview(imageFeature)
+        morePanel.addSubview(photoFeature)
         
         let cameraFeature = FeatureButton(title: configuration.cameraText, image: configuration.cameraImage, configuration: configuration)
         cameraFeature.translatesAutoresizingMaskIntoConstraints = false
@@ -439,8 +441,8 @@ extension MessageInput {
             NSLayoutConstraint(item: morePanel, attribute: .top, relatedBy: .equal, toItem: contentPanel, attribute: .top, multiplier: 1, constant: configuration.featurePanelPaddingVertical),
             NSLayoutConstraint(item: morePanel, attribute: .bottom, relatedBy: .equal, toItem: contentPanel, attribute: .bottom, multiplier: 1, constant: -configuration.featurePanelPaddingVertical),
 
-            NSLayoutConstraint(item: imageFeature, attribute: .top, relatedBy: .equal, toItem: morePanel, attribute: .top, multiplier: 1, constant: 0),
-            NSLayoutConstraint(item: imageFeature, attribute: .left, relatedBy: .equal, toItem: morePanel, attribute: .left, multiplier: 1, constant: 0),
+            NSLayoutConstraint(item: photoFeature, attribute: .top, relatedBy: .equal, toItem: morePanel, attribute: .top, multiplier: 1, constant: 0),
+            NSLayoutConstraint(item: photoFeature, attribute: .left, relatedBy: .equal, toItem: morePanel, attribute: .left, multiplier: 1, constant: 0),
 
             NSLayoutConstraint(item: cameraFeature, attribute: .top, relatedBy: .equal, toItem: morePanel, attribute: .top, multiplier: 1, constant: 0),
             NSLayoutConstraint(item: cameraFeature, attribute: .left, relatedBy: .equal, toItem: morePanel, attribute: .left, multiplier: 1, constant: configuration.featureButtonWidth + configuration.featureButtonSpacing),
@@ -476,7 +478,7 @@ extension MessageInput {
                 self.layoutIfNeeded()
             },
             completion: { finished in
-                self.delegate.messageInputDidLift(self)
+                self.delegate.messageInputDidLift()
             }
         )
         
@@ -499,7 +501,7 @@ extension MessageInput {
             },
             completion: { finished in
                 self.resetPanels()
-                self.delegate.messageInputDidFall(self)
+                self.delegate.messageInputDidFall()
             }
         )
         
@@ -508,7 +510,7 @@ extension MessageInput {
     private func sendText() {
         
         if text != "" {
-            delegate.messageInputDidSendText(self, text: text)
+            delegate.messageInputDidSendText(text: text)
             textarea.clear()
         }
         
@@ -647,7 +649,7 @@ extension MessageInput {
 extension MessageInput: VoiceInputDelegate {
     
     public func voiceInputDidFinishRecord(_ voiceInput: VoiceInput, audioPath: String, audioDuration: TimeInterval) {
-        delegate.messageInputDidSendAudio(self, audioPath: audioPath, audioDuration: audioDuration)
+        delegate.messageInputDidSendAudio(audioPath: audioPath, audioDuration: audioDuration)
     }
     
 }
@@ -665,13 +667,13 @@ extension MessageInput: CameraViewDelegate {
     public func cameraViewDidPickPhoto(_ cameraView: CameraView, photoPath: String, photoWidth: CGFloat, photoHeight: CGFloat) {
         cameraViewController?.dismiss(animated: true, completion: nil)
         let photo = Image(path: photoPath, width: Int(photoWidth), height: Int(photoHeight))
-        delegate.messageInputDidSendPhoto(self, photo: photo)
+        delegate.messageInputDidSendPhoto(photo: photo)
     }
     
     public func cameraViewDidPickVideo(_ cameraView: CameraView, videoPath: String, videoDuration: TimeInterval, photoPath: String, photoWidth: CGFloat, photoHeight: CGFloat) {
         cameraViewController?.dismiss(animated: true, completion: nil)
         let thumbnail = Image(path: photoPath, width: Int(photoWidth), height: Int(photoHeight))
-        delegate.messageInputDidSendVideo(self, videoPath: videoPath, videoDuration: videoDuration, thumbnail: thumbnail)
+        delegate.messageInputDidSendVideo(videoPath: videoPath, videoDuration: videoDuration, thumbnail: thumbnail)
     }
     
     public func cameraViewWillCaptureWithoutPermissions(_ cameraView: CameraView) {
@@ -703,18 +705,49 @@ extension MessageInput: UIImagePickerControllerDelegate, UINavigationControllerD
         picker.dismiss(animated: true, completion: nil)
         
         if let pickedImage = info[UIImagePickerControllerOriginalImage] as? UIImage {
-            let imageWidth = pickedImage.size.width
-            let imageHeight = pickedImage.size.height
-            let image = Image(path: "", width: Int(imageWidth), height: Int(imageHeight))
             
-            var images = [Image]()
-            images.append(image)
-            
-            delegate.messageInputDidSendImage(self, images: images)
+            if let imageData = UIImageJPEGRepresentation(pickedImage, 0.8) as NSData? {
+                let filePath = getFilePath(dirname: NSTemporaryDirectory(), extname: ".jpeg")
+                if imageData.write(toFile: filePath, atomically: true) {
+                    
+                    
+                    let imageWidth = pickedImage.size.width
+                    let imageHeight = pickedImage.size.height
+                    let image = Image(path: filePath, width: Int(imageWidth), height: Int(imageHeight))
+                    
+                    var images = [Image]()
+                    images.append(image)
+                    
+                    delegate.messageInputDidSendImages(images: images)
+                    
+                }
+            }
             
         }
             
     }
+    
+    // 生成一个文件路径
+    func getFilePath(dirname: String, extname: String) -> String {
+        
+        let fileManager = FileManager.default
+        if !fileManager.fileExists(atPath: dirname) {
+            try? fileManager.createDirectory(atPath: dirname, withIntermediateDirectories: true, attributes: nil)
+        }
+        
+        let format = DateFormatter()
+        format.dateFormat = "yyyy_MM_dd_HH_mm_ss"
+        
+        let filename = "\(format.string(from: Date()))\(extname)"
+        
+        if dirname.hasSuffix("/") {
+            return dirname + filename
+        }
+        
+        return "\(dirname)/\(filename)"
+        
+    }
+    
 }
 
 //

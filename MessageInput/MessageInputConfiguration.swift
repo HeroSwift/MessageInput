@@ -103,7 +103,7 @@ public class MessageInputConfiguration {
     public var featureButtonTitleTextColor = UIColor(red: 120 / 255, green: 120 / 255, blue: 120 / 255, alpha: 1)
     
     // 图片按钮
-    public var photoImage = UIImage(named: "image", in: Bundle(for: MessageInputConfiguration.self), compatibleWith: nil)!
+    public var photoImage = UIImage(named: "photo", in: Bundle(for: MessageInputConfiguration.self), compatibleWith: nil)!
     
     public var photoText = "图片"
     
