@@ -139,15 +139,15 @@ extension ViewController: MessageInputDelegate {
         print("send text  \(text)")
     }
     
-    func messageInputDidSendImages(images: [Image]) {
+    func messageInputDidSendImages(images: [ImageFile]) {
         print("send image  \(images)")
     }
     
-    func messageInputDidSendPhoto(photo: Image) {
+    func messageInputDidSendPhoto(photo: ImageFile) {
         print("send photo  \(photo)")
     }
     
-    func messageInputDidSendVideo(videoPath: String, videoDuration: TimeInterval, thumbnail: Image) {
+    func messageInputDidSendVideo(videoPath: String, videoDuration: TimeInterval, thumbnail: ImageFile) {
         print("send video  \(videoPath) \(videoDuration)  \(thumbnail)")
     }
     

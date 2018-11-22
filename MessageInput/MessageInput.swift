@@ -674,13 +674,13 @@ extension MessageInput: CameraViewDelegate {
     
     public func cameraViewDidPickPhoto(_ cameraView: CameraView, photoPath: String, photoWidth: CGFloat, photoHeight: CGFloat) {
         cameraViewController?.dismiss(animated: true, completion: nil)
-        let photo = Image(path: photoPath, width: Int(photoWidth), height: Int(photoHeight))
+        let photo = ImageFile(path: photoPath, width: Int(photoWidth), height: Int(photoHeight))
         delegate.messageInputDidSendPhoto(photo: photo)
     }
     
     public func cameraViewDidPickVideo(_ cameraView: CameraView, videoPath: String, videoDuration: TimeInterval, photoPath: String, photoWidth: CGFloat, photoHeight: CGFloat) {
         cameraViewController?.dismiss(animated: true, completion: nil)
-        let thumbnail = Image(path: photoPath, width: Int(photoWidth), height: Int(photoHeight))
+        let thumbnail = ImageFile(path: photoPath, width: Int(photoWidth), height: Int(photoHeight))
         delegate.messageInputDidSendVideo(videoPath: videoPath, videoDuration: videoDuration, thumbnail: thumbnail)
     }
     
@@ -718,12 +718,11 @@ extension MessageInput: UIImagePickerControllerDelegate, UINavigationControllerD
                 let filePath = getFilePath(dirname: NSTemporaryDirectory(), extname: ".jpeg")
                 if imageData.write(toFile: filePath, atomically: true) {
                     
-                    
                     let imageWidth = pickedImage.size.width
                     let imageHeight = pickedImage.size.height
-                    let image = Image(path: filePath, width: Int(imageWidth), height: Int(imageHeight))
+                    let image = ImageFile(path: filePath, width: Int(imageWidth), height: Int(imageHeight))
                     
-                    var images = [Image]()
+                    var images = [ImageFile]()
                     images.append(image)
                     
                     delegate.messageInputDidSendImages(images: images)

@@ -12,7 +12,7 @@
 		9D0A79AB21943727009696D0 /* RoundView.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9D0A79AA21943727009696D0 /* RoundView.framework */; };
 		9D0A79AC21943A21009696D0 /* RoundView.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9D0A79AA21943727009696D0 /* RoundView.framework */; };
 		9D0A79AD21943A21009696D0 /* RoundView.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 9D0A79AA21943727009696D0 /* RoundView.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		9D0A79B0219809C0009696D0 /* Image.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D0A79AF219809BF009696D0 /* Image.swift */; };
+		9D0A79B0219809C0009696D0 /* ImageFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D0A79AF219809BF009696D0 /* ImageFile.swift */; };
 		9D511263218AD7A300886938 /* CircleView.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9DF4EFDA21721BDC00CA4DE7 /* CircleView.framework */; };
 		9D511266218AD7A400886938 /* VoiceInput.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9D511264218AD7A400886938 /* VoiceInput.framework */; };
 		9D511267218AD7A400886938 /* SimpleButton.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9D511265218AD7A400886938 /* SimpleButton.framework */; };
@@ -79,7 +79,7 @@
 		9D0A79462193D955009696D0 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		9D0A79752194095B009696D0 /* MessageInputDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageInputDelegate.swift; sourceTree = "<group>"; };
 		9D0A79AA21943727009696D0 /* RoundView.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RoundView.framework; path = Carthage/Build/iOS/RoundView.framework; sourceTree = "<group>"; };
-		9D0A79AF219809BF009696D0 /* Image.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Image.swift; sourceTree = "<group>"; };
+		9D0A79AF219809BF009696D0 /* ImageFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageFile.swift; sourceTree = "<group>"; };
 		9D511264218AD7A400886938 /* VoiceInput.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = VoiceInput.framework; path = Carthage/Build/iOS/VoiceInput.framework; sourceTree = "<group>"; };
 		9D511265218AD7A400886938 /* SimpleButton.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SimpleButton.framework; path = Carthage/Build/iOS/SimpleButton.framework; sourceTree = "<group>"; };
 		9D51127B218AEA5600886938 /* EmotionInput.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = EmotionInput.framework; path = Carthage/Build/iOS/EmotionInput.framework; sourceTree = "<group>"; };
@@ -137,7 +137,7 @@
 		9D0A79AE2198099F009696D0 /* model */ = {
 			isa = PBXGroup;
 			children = (
-				9D0A79AF219809BF009696D0 /* Image.swift */,
+				9D0A79AF219809BF009696D0 /* ImageFile.swift */,
 			);
 			path = model;
 			sourceTree = "<group>";
@@ -362,7 +362,7 @@
 				9DF4EFD9217218BC00CA4DE7 /* MessageInput.swift in Sources */,
 				9D9B4DBC21A28DBA006110EE /* ViewMode.swift in Sources */,
 				9DF4EFE321722EC000CA4DE7 /* FeatureButton.swift in Sources */,
-				9D0A79B0219809C0009696D0 /* Image.swift in Sources */,
+				9D0A79B0219809C0009696D0 /* ImageFile.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

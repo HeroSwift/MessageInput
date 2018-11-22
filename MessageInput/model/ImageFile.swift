@@ -1,5 +1,5 @@
 
-public class Image {
+public class ImageFile {
     
     public var path: String
     
