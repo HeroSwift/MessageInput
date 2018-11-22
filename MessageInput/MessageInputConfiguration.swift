@@ -41,7 +41,7 @@ public class MessageInputConfiguration {
     public var circleButtonMarginBottom: CGFloat = 4
     
     // 发送按钮的文本
-    public var sendButtonImage = UIImage(named: "send", in: Bundle(for: MessageInputConfiguration.self), compatibleWith: nil)
+    public var sendButtonTitle = "发送"
 
     // 发送按钮的宽度
     public var sendButtonWidth: CGFloat = 40

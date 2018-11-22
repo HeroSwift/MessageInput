@@ -1,7 +1,6 @@
 
 import UIKit
 
-import RoundView
 import CircleView
 import CameraView
 import VoiceInput
@@ -25,7 +24,7 @@ public class MessageInput: UIView {
     
     private let rightButtons = UIView()
     private let moreButton = CircleView()
-    private let sendButton = RoundView()
+    private let sendButton = SimpleButton()
     
     private let contentPanel = UIView()
     
@@ -84,6 +83,9 @@ public class MessageInput: UIView {
                     sendButton.isHidden = false
                     moreButton.isHidden = true
                     emotionPanel.isSendButtonEnabled = true
+                    
+                    sendButton.setBackgroundColor(configuration.sendButtonBackgroundColorNormal, for: .normal)
+                    sendButton.setBackgroundColor(configuration.sendButtonBackgroundColorPressed, for: .highlighted)
                 }
                 else {
                     sendButton.isHidden = true
@@ -269,21 +271,27 @@ extension MessageInput {
         
         sendButton.translatesAutoresizingMaskIntoConstraints = false
         
-        sendButton.delegate = self
         sendButton.isHidden = true
-        sendButton.centerImage = configuration.sendButtonImage
-        sendButton.centerColor = configuration.sendButtonBackgroundColorNormal
+        sendButton.titleLabel?.font = configuration.sendButtonTextFont
+        sendButton.setTitle(configuration.sendButtonTitle, for: .normal)
+        sendButton.setTitleColor(configuration.sendButtonTextColor, for: .normal)
+
+        sendButton.layer.borderWidth = configuration.sendButtonBorderWidth
+        sendButton.layer.borderColor = configuration.sendButtonBorderColor.cgColor
+        sendButton.layer.cornerRadius = configuration.sendButtonBorderRadius
         sendButton.borderRadius = configuration.sendButtonBorderRadius
-        sendButton.borderWidth = configuration.sendButtonBorderWidth
-        sendButton.borderColor = configuration.sendButtonBorderColor
-        sendButton.width = configuration.sendButtonWidth
-        sendButton.height = 2 * configuration.circleButtonRadius
         
         rightButtons.addSubview(sendButton)
+        
+        sendButton.onClick = {
+            self.sendText()
+        }
         
         rightButtons.addConstraints([
             NSLayoutConstraint(item: sendButton, attribute: .centerX, relatedBy: .equal, toItem: rightButtons, attribute: .centerX, multiplier: 1, constant: 0),
             NSLayoutConstraint(item: sendButton, attribute: .centerY, relatedBy: .equal, toItem: rightButtons, attribute: .centerY, multiplier: 1, constant: 0),
+            NSLayoutConstraint(item: sendButton, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .width, multiplier: 1, constant: configuration.sendButtonWidth),
+            NSLayoutConstraint(item: sendButton, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .height, multiplier: 1, constant: 2 * configuration.circleButtonRadius),
         ])
         
     }
@@ -746,46 +754,6 @@ extension MessageInput: UIImagePickerControllerDelegate, UINavigationControllerD
         
         return "\(dirname)/\(filename)"
         
-    }
-    
-}
-
-//
-// MARK: - 圆角矩形按钮的事件响应
-//
-
-extension MessageInput: RoundViewDelegate {
-    
-    public func roundViewDidTouchDown(_ roundView: RoundView) {
-        if roundView == sendButton {
-            roundView.centerColor = configuration.sendButtonBackgroundColorPressed
-            roundView.setNeedsDisplay()
-        }
-    }
-    
-    public func roundViewDidTouchUp(_ roundView: RoundView, _ inside: Bool) {
-        guard inside else {
-            return
-        }
-        if roundView == sendButton {
-            roundView.centerColor = configuration.sendButtonBackgroundColorNormal
-            roundView.setNeedsDisplay()
-            sendText()
-        }
-    }
-    
-    public func roundViewDidTouchEnter(_ roundView: RoundView) {
-        if roundView == sendButton {
-            roundView.centerColor = configuration.sendButtonBackgroundColorPressed
-            roundView.setNeedsDisplay()
-        }
-    }
-    
-    public func roundViewDidTouchLeave(_ roundView: RoundView) {
-        if roundView == sendButton {
-            roundView.centerColor = configuration.sendButtonBackgroundColorNormal
-            roundView.setNeedsDisplay()
-        }
     }
     
 }
