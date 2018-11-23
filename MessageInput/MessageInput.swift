@@ -32,7 +32,7 @@ public class MessageInput: UIView {
     private var cameraViewController: CameraViewController?
     
     private var keyboardHeight: CGFloat!
-    private var textareaHeightConstraint: NSLayoutConstraint!
+    private var textareaBottomConstraint: NSLayoutConstraint!
     private var contentPanelHeightConstraint: NSLayoutConstraint!
     private var contentPanelBottomConstraint: NSLayoutConstraint!
     
@@ -173,12 +173,29 @@ extension MessageInput {
         
         backgroundColor = configuration.inputBarBackgroundColor
         
-        addVoiceButton()
-        addRightButtons()
-        addEmotionButton()
         addTextarea()
         
+        addVoiceButton()
+        addRightButtons()
+        
+        addEmotionButton()
+        
         addInputBarTopBorder()
+        
+    }
+    
+    private func addTextarea() {
+        
+        textarea.translatesAutoresizingMaskIntoConstraints = false
+        textarea.onTextChange = {
+            self.text = self.textarea.plainText
+        }
+        
+        addSubview(textarea)
+        
+        textareaBottomConstraint = NSLayoutConstraint(item: textarea, attribute: .bottom, relatedBy: .equal, toItem: contentPanel, attribute: .top, multiplier: 1, constant: -configuration.inputBarPaddingVertical)
+        
+        addConstraint(textareaBottomConstraint)
         
     }
 
@@ -198,9 +215,34 @@ extension MessageInput {
         
         addConstraints([
             NSLayoutConstraint(item: voiceButton, attribute: .left, relatedBy: .equal, toItem: self, attribute: .left, multiplier: 1, constant: configuration.inputBarPaddingHorizontal),
+            NSLayoutConstraint(item: voiceButton, attribute: .right, relatedBy: .equal, toItem: textarea, attribute: .left, multiplier: 1, constant: -configuration.inputBarItemSpacing),
             NSLayoutConstraint(item: voiceButton, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .width, multiplier: 1, constant: 2 * configuration.circleButtonRadius),
             NSLayoutConstraint(item: voiceButton, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .height, multiplier: 1, constant: 2 * configuration.circleButtonRadius),
-            NSLayoutConstraint(item: voiceButton, attribute: .bottom, relatedBy: .equal, toItem: contentPanel, attribute: .top, multiplier: 1, constant: -(configuration.inputBarPaddingVertical + configuration.circleButtonMarginBottom)),
+            NSLayoutConstraint(item: voiceButton, attribute: .bottom, relatedBy: .equal, toItem: textarea, attribute: .bottom, multiplier: 1, constant: -configuration.circleButtonMarginBottom),
+        ])
+        
+    }
+    
+    private func addEmotionButton() {
+        
+        emotionButton.centerImage = configuration.emotionButtonImage
+        emotionButton.centerRadius = configuration.circleButtonRadius - configuration.circleButtonBorderWidth
+        emotionButton.centerColor = configuration.circleButtonBackgroundColorNormal
+        emotionButton.ringWidth = configuration.circleButtonBorderWidth
+        emotionButton.ringColor = configuration.circleButtonBorderColor
+        emotionButton.trackWidth = 0
+        
+        emotionButton.translatesAutoresizingMaskIntoConstraints = false
+        emotionButton.delegate = self
+        
+        addSubview(emotionButton)
+        
+        addConstraints([
+            NSLayoutConstraint(item: emotionButton, attribute: .left, relatedBy: .equal, toItem: textarea, attribute: .right, multiplier: 1, constant: configuration.inputBarItemSpacing),
+            NSLayoutConstraint(item: emotionButton, attribute: .right, relatedBy: .equal, toItem: rightButtons, attribute: .left, multiplier: 1, constant: -configuration.inputBarItemSpacing),
+            NSLayoutConstraint(item: emotionButton, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .width, multiplier: 1, constant: 2 * configuration.circleButtonRadius),
+            NSLayoutConstraint(item: emotionButton, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .height, multiplier: 1, constant: 2 * configuration.circleButtonRadius),
+            NSLayoutConstraint(item: emotionButton, attribute: .bottom, relatedBy: .equal, toItem: voiceButton, attribute: .bottom, multiplier: 1, constant: 0),
         ])
         
     }
@@ -275,48 +317,7 @@ extension MessageInput {
         ])
         
     }
-    
-    
-    private func addEmotionButton() {
-        
-        emotionButton.centerImage = configuration.emotionButtonImage
-        emotionButton.centerRadius = configuration.circleButtonRadius - configuration.circleButtonBorderWidth
-        emotionButton.centerColor = configuration.circleButtonBackgroundColorNormal
-        emotionButton.ringWidth = configuration.circleButtonBorderWidth
-        emotionButton.ringColor = configuration.circleButtonBorderColor
-        emotionButton.trackWidth = 0
-        
-        emotionButton.translatesAutoresizingMaskIntoConstraints = false
-        emotionButton.delegate = self
-        
-        addSubview(emotionButton)
-        
-        addConstraints([
-            NSLayoutConstraint(item: emotionButton, attribute: .right, relatedBy: .equal, toItem: rightButtons, attribute: .left, multiplier: 1, constant: -configuration.inputBarItemSpacing),
-            NSLayoutConstraint(item: emotionButton, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .width, multiplier: 1, constant: 2 * configuration.circleButtonRadius),
-            NSLayoutConstraint(item: emotionButton, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .height, multiplier: 1, constant: 2 * configuration.circleButtonRadius),
-            NSLayoutConstraint(item: emotionButton, attribute: .bottom, relatedBy: .equal, toItem: voiceButton, attribute: .bottom, multiplier: 1, constant: 0),
-        ])
-        
-    }
 
-    private func addTextarea() {
-        
-        textarea.translatesAutoresizingMaskIntoConstraints = false
-        textarea.onTextChange = {
-            self.text = self.textarea.plainText
-        }
-        
-        addSubview(textarea)
-        
-        addConstraints([
-            NSLayoutConstraint(item: textarea, attribute: .left, relatedBy: .equal, toItem: voiceButton, attribute: .right, multiplier: 1, constant: configuration.inputBarItemSpacing),
-            NSLayoutConstraint(item: textarea, attribute: .right, relatedBy: .equal, toItem: emotionButton, attribute: .left, multiplier: 1, constant: -configuration.inputBarItemSpacing),
-            NSLayoutConstraint(item: textarea, attribute: .bottom, relatedBy: .equal, toItem: voiceButton, attribute: .bottom, multiplier: 1, constant: configuration.circleButtonMarginBottom),
-        ])
-
-    }
-    
     private func addInputBarTopBorder() {
         
         let border = UIView()
@@ -596,7 +597,12 @@ extension MessageInput {
         
         if #available(iOS 11.0, *) {
             if let safeAreaInsets = UIApplication.shared.keyWindow?.safeAreaInsets {
-                
+                var bottom = configuration.inputBarPaddingVertical
+                if contentPanelBottomConstraint.constant > 0 {
+                    bottom += safeAreaInsets.bottom
+                }
+                textareaBottomConstraint.constant = -bottom
+                setNeedsLayout()
             }
         }
         
