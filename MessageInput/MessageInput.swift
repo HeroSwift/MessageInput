@@ -29,10 +29,6 @@ public class MessageInput: UIView {
     private let emotionPanel = EmotionPager(configuration: EmotionPagerConfiguration())
     private let morePanel = UIView()
     
-    // 用来垫起安全区域
-    private let safeArea = UIView()
-    private var safeAreaHeightConstraint: NSLayoutConstraint!
-    
     private var cameraViewController: CameraViewController?
     
     private var keyboardHeight: CGFloat!
@@ -124,7 +120,8 @@ public class MessageInput: UIView {
     
     private func setup() {
         
-        addSafeArea()
+        backgroundColor = .gray
+        
         addContentPanel()
         addInputBar()
         
@@ -466,23 +463,6 @@ extension MessageInput {
         
     }
     
-    private func addSafeArea() {
-        
-        safeArea.backgroundColor = .red
-        safeArea.translatesAutoresizingMaskIntoConstraints = false
-        addSubview(safeArea)
-        
-        safeAreaHeightConstraint = NSLayoutConstraint(item: safeArea, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .height, multiplier: 1, constant: 0)
-        
-        addConstraints([
-            NSLayoutConstraint(item: safeArea, attribute: .left, relatedBy: .equal, toItem: contentPanel, attribute: .left, multiplier: 1, constant: 0),
-            NSLayoutConstraint(item: safeArea, attribute: .right, relatedBy: .equal, toItem: contentPanel, attribute: .right, multiplier: 1, constant: 0),
-            NSLayoutConstraint(item: safeArea, attribute: .bottom, relatedBy: .equal, toItem: contentPanel, attribute: .bottom, multiplier: 1, constant: 0),
-            safeAreaHeightConstraint,
-        ])
-        
-    }
-    
     private func showKeyboard() {
         
         textarea.becomeFirstResponder()
@@ -620,8 +600,7 @@ extension MessageInput {
         
         if #available(iOS 11.0, *) {
             if let safeAreaInsets = UIApplication.shared.keyWindow?.safeAreaInsets {
-                safeAreaHeightConstraint.constant = safeAreaInsets.bottom
-                setNeedsLayout()
+                
             }
         }
         
