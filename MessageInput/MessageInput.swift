@@ -241,7 +241,7 @@ extension MessageInput {
         
         rightButtons.addSubview(moreButton)
         
-        addConstraints([
+        rightButtons.addConstraints([
             NSLayoutConstraint(item: moreButton, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .width, multiplier: 1, constant: 2 * configuration.circleButtonRadius),
             NSLayoutConstraint(item: moreButton, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .height, multiplier: 1, constant: 2 * configuration.circleButtonRadius),
             NSLayoutConstraint(item: moreButton, attribute: .centerX, relatedBy: .equal, toItem: rightButtons, attribute: .centerX, multiplier: 1, constant: 0),
@@ -270,7 +270,7 @@ extension MessageInput {
             self.sendText()
         }
         
-        addConstraints([
+        rightButtons.addConstraints([
             NSLayoutConstraint(item: sendButton, attribute: .centerX, relatedBy: .equal, toItem: rightButtons, attribute: .centerX, multiplier: 1, constant: 0),
             NSLayoutConstraint(item: sendButton, attribute: .centerY, relatedBy: .equal, toItem: rightButtons, attribute: .centerY, multiplier: 1, constant: 0),
             NSLayoutConstraint(item: sendButton, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .width, multiplier: 1, constant: configuration.sendButtonWidth),
@@ -346,7 +346,7 @@ extension MessageInput {
         
         panel.addSubview(border)
         
-        addConstraints([
+        panel.addConstraints([
             NSLayoutConstraint(item: border, attribute: .top, relatedBy: .equal, toItem: panel, attribute: .top, multiplier: 1, constant: 0),
             NSLayoutConstraint(item: border, attribute: .left, relatedBy: .equal, toItem: panel, attribute: .left, multiplier: 1, constant: 0),
             NSLayoutConstraint(item: border, attribute: .right, relatedBy: .equal, toItem: panel, attribute: .right, multiplier: 1, constant: 0),
@@ -370,7 +370,7 @@ extension MessageInput {
             NSLayoutConstraint(item: contentPanel, attribute: .left, relatedBy: .equal, toItem: self, attribute: .left, multiplier: 1, constant: 0),
             NSLayoutConstraint(item: contentPanel, attribute: .right, relatedBy: .equal, toItem: self, attribute: .right, multiplier: 1, constant: 0),
             contentPanelBottomConstraint,
-            contentPanelHeightConstraint
+            contentPanelHeightConstraint,
         ])
         
         addVoicePanel()
@@ -449,7 +449,7 @@ extension MessageInput {
         }
         morePanel.addSubview(cameraFeature)
         
-        addConstraints([
+        contentPanel.addConstraints([
             NSLayoutConstraint(item: morePanel, attribute: .left, relatedBy: .equal, toItem: contentPanel, attribute: .left, multiplier: 1, constant: 0),
             NSLayoutConstraint(item: morePanel, attribute: .right, relatedBy: .equal, toItem: contentPanel, attribute: .right, multiplier: 1, constant: 0),
             NSLayoutConstraint(item: morePanel, attribute: .top, relatedBy: .equal, toItem: contentPanel, attribute: .top, multiplier: 1, constant: 0),
