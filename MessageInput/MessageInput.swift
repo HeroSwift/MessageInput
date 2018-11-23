@@ -15,8 +15,6 @@ public class MessageInput: UIView {
 
     public var delegate: MessageInputDelegate!
     
-    private let inputBarTopBorder = UIView()
-    
     private let voiceButton = CircleView()
     private let textarea = EmotionTextarea(configuration: EmotionTextareaConfiguration())
     private let emotionButton = CircleView()
@@ -30,6 +28,10 @@ public class MessageInput: UIView {
     private let voicePanel = VoiceInput(configuration: VoiceInputConfiguration())
     private let emotionPanel = EmotionPager(configuration: EmotionPagerConfiguration())
     private let morePanel = UIView()
+    
+    // 用来垫起安全区域
+    private let safeArea = UIView()
+    private var safeAreaHeightConstraint: NSLayoutConstraint!
     
     private var cameraViewController: CameraViewController?
     
@@ -122,6 +124,7 @@ public class MessageInput: UIView {
     
     private func setup() {
         
+        addSafeArea()
         addContentPanel()
         addInputBar()
         
@@ -139,10 +142,6 @@ public class MessageInput: UIView {
             object: nil
         )
         
-        if #available(iOS 11.0, *) {
-            print(UIApplication.shared.keyWindow?.safeAreaInsets)
-        }
-     
     }
     
     public func reset() {
@@ -323,16 +322,18 @@ extension MessageInput {
     
     private func addInputBarTopBorder() {
         
-        inputBarTopBorder.backgroundColor = configuration.inputBarBorderColor
-        inputBarTopBorder.translatesAutoresizingMaskIntoConstraints = false
-        addSubview(inputBarTopBorder)
+        let border = UIView()
+        
+        border.backgroundColor = configuration.inputBarBorderColor
+        border.translatesAutoresizingMaskIntoConstraints = false
+        addSubview(border)
         
         addConstraints([
-            NSLayoutConstraint(item: inputBarTopBorder, attribute: .top, relatedBy: .equal, toItem: self, attribute: .top, multiplier: 1, constant: 0),
-            NSLayoutConstraint(item: inputBarTopBorder, attribute: .bottom, relatedBy: .equal, toItem: textarea, attribute: .top, multiplier: 1, constant: -configuration.inputBarPaddingVertical),
-            NSLayoutConstraint(item: inputBarTopBorder, attribute: .left, relatedBy: .equal, toItem: self, attribute: .left, multiplier: 1, constant: 0),
-            NSLayoutConstraint(item: inputBarTopBorder, attribute: .right, relatedBy: .equal, toItem: self, attribute: .right, multiplier: 1, constant: 0),
-            NSLayoutConstraint(item: inputBarTopBorder, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .height, multiplier: 1, constant: configuration.inputBarBorderWidth),
+            NSLayoutConstraint(item: border, attribute: .top, relatedBy: .equal, toItem: self, attribute: .top, multiplier: 1, constant: 0),
+            NSLayoutConstraint(item: border, attribute: .bottom, relatedBy: .equal, toItem: textarea, attribute: .top, multiplier: 1, constant: -configuration.inputBarPaddingVertical),
+            NSLayoutConstraint(item: border, attribute: .left, relatedBy: .equal, toItem: self, attribute: .left, multiplier: 1, constant: 0),
+            NSLayoutConstraint(item: border, attribute: .right, relatedBy: .equal, toItem: self, attribute: .right, multiplier: 1, constant: 0),
+            NSLayoutConstraint(item: border, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .height, multiplier: 1, constant: configuration.inputBarBorderWidth),
         ])
         
     }
@@ -462,6 +463,23 @@ extension MessageInput {
         ])
         
         addContentTopBorder(panel: morePanel)
+        
+    }
+    
+    private func addSafeArea() {
+        
+        safeArea.backgroundColor = .red
+        safeArea.translatesAutoresizingMaskIntoConstraints = false
+        addSubview(safeArea)
+        
+        safeAreaHeightConstraint = NSLayoutConstraint(item: safeArea, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .height, multiplier: 1, constant: 0)
+        
+        addConstraints([
+            NSLayoutConstraint(item: safeArea, attribute: .left, relatedBy: .equal, toItem: contentPanel, attribute: .left, multiplier: 1, constant: 0),
+            NSLayoutConstraint(item: safeArea, attribute: .right, relatedBy: .equal, toItem: contentPanel, attribute: .right, multiplier: 1, constant: 0),
+            NSLayoutConstraint(item: safeArea, attribute: .bottom, relatedBy: .equal, toItem: contentPanel, attribute: .bottom, multiplier: 1, constant: 0),
+            safeAreaHeightConstraint,
+        ])
         
     }
     
@@ -598,6 +616,16 @@ extension MessageInput {
         
     }
     
+    public override func layoutSubviews() {
+        
+        if #available(iOS 11.0, *) {
+            if let safeAreaInsets = UIApplication.shared.keyWindow?.safeAreaInsets {
+                safeAreaHeightConstraint.constant = safeAreaInsets.bottom
+                setNeedsLayout()
+            }
+        }
+        
+    }
 }
 
 //
