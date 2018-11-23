@@ -35,7 +35,7 @@ public class MessageInputConfiguration {
     public var circleButtonBackgroundColorNormal = UIColor.white
     
     // 圆形按钮按下时的背景色
-    public var circleButtonBackgroundColorPressed = UIColor(red: 0.87, green: 0.87, blue: 0.87, alpha: 1)
+    public var circleButtonBackgroundColorPressed = UIColor(red: 0.8, green: 0.8, blue: 0.8, alpha: 1)
     
     // 圆形按钮底部与输入框底部的距离
     public var circleButtonMarginBottom: CGFloat = 4
