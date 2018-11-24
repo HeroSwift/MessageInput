@@ -15,6 +15,9 @@ public class MessageInput: UIView {
 
     public var delegate: MessageInputDelegate!
     
+    private let voicePanelConfiguration = VoiceInputConfiguration()
+    private let emotionPagerConfiguration = EmotionPagerConfiguration()
+    
     private let voiceButton = CircleView()
     private let textarea = EmotionTextarea(configuration: EmotionTextareaConfiguration())
     private let emotionButton = CircleView()
@@ -24,21 +27,29 @@ public class MessageInput: UIView {
     private let sendButton = SimpleButton()
     
     private let contentPanel = UIView()
+    private let contentPanelTopBorder = UIView()
     
-    private let voicePanel = VoiceInput(configuration: VoiceInputConfiguration())
-    private let emotionPanel = EmotionPager(configuration: EmotionPagerConfiguration())
+    private var voicePanel: VoiceInput!
+    private var emotionPanel: EmotionPager!
     private let morePanel = UIView()
     
     private var cameraViewController: CameraViewController?
     
     private var keyboardHeight: CGFloat!
     private var textareaBottomConstraint: NSLayoutConstraint!
+    
+    private var voicePanelBottomConstraint: NSLayoutConstraint!
+    private var emotionPanelBottomConstraint: NSLayoutConstraint!
+    private var morePanelBottomConstraint: NSLayoutConstraint!
+    
     private var contentPanelHeightConstraint: NSLayoutConstraint!
     private var contentPanelBottomConstraint: NSLayoutConstraint!
     
     private var configuration: MessageInputConfiguration!
     
     private var isKeyboardVisible = false
+    
+    private var isVoicePreviewing = false
     
     public var viewMode = ViewMode.keyboard {
         didSet {
@@ -49,16 +60,19 @@ public class MessageInput: UIView {
                 voicePanel.isHidden = false
                 emotionPanel.isHidden = true
                 morePanel.isHidden = true
+                updateVoicePanelBackgroundColor()
                 break
             case .emotion:
                 voicePanel.isHidden = true
                 emotionPanel.isHidden = false
                 morePanel.isHidden = true
+                contentPanel.backgroundColor = emotionPagerConfiguration.toolbarBackgroundColor
                 break
             case .more:
                 voicePanel.isHidden = true
                 emotionPanel.isHidden = true
                 morePanel.isHidden = false
+                contentPanel.backgroundColor = configuration.contentPanelBackgroundColor
                 break
             case .keyboard:
                 break
@@ -364,38 +378,45 @@ extension MessageInput {
     
     private func addContentTopBorder() {
         
-        let border = UIView()
-        border.backgroundColor = configuration.inputBarBorderColor
-        border.translatesAutoresizingMaskIntoConstraints = false
+        contentPanelTopBorder.backgroundColor = configuration.inputBarBorderColor
+        contentPanelTopBorder.translatesAutoresizingMaskIntoConstraints = false
         
-        contentPanel.addSubview(border)
+        contentPanel.addSubview(contentPanelTopBorder)
         
         contentPanel.addConstraints([
-            NSLayoutConstraint(item: border, attribute: .top, relatedBy: .equal, toItem: contentPanel, attribute: .top, multiplier: 1, constant: 0),
-            NSLayoutConstraint(item: border, attribute: .left, relatedBy: .equal, toItem: contentPanel, attribute: .left, multiplier: 1, constant: 0),
-            NSLayoutConstraint(item: border, attribute: .right, relatedBy: .equal, toItem: contentPanel, attribute: .right, multiplier: 1, constant: 0),
-            NSLayoutConstraint(item: border, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .height, multiplier: 1, constant: configuration.inputBarBorderWidth),
+            NSLayoutConstraint(item: contentPanelTopBorder, attribute: .top, relatedBy: .equal, toItem: contentPanel, attribute: .top, multiplier: 1, constant: 0),
+            NSLayoutConstraint(item: contentPanelTopBorder, attribute: .left, relatedBy: .equal, toItem: contentPanel, attribute: .left, multiplier: 1, constant: 0),
+            NSLayoutConstraint(item: contentPanelTopBorder, attribute: .right, relatedBy: .equal, toItem: contentPanel, attribute: .right, multiplier: 1, constant: 0),
+            NSLayoutConstraint(item: contentPanelTopBorder, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .height, multiplier: 1, constant: configuration.inputBarBorderWidth),
         ])
         
     }
     
     private func addVoicePanel() {
         
+        voicePanelConfiguration.backgroundColor = configuration.contentPanelBackgroundColor
+        voicePanel = VoiceInput(configuration: voicePanelConfiguration)
+        
         voicePanel.delegate = self
         voicePanel.isHidden = true
         voicePanel.translatesAutoresizingMaskIntoConstraints = false
         contentPanel.addSubview(voicePanel)
         
+        voicePanelBottomConstraint = NSLayoutConstraint(item: voicePanel, attribute: .bottom, relatedBy: .equal, toItem: contentPanel, attribute: .bottom, multiplier: 1, constant: 0)
+        
         addConstraints([
             NSLayoutConstraint(item: voicePanel, attribute: .left, relatedBy: .equal, toItem: contentPanel, attribute: .left, multiplier: 1, constant: 0),
             NSLayoutConstraint(item: voicePanel, attribute: .right, relatedBy: .equal, toItem: contentPanel, attribute: .right, multiplier: 1, constant: 0),
-            NSLayoutConstraint(item: voicePanel, attribute: .top, relatedBy: .equal, toItem: contentPanel, attribute: .top, multiplier: 1, constant: 0),
-            NSLayoutConstraint(item: voicePanel, attribute: .bottom, relatedBy: .equal, toItem: contentPanel, attribute: .bottom, multiplier: 1, constant: 0),
+            NSLayoutConstraint(item: voicePanel, attribute: .top, relatedBy: .equal, toItem: contentPanelTopBorder, attribute: .bottom, multiplier: 1, constant: 0),
+            voicePanelBottomConstraint,
         ])
         
     }
     
     private func addEmotionPanel() {
+        
+        emotionPagerConfiguration.pagerBackgroundColor = configuration.contentPanelBackgroundColor
+        emotionPanel = EmotionPager(configuration: emotionPagerConfiguration)
         
         emotionPanel.isHidden = true
         emotionPanel.translatesAutoresizingMaskIntoConstraints = false
@@ -416,11 +437,13 @@ extension MessageInput {
         }
         contentPanel.addSubview(emotionPanel)
 
+        emotionPanelBottomConstraint = NSLayoutConstraint(item: emotionPanel, attribute: .bottom, relatedBy: .equal, toItem: contentPanel, attribute: .bottom, multiplier: 1, constant: 0)
+        
         addConstraints([
             NSLayoutConstraint(item: emotionPanel, attribute: .left, relatedBy: .equal, toItem: contentPanel, attribute: .left, multiplier: 1, constant: 0),
             NSLayoutConstraint(item: emotionPanel, attribute: .right, relatedBy: .equal, toItem: contentPanel, attribute: .right, multiplier: 1, constant: 0),
-            NSLayoutConstraint(item: emotionPanel, attribute: .top, relatedBy: .equal, toItem: contentPanel, attribute: .top, multiplier: 1, constant: 0),
-            NSLayoutConstraint(item: emotionPanel, attribute: .bottom, relatedBy: .equal, toItem: contentPanel, attribute: .bottom, multiplier: 1, constant: 0),
+            NSLayoutConstraint(item: emotionPanel, attribute: .top, relatedBy: .equal, toItem: contentPanelTopBorder, attribute: .bottom, multiplier: 1, constant: 0),
+            emotionPanelBottomConstraint,
         ])
         
     }
@@ -445,11 +468,13 @@ extension MessageInput {
         }
         morePanel.addSubview(cameraFeature)
         
+        morePanelBottomConstraint = NSLayoutConstraint(item: morePanel, attribute: .bottom, relatedBy: .equal, toItem: contentPanel, attribute: .bottom, multiplier: 1, constant: 0)
+        
         contentPanel.addConstraints([
             NSLayoutConstraint(item: morePanel, attribute: .left, relatedBy: .equal, toItem: contentPanel, attribute: .left, multiplier: 1, constant: 0),
             NSLayoutConstraint(item: morePanel, attribute: .right, relatedBy: .equal, toItem: contentPanel, attribute: .right, multiplier: 1, constant: 0),
-            NSLayoutConstraint(item: morePanel, attribute: .top, relatedBy: .equal, toItem: contentPanel, attribute: .top, multiplier: 1, constant: 0),
-            NSLayoutConstraint(item: morePanel, attribute: .bottom, relatedBy: .equal, toItem: contentPanel, attribute: .bottom, multiplier: 1, constant: 0),
+            NSLayoutConstraint(item: morePanel, attribute: .top, relatedBy: .equal, toItem: contentPanelTopBorder, attribute: .bottom, multiplier: 1, constant: 0),
+            morePanelBottomConstraint,
 
             NSLayoutConstraint(item: photoFeature, attribute: .top, relatedBy: .equal, toItem: morePanel, attribute: .top, multiplier: 1, constant: configuration.featurePanelPaddingVertical),
             NSLayoutConstraint(item: photoFeature, attribute: .left, relatedBy: .equal, toItem: morePanel, attribute: .left, multiplier: 1, constant: configuration.featurePanelPaddingHorizontal),
@@ -597,12 +622,21 @@ extension MessageInput {
         
         if #available(iOS 11.0, *) {
             if let safeAreaInsets = UIApplication.shared.keyWindow?.safeAreaInsets {
+                
+                let safeAreaBottom = safeAreaInsets.bottom
+                
                 var bottom = configuration.inputBarPaddingVertical
                 if contentPanelBottomConstraint.constant > 0 {
-                    bottom += safeAreaInsets.bottom
+                    bottom += safeAreaBottom
                 }
                 textareaBottomConstraint.constant = -bottom
+                
+                voicePanelBottomConstraint.constant = -safeAreaBottom
+                emotionPanelBottomConstraint.constant = -safeAreaBottom
+                morePanelBottomConstraint.constant = -safeAreaBottom
+                
                 setNeedsLayout()
+                
             }
         }
         
@@ -672,8 +706,22 @@ extension MessageInput {
 
 extension MessageInput: VoiceInputDelegate {
     
+    public func voiceInputDidPreviewingChange(_ voiceInput: VoiceInput, isPreviewing: Bool) {
+        isVoicePreviewing = isPreviewing
+        updateVoicePanelBackgroundColor()
+    }
+    
     public func voiceInputDidFinishRecord(_ voiceInput: VoiceInput, audioPath: String, audioDuration: TimeInterval) {
         delegate.messageInputDidSendAudio(audioPath: audioPath, audioDuration: audioDuration)
+    }
+    
+    private func updateVoicePanelBackgroundColor() {
+        if isVoicePreviewing {
+            contentPanel.backgroundColor = voicePanelConfiguration.footerButtonBackgroundColorNormal
+        }
+        else {
+            contentPanel.backgroundColor = configuration.contentPanelBackgroundColor
+        }
     }
     
 }
