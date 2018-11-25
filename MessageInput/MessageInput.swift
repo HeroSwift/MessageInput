@@ -415,7 +415,7 @@ extension MessageInput {
     
     private func addEmotionPanel() {
         
-        emotionPagerConfiguration.pagerBackgroundColor = configuration.contentPanelBackgroundColor
+        emotionPagerConfiguration.backgroundColor = configuration.contentPanelBackgroundColor
         emotionPanel = EmotionPager(configuration: emotionPagerConfiguration)
         
         emotionPanel.isHidden = true
