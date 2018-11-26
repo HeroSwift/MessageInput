@@ -457,7 +457,7 @@ extension MessageInput {
         let photoFeature = FeatureButton(title: configuration.photoText, image: configuration.photoImage, configuration: configuration)
         photoFeature.translatesAutoresizingMaskIntoConstraints = false
         photoFeature.onClick = {
-            self.openPhotoPicker()
+            self.delegate.messageInputDidClickPhotoFeature()
         }
         morePanel.addSubview(photoFeature)
         
@@ -579,24 +579,6 @@ extension MessageInput {
         }
         else {
             completion(true)
-        }
-        
-    }
-    
-    private func openPhotoPicker() {
-        
-        guard let parentViewController = UIApplication.shared.keyWindow?.rootViewController else {
-            return
-        }
-        
-        requestPhotoPermissions { authorized in
-            if authorized {
-                let imagePickerController = UIImagePickerController()
-                imagePickerController.delegate = self
-                imagePickerController.sourceType = .photoLibrary
-                
-                parentViewController.present(imagePickerController, animated: true, completion: nil)
-            }
         }
         
     }
@@ -761,61 +743,6 @@ extension MessageInput: CameraViewDelegate {
     }
     
     public func cameraViewDidPermissionsDenied(_ cameraView: CameraView) {
-        
-    }
-    
-}
-
-//
-// MARK: - UIImagePickerController 代理
-//
-
-extension MessageInput: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
-    
-    @objc public func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
-        
-        picker.dismiss(animated: true, completion: nil)
-        
-        if let pickedImage = info[UIImagePickerControllerOriginalImage] as? UIImage {
-            
-            if let imageData = UIImageJPEGRepresentation(pickedImage, 0.8) as NSData? {
-                let filePath = getFilePath(dirname: NSTemporaryDirectory(), extname: ".jpeg")
-                if imageData.write(toFile: filePath, atomically: true) {
-                    
-                    let imageWidth = pickedImage.size.width
-                    let imageHeight = pickedImage.size.height
-                    let image = ImageFile(path: filePath, width: Int(imageWidth), height: Int(imageHeight))
-                    
-                    var images = [ImageFile]()
-                    images.append(image)
-                    
-                    delegate.messageInputDidSendImages(images: images)
-                    
-                }
-            }
-            
-        }
-            
-    }
-    
-    // 生成一个文件路径
-    func getFilePath(dirname: String, extname: String) -> String {
-        
-        let fileManager = FileManager.default
-        if !fileManager.fileExists(atPath: dirname) {
-            try? fileManager.createDirectory(atPath: dirname, withIntermediateDirectories: true, attributes: nil)
-        }
-        
-        let format = DateFormatter()
-        format.dateFormat = "yyyy_MM_dd_HH_mm_ss"
-        
-        let filename = "\(format.string(from: Date()))\(extname)"
-        
-        if dirname.hasSuffix("/") {
-            return dirname + filename
-        }
-        
-        return "\(dirname)/\(filename)"
         
     }
     

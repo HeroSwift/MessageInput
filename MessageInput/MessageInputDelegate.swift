@@ -13,14 +13,14 @@ public protocol MessageInputDelegate {
     // 发送文本
     func messageInputDidSendText(text: String)
     
-    // 选择照片
-    func messageInputDidSendImages(images: [ImageFile])
-    
     // 拍照
     func messageInputDidSendPhoto(photo: ImageFile)
     
     // 录制视频
     func messageInputDidSendVideo(videoPath: String, videoDuration: TimeInterval, thumbnail: ImageFile)
+    
+    // 点击图片按钮
+    func messageInputDidClickPhotoFeature()
     
     // 抬起
     func messageInputDidLift()
@@ -38,11 +38,11 @@ public extension MessageInputDelegate {
     
     func messageInputDidSendText(text: String) { }
     
-    func messageInputDidSendImages(images: [ImageFile]) { }
-    
     func messageInputDidSendPhoto(photo: ImageFile) { }
     
     func messageInputDidSendVideo(videoPath: String, videoDuration: TimeInterval, thumbnail: ImageFile) { }
+    
+    func messageInputDidClickPhotoFeature() { }
     
     func messageInputDidLift() { }
     
