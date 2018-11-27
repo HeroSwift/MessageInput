@@ -649,12 +649,16 @@ extension MessageInput {
                 showContentPanel()
             }
             else {
-                Timer.scheduledTimer(
-                    timeInterval: configuration.keyboardAnimationDuration,
-                    target: self,
-                    selector: #selector(onKeyboardAppear),
-                    userInfo: nil,
-                    repeats: false
+                UIView.animate(
+                    withDuration: configuration.keyboardAnimationDuration,
+                    delay: 0,
+                    options: .curveEaseOut,
+                    animations: {
+                        self.layoutIfNeeded()
+                    },
+                    completion: { finished in
+                        self.resetPanels()
+                    }
                 )
             }
             
@@ -671,12 +675,6 @@ extension MessageInput {
         isKeyboardVisible = false
         
         hideContentPanel()
-        
-    }
-    
-    @objc func onKeyboardAppear() {
-        
-        resetPanels()
         
     }
     
