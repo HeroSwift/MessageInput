@@ -8,7 +8,7 @@ public class MessageInputConfiguration {
     public var inputBarBorderWidth = 1 / UIScreen.main.scale
     
     // 输入栏的边框颜色
-    public var inputBarBorderColor = UIColor(red: 200 / 255, green: 200 / 255, blue: 200 / 255, alpha: 1)
+    public var inputBarBorderColor = UIColor(red: 0.8, green: 0.8, blue: 0.8, alpha: 1)
     
     // 输入栏的背景颜色
     public var inputBarBackgroundColor = UIColor(red: 0.96, green: 0.96, blue: 0.96, alpha: 1)
@@ -17,7 +17,7 @@ public class MessageInputConfiguration {
     public var inputBarPaddingHorizontal: CGFloat = 10
 
     // 输入栏的垂直内边距
-    public var inputBarPaddingVertical: CGFloat = 6
+    public var inputBarPaddingVertical: CGFloat = 8
     
     // 输入栏每一项的间距
     public var inputBarItemSpacing: CGFloat = 8
@@ -29,13 +29,13 @@ public class MessageInputConfiguration {
     public var circleButtonBorderWidth = 1 / UIScreen.main.scale
     
     // 圆形按钮的边框颜色
-    public var circleButtonBorderColor = UIColor(red: 0.56, green: 0.56, blue: 0.56, alpha: 1)
+    public var circleButtonBorderColor = UIColor(red: 0.50, green: 0.51, blue: 0.54, alpha: 1)
     
     // 圆形按钮的默认背景色
-    public var circleButtonBackgroundColorNormal = UIColor.white
+    public var circleButtonBackgroundColorNormal = UIColor(red: 0.96, green: 0.96, blue: 0.96, alpha: 1)
     
     // 圆形按钮按下时的背景色
-    public var circleButtonBackgroundColorPressed = UIColor(red: 0.8, green: 0.8, blue: 0.8, alpha: 1)
+    public var circleButtonBackgroundColorPressed = UIColor(red: 0.9, green: 0.9, blue: 0.9, alpha: 1)
     
     // 圆形按钮底部与输入框底部的距离
     public var circleButtonMarginBottom: CGFloat = 4
@@ -78,24 +78,24 @@ public class MessageInputConfiguration {
     public var contentPanelBackgroundColor = UIColor(red: 0.96, green: 0.96, blue: 0.96, alpha: 1)
     
     // 特性面板内边距
-    public var featurePanelPaddingHorizontal: CGFloat = 30
+    public var featurePanelPaddingHorizontal: CGFloat = 34
     public var featurePanelPaddingVertical: CGFloat = 30
     
     // 特性按钮之间的间距
-    public var featureButtonSpacing: CGFloat = 25
+    public var featureButtonSpacing: CGFloat = 30
     
     // 图标按钮尺寸
-    public var featureButtonWidth: CGFloat = 50
-    public var featureButtonHeight: CGFloat = 50
+    public var featureButtonWidth: CGFloat = 56
+    public var featureButtonHeight: CGFloat = 56
     
     // 按钮背景色
-    public var featureButtonBackgroundColorNormal: UIColor = .white
-    public var featureButtonBackgroundColorPressed: UIColor = UIColor(red: 225 / 255, green: 225 / 255, blue: 225 / 255, alpha: 1)
+    public var featureButtonBackgroundColorNormal: UIColor = UIColor(red: 0.98, green: 0.98, blue: 0.98, alpha: 1)
+    public var featureButtonBackgroundColorPressed: UIColor = UIColor(red: 0.9, green: 0.9, blue: 0.9, alpha: 1)
     
     // 图标按钮边框
-    public var featureButtonBorderRadius: CGFloat = 8
+    public var featureButtonBorderRadius: CGFloat = 12
     public var featureButtonBorderWidth: CGFloat = 1 / UIScreen.main.scale
-    public var featureButtonBorderColor = UIColor(red: 160 / 255, green: 160 / 255, blue: 160 / 255, alpha: 160 / 255)
+    public var featureButtonBorderColor = UIColor(red: 0.7, green: 0.7, blue: 0.7, alpha: 1)
     
     // 特性按钮标题
     public var featureButtonTitleMarginTop: CGFloat = 8
@@ -103,14 +103,14 @@ public class MessageInputConfiguration {
     public var featureButtonTitleTextColor = UIColor(red: 120 / 255, green: 120 / 255, blue: 120 / 255, alpha: 1)
     
     // 图片按钮
-    public var photoImage = UIImage(named: "photo", in: Bundle(for: MessageInputConfiguration.self), compatibleWith: nil)!
+    public var photoFeatureImage = UIImage(named: "photo", in: Bundle(for: MessageInputConfiguration.self), compatibleWith: nil)!
     
-    public var photoText = "图片"
+    public var photoFeatureTitle = "图片"
     
     // 拍摄按钮
-    public var cameraImage = UIImage(named: "camera", in: Bundle(for: MessageInputConfiguration.self), compatibleWith: nil)!
+    public var cameraFeatureImage = UIImage(named: "camera", in: Bundle(for: MessageInputConfiguration.self), compatibleWith: nil)!
     
-    public var cameraText = "拍摄"
+    public var cameraFeatureTitle = "拍摄"
 
     // 默认的键盘高度
     public var defaultKeyboardHeight: CGFloat = 258

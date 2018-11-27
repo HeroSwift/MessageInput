@@ -454,14 +454,14 @@ extension MessageInput {
         morePanel.translatesAutoresizingMaskIntoConstraints = false
         contentPanel.addSubview(morePanel)
         
-        let photoFeature = FeatureButton(title: configuration.photoText, image: configuration.photoImage, configuration: configuration)
+        let photoFeature = FeatureButton(title: configuration.photoFeatureTitle, image: configuration.photoFeatureImage, configuration: configuration)
         photoFeature.translatesAutoresizingMaskIntoConstraints = false
         photoFeature.onClick = {
             self.delegate.messageInputDidClickPhotoFeature()
         }
         morePanel.addSubview(photoFeature)
         
-        let cameraFeature = FeatureButton(title: configuration.cameraText, image: configuration.cameraImage, configuration: configuration)
+        let cameraFeature = FeatureButton(title: configuration.cameraFeatureTitle, image: configuration.cameraFeatureImage, configuration: configuration)
         cameraFeature.translatesAutoresizingMaskIntoConstraints = false
         cameraFeature.onClick = {
             self.openCamera()
