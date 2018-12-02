@@ -2,10 +2,10 @@
 import UIKit
 import EmotionInput
 
-public protocol MessageInputDelegate {
+@objc public protocol MessageInputDelegate {
     
     // 发送语音
-    func messageInputDidSendAudio(audioPath: String, audioDuration: TimeInterval)
+    func messageInputDidSendAudio(audioPath: String, audioDuration: Int)
     
     // 发送表情
     func messageInputDidSendEmotion(emotion: Emotion)
@@ -17,7 +17,7 @@ public protocol MessageInputDelegate {
     func messageInputDidSendPhoto(photo: ImageFile)
     
     // 录制视频
-    func messageInputDidSendVideo(videoPath: String, videoDuration: TimeInterval, thumbnail: ImageFile)
+    func messageInputDidSendVideo(videoPath: String, videoDuration: Int, thumbnail: ImageFile)
     
     // 点击图片按钮
     func messageInputDidClickPhotoFeature()
@@ -32,7 +32,7 @@ public protocol MessageInputDelegate {
 
 public extension MessageInputDelegate {
     
-    func messageInputDidSendAudio(audioPath: String, audioDuration: TimeInterval) { }
+    func messageInputDidSendAudio(audioPath: String, audioDuration: Int) { }
     
     func messageInputDidSendEmotion(emotion: Emotion) { }
     
@@ -40,7 +40,7 @@ public extension MessageInputDelegate {
     
     func messageInputDidSendPhoto(photo: ImageFile) { }
     
-    func messageInputDidSendVideo(videoPath: String, videoDuration: TimeInterval, thumbnail: ImageFile) { }
+    func messageInputDidSendVideo(videoPath: String, videoDuration: Int, thumbnail: ImageFile) { }
     
     func messageInputDidClickPhotoFeature() { }
     

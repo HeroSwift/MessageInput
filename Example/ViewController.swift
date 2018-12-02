@@ -127,7 +127,7 @@ class ViewController: UIViewController {
 
 extension ViewController: MessageInputDelegate {    
     
-    func messageInputDidSendAudio(audioPath: String, audioDuration: TimeInterval) {
+    func messageInputDidSendAudio(audioPath: String, audioDuration: Int) {
         print("send voice  \(audioPath) \(audioDuration)")
     }
     
@@ -143,7 +143,7 @@ extension ViewController: MessageInputDelegate {
         print("send photo  \(photo)")
     }
     
-    func messageInputDidSendVideo(videoPath: String, videoDuration: TimeInterval, thumbnail: ImageFile) {
+    func messageInputDidSendVideo(videoPath: String, videoDuration: Int, thumbnail: ImageFile) {
         print("send video  \(videoPath) \(videoDuration)  \(thumbnail)")
     }
     

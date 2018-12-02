@@ -692,7 +692,7 @@ extension MessageInput: VoiceInputDelegate {
         updateVoicePanelBackgroundColor()
     }
     
-    public func voiceInputDidFinishRecord(_ voiceInput: VoiceInput, audioPath: String, audioDuration: TimeInterval) {
+    public func voiceInputDidFinishRecord(_ voiceInput: VoiceInput, audioPath: String, audioDuration: Int) {
         delegate.messageInputDidSendAudio(audioPath: audioPath, audioDuration: audioDuration)
     }
     
@@ -719,13 +719,13 @@ extension MessageInput: CameraViewDelegate {
     
     public func cameraViewDidPickPhoto(_ cameraView: CameraView, photoPath: String, photoWidth: CGFloat, photoHeight: CGFloat) {
         cameraViewController?.dismiss(animated: true, completion: nil)
-        let photo = ImageFile(path: photoPath, width: Int(photoWidth), height: Int(photoHeight))
+        let photo = ImageFile(path: photoPath, width: photoWidth, height: photoHeight)
         delegate.messageInputDidSendPhoto(photo: photo)
     }
     
-    public func cameraViewDidPickVideo(_ cameraView: CameraView, videoPath: String, videoDuration: TimeInterval, photoPath: String, photoWidth: CGFloat, photoHeight: CGFloat) {
+    public func cameraViewDidPickVideo(_ cameraView: CameraView, videoPath: String, videoDuration: Int, photoPath: String, photoWidth: CGFloat, photoHeight: CGFloat) {
         cameraViewController?.dismiss(animated: true, completion: nil)
-        let thumbnail = ImageFile(path: photoPath, width: Int(photoWidth), height: Int(photoHeight))
+        let thumbnail = ImageFile(path: photoPath, width: photoWidth, height: photoHeight)
         delegate.messageInputDidSendVideo(videoPath: videoPath, videoDuration: videoDuration, thumbnail: thumbnail)
     }
     
