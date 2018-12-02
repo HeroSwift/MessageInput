@@ -75,6 +75,7 @@ public class MessageInput: UIView {
                 contentPanel.backgroundColor = configuration.contentPanelBackgroundColor
                 break
             case .keyboard:
+                contentPanel.backgroundColor = configuration.contentPanelBackgroundColor
                 break
             }
             

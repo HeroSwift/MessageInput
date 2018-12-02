@@ -66,13 +66,13 @@ public class MessageInputConfiguration {
     public var sendButtonBackgroundColorPressed = UIColor(red: 0.99, green: 0.56, blue: 0.01, alpha: 1)
     
     // 语音按钮图片
-    public var voiceButtonImage = UIImage(named: "voice", in: Bundle(for: MessageInputConfiguration.self), compatibleWith: nil)
+    public var voiceButtonImage = UIImage(named: "message_input_voice")
     
     // 表情按钮图片
-    public var emotionButtonImage = UIImage(named: "emotion", in: Bundle(for: MessageInputConfiguration.self), compatibleWith: nil)
+    public var emotionButtonImage = UIImage(named: "message_input_emotion")
     
     // 更多按钮图片
-    public var moreButtonImage = UIImage(named: "more", in: Bundle(for: MessageInputConfiguration.self), compatibleWith: nil)
+    public var moreButtonImage = UIImage(named: "message_input_more")
     
     // 内容面板的背景色
     public var contentPanelBackgroundColor = UIColor(red: 0.96, green: 0.96, blue: 0.96, alpha: 1)
@@ -103,12 +103,12 @@ public class MessageInputConfiguration {
     public var featureButtonTitleTextColor = UIColor(red: 120 / 255, green: 120 / 255, blue: 120 / 255, alpha: 1)
     
     // 图片按钮
-    public var photoFeatureImage = UIImage(named: "photo", in: Bundle(for: MessageInputConfiguration.self), compatibleWith: nil)!
+    public var photoFeatureImage = UIImage(named: "message_input_photo")!
     
     public var photoFeatureTitle = "图片"
     
     // 拍摄按钮
-    public var cameraFeatureImage = UIImage(named: "camera", in: Bundle(for: MessageInputConfiguration.self), compatibleWith: nil)!
+    public var cameraFeatureImage = UIImage(named: "message_input_camera")!
     
     public var cameraFeatureTitle = "拍摄"
 
@@ -116,7 +116,7 @@ public class MessageInputConfiguration {
     public var defaultKeyboardHeight: CGFloat = 258
     
     // 键盘显示、隐藏的动画时长
-    public var keyboardAnimationDuration: TimeInterval = 0.2
+    public var keyboardAnimationDuration: TimeInterval = 5
     
     
     public init() { }

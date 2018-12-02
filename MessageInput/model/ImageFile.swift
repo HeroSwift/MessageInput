@@ -1,11 +1,13 @@
 
-public class ImageFile {
+import Foundation
+
+@objc public class ImageFile: NSObject {
     
-    public var path: String
+    @objc public var path: String
     
-    public var width: Int
+    @objc public var width: Int
     
-    public var height: Int
+    @objc public var height: Int
     
     public init(path: String, width: Int, height: Int) {
         self.path = path
