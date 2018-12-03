@@ -4,6 +4,22 @@ import EmotionInput
 
 @objc public protocol MessageInputDelegate {
     
+    func messageInputWillRecordAudioWithoutPermissions()
+    
+    func messageInputDidRecordAudioDurationLessThanMinDuration()
+    
+    func messageInputDidRecordAudioPermissionsGranted()
+    
+    func messageInputDidRecordAudioPermissionsDenied()
+    
+    func messageInputWillUseCameraWithoutPermissions()
+    
+    func messageInputDidRecordVideoDurationLessThanMinDuration()
+    
+    func messageInputDidRecordVideoPermissionsGranted()
+    
+    func messageInputDidRecordVideoPermissionsDenied()
+    
     // 发送语音
     func messageInputDidSendAudio(audioPath: String, audioDuration: Int)
     
@@ -31,6 +47,22 @@ import EmotionInput
 }
 
 public extension MessageInputDelegate {
+    
+    func messageInputWillRecordAudioWithoutPermissions() { }
+    
+    func messageInputDidRecordAudioDurationLessThanMinDuration() { }
+    
+    func messageInputDidRecordAudioPermissionsGranted() { }
+    
+    func messageInputDidRecordAudioPermissionsDenied() { }
+    
+    func messageInputWillUseCameraWithoutPermissions() { }
+    
+    func messageInputDidRecordVideoDurationLessThanMinDuration() { }
+    
+    func messageInputDidRecordVideoPermissionsGranted() { }
+    
+    func messageInputDidRecordVideoPermissionsDenied() { }
     
     func messageInputDidSendAudio(audioPath: String, audioDuration: Int) { }
     

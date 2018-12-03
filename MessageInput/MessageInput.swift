@@ -7,8 +7,6 @@ import VoiceInput
 import EmotionInput
 import SimpleButton
 
-import Photos
-
 public class MessageInput: UIView {
     
     private static let KEY_KEYBOARD_HEIGHT = "message_input_keyboard_height"
@@ -696,6 +694,22 @@ extension MessageInput: VoiceInputDelegate {
         delegate.messageInputDidSendAudio(audioPath: audioPath, audioDuration: audioDuration)
     }
     
+    public func voiceInputWillRecordWithoutPermissions(_ voiceInput: VoiceInput) {
+        delegate.messageInputWillRecordAudioWithoutPermissions()
+    }
+    
+    public func voiceInputDidRecordDurationLessThanMinDuration(_ voiceInput: VoiceInput) {
+        delegate.messageInputDidRecordAudioDurationLessThanMinDuration()
+    }
+    
+    public func voiceInputDidPermissionsGranted(_ voiceInput: VoiceInput) {
+        delegate.messageInputDidRecordAudioPermissionsGranted()
+    }
+    
+    public func voiceInputDidPermissionsDenied(_ voiceInput: VoiceInput) {
+        delegate.messageInputDidRecordAudioPermissionsDenied()
+    }
+    
     private func updateVoicePanelBackgroundColor() {
         if isVoicePreviewing {
             contentPanel.backgroundColor = voicePanelConfiguration.footerButtonBackgroundColorNormal
@@ -730,19 +744,19 @@ extension MessageInput: CameraViewDelegate {
     }
     
     public func cameraViewWillCaptureWithoutPermissions(_ cameraView: CameraView) {
-        
+        delegate.messageInputWillUseCameraWithoutPermissions()
     }
     
     public func cameraViewDidRecordDurationLessThanMinDuration(_ cameraView: CameraView) {
-        
+        delegate.messageInputDidRecordVideoDurationLessThanMinDuration()
     }
     
     public func cameraViewDidPermissionsGranted(_ cameraView: CameraView) {
-        
+        delegate.messageInputDidRecordVideoPermissionsGranted()
     }
     
     public func cameraViewDidPermissionsDenied(_ cameraView: CameraView) {
-        
+        delegate.messageInputDidRecordVideoPermissionsDenied()
     }
     
 }
