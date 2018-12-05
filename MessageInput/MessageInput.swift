@@ -165,6 +165,10 @@ public class MessageInput: UIView {
             hideContentPanel()
         }
     }
+    
+    public func setValue(_ value: String) {
+        textarea.insertText(value)
+    }
 
     public func setEmotionSetList(_ emotionSetList: [EmotionSet]) {
         emotionPanel.emotionSetList = emotionSetList
@@ -565,21 +569,6 @@ extension MessageInput {
     
     private func writeKeyboardHeight(_ keyboardHeight: CGFloat) {
         UserDefaults.standard.set(keyboardHeight, forKey: MessageInput.KEY_KEYBOARD_HEIGHT)
-    }
-
-    private func requestPhotoPermissions(completion: @escaping (Bool) -> Void) {
-        
-        if PHPhotoLibrary.authorizationStatus() != .authorized {
-            PHPhotoLibrary.requestAuthorization { status in
-                DispatchQueue.main.async {
-                    completion(status == .authorized)
-                }
-            }
-        }
-        else {
-            completion(true)
-        }
-        
     }
     
     private func openCamera() {
