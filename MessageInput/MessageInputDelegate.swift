@@ -38,6 +38,9 @@ import EmotionInput
     // 点击图片按钮
     func messageInputDidClickPhotoFeature()
     
+    // 文本变化
+    func messageInputDidTextChange(text: String)
+    
     // 抬起
     func messageInputDidLift()
     
@@ -75,6 +78,8 @@ public extension MessageInputDelegate {
     func messageInputDidSendVideo(videoPath: String, videoDuration: Int, thumbnail: ImageFile) { }
     
     func messageInputDidClickPhotoFeature() { }
+    
+    func messageInputDidTextChange(text: String) { }
     
     func messageInputDidLift() { }
     

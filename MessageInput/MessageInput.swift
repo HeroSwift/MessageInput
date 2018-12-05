@@ -88,9 +88,9 @@ public class MessageInput: UIView {
         }
     }
     
-    var text = "" {
+    private var plainText = "" {
         didSet {
-            if oldValue.isEmpty || text.isEmpty {
+            if oldValue.isEmpty || plainText.isEmpty {
                 if oldValue.isEmpty {
                     sendButton.isHidden = false
                     moreButton.isHidden = true
@@ -105,6 +105,7 @@ public class MessageInput: UIView {
                     emotionPanel.isSendButtonEnabled = false
                 }
             }
+            delegate.messageInputDidTextChange(text: plainText)
         }
     }
     
@@ -160,8 +161,13 @@ public class MessageInput: UIView {
         }
     }
     
-    public func setValue(_ value: String) {
-        textarea.insertText(value)
+    public func getText() -> String {
+        return plainText
+    }
+    
+    public func setText(_ text: String) {
+        textarea.clear()
+        textarea.insertText(text)
     }
 
     public func setEmotionSetList(_ emotionSetList: [EmotionSet]) {
@@ -199,7 +205,7 @@ extension MessageInput {
         
         textarea.translatesAutoresizingMaskIntoConstraints = false
         textarea.onTextChange = {
-            self.text = self.textarea.plainText
+            self.plainText = self.textarea.plainText
         }
         
         addSubview(textarea)
@@ -527,8 +533,8 @@ extension MessageInput {
     
     private func sendText() {
         
-        if text != "" {
-            delegate.messageInputDidSendText(text: text)
+        if plainText != "" {
+            delegate.messageInputDidSendText(text: plainText)
             textarea.clear()
         }
         
