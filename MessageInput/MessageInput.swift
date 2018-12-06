@@ -17,7 +17,7 @@ public class MessageInput: UIView {
     private let emotionPagerConfiguration = EmotionPagerConfiguration()
     
     private let voiceButton = CircleView()
-    private let textarea = EmotionTextarea(configuration: EmotionTextareaConfiguration())
+    private var textarea: EmotionTextarea!
     private let emotionButton = CircleView()
     
     private let rightButtons = UIView()
@@ -202,6 +202,10 @@ extension MessageInput {
     }
     
     private func addTextarea() {
+        
+        let textareaConfiguration = EmotionTextareaConfiguration()
+        textareaConfiguration.emotionTextHeightRatio = configuration.emotionTextHeightRatio
+        textarea = EmotionTextarea(configuration: textareaConfiguration)
         
         textarea.translatesAutoresizingMaskIntoConstraints = false
         textarea.onTextChange = {

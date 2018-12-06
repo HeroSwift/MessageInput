@@ -40,6 +40,9 @@ public class MessageInputConfiguration {
     // 圆形按钮底部与输入框底部的距离
     public var circleButtonMarginBottom: CGFloat = 4
     
+    // 输入框中表情图片和文本的高度比例
+    public var emotionTextHeightRatio: CGFloat = 1.1
+    
     // 发送按钮的文本
     public var sendButtonTitle = "发送"
 
