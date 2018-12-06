@@ -44,10 +44,16 @@ public class MessageInputConfiguration {
     public var sendButtonTitle = "发送"
 
     // 发送按钮的宽度
-    public var sendButtonWidth: CGFloat = 40
+    public var sendButtonWidth: CGFloat = 44
+    
+    // 发送按钮的高度
+    public var sendButtonHeight: CGFloat = 34
+    
+    // 发送按钮与输入框底部的距离
+    public var sendButtonMarginBottom: CGFloat = 2
     
     // 发送按钮的文本字体
-    public var sendButtonTextFont = UIFont.systemFont(ofSize: 12)
+    public var sendButtonTextFont = UIFont.systemFont(ofSize: 14)
     
     // 发送按钮的文本颜色
     public var sendButtonTextColor = UIColor.white
