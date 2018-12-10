@@ -402,6 +402,10 @@ extension MessageInput {
     private func addVoicePanel() {
         
         voicePanelConfiguration.backgroundColor = configuration.contentPanelBackgroundColor
+        voicePanelConfiguration.audioBitRate = 128000
+        voicePanelConfiguration.audioQuality = .medium
+        voicePanelConfiguration.audioSampleRate = 22050
+        
         voicePanel = VoiceInput(configuration: voicePanelConfiguration)
         
         voicePanel.delegate = self
@@ -468,12 +472,12 @@ extension MessageInput {
         }
         morePanel.addSubview(photoFeature)
         
-        let cameraFeature = FeatureButton(title: configuration.cameraFeatureTitle, image: configuration.cameraFeatureImage, configuration: configuration)
-        cameraFeature.translatesAutoresizingMaskIntoConstraints = false
-        cameraFeature.onClick = {
-            self.openCamera()
-        }
-        morePanel.addSubview(cameraFeature)
+//        let cameraFeature = FeatureButton(title: configuration.cameraFeatureTitle, image: configuration.cameraFeatureImage, configuration: configuration)
+//        cameraFeature.translatesAutoresizingMaskIntoConstraints = false
+//        cameraFeature.onClick = {
+//            self.openCamera()
+//        }
+//        morePanel.addSubview(cameraFeature)
         
         morePanelBottomConstraint = NSLayoutConstraint(item: morePanel, attribute: .bottom, relatedBy: .equal, toItem: contentPanel, attribute: .bottom, multiplier: 1, constant: 0)
         
@@ -486,8 +490,8 @@ extension MessageInput {
             NSLayoutConstraint(item: photoFeature, attribute: .top, relatedBy: .equal, toItem: morePanel, attribute: .top, multiplier: 1, constant: configuration.featurePanelPaddingVertical),
             NSLayoutConstraint(item: photoFeature, attribute: .left, relatedBy: .equal, toItem: morePanel, attribute: .left, multiplier: 1, constant: configuration.featurePanelPaddingHorizontal),
 
-            NSLayoutConstraint(item: cameraFeature, attribute: .top, relatedBy: .equal, toItem: morePanel, attribute: .top, multiplier: 1, constant: configuration.featurePanelPaddingVertical),
-            NSLayoutConstraint(item: cameraFeature, attribute: .left, relatedBy: .equal, toItem: morePanel, attribute: .left, multiplier: 1, constant: configuration.featurePanelPaddingHorizontal + configuration.featureButtonWidth + configuration.featureButtonSpacing),
+//            NSLayoutConstraint(item: cameraFeature, attribute: .top, relatedBy: .equal, toItem: morePanel, attribute: .top, multiplier: 1, constant: configuration.featurePanelPaddingVertical),
+//            NSLayoutConstraint(item: cameraFeature, attribute: .left, relatedBy: .equal, toItem: morePanel, attribute: .left, multiplier: 1, constant: configuration.featurePanelPaddingHorizontal + configuration.featureButtonWidth + configuration.featureButtonSpacing),
         ])
         
     }
@@ -561,6 +565,7 @@ extension MessageInput {
         let cameraViewController = CameraViewController()
         
         cameraViewController.configuration = CameraViewConfiguration()
+        cameraViewController.configuration.preset = .medium
         cameraViewController.delegate = self
         
         parentViewController.present(cameraViewController, animated: true, completion: nil)
