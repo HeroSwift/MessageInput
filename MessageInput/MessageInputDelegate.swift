@@ -1,6 +1,5 @@
 
 import UIKit
-import EmotionInput
 
 @objc public protocol MessageInputDelegate {
     

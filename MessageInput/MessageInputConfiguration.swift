@@ -1,7 +1,6 @@
 
 import UIKit
 
-// 配置
 public class MessageInputConfiguration {
     
     // 输入栏的边框大小

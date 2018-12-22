@@ -1,12 +1,6 @@
 
 import UIKit
 
-import CircleView
-import CameraView
-import VoiceInput
-import EmotionInput
-import SimpleButton
-
 public class MessageInput: UIView {
     
     private static let KEY_KEYBOARD_HEIGHT = "message_input_keyboard_height"
@@ -95,9 +89,6 @@ public class MessageInput: UIView {
                     sendButton.isHidden = false
                     moreButton.isHidden = true
                     emotionPanel.isSendButtonEnabled = true
-                    
-                    sendButton.setBackgroundColor(configuration.sendButtonBackgroundColorNormal, for: .normal)
-                    sendButton.setBackgroundColor(configuration.sendButtonBackgroundColorPressed, for: .highlighted)
                 }
                 else {
                     sendButton.isHidden = true
@@ -315,6 +306,10 @@ extension MessageInput {
         sendButton.translatesAutoresizingMaskIntoConstraints = false
         
         sendButton.isHidden = true
+        
+        sendButton.backgroundColor = configuration.sendButtonBackgroundColorNormal
+        sendButton.backgroundColorPressed = configuration.sendButtonBackgroundColorPressed
+        
         sendButton.titleLabel?.font = configuration.sendButtonTextFont
         sendButton.setTitle(configuration.sendButtonTitle, for: .normal)
         sendButton.setTitleColor(configuration.sendButtonTextColor, for: .normal)
@@ -322,7 +317,11 @@ extension MessageInput {
         sendButton.layer.borderWidth = configuration.sendButtonBorderWidth
         sendButton.layer.borderColor = configuration.sendButtonBorderColor.cgColor
         sendButton.layer.cornerRadius = configuration.sendButtonBorderRadius
-        sendButton.borderRadius = configuration.sendButtonBorderRadius
+        
+        if configuration.sendButtonBorderRadius > 0 {
+            sendButton.layer.cornerRadius = configuration.sendButtonBorderRadius
+            sendButton.clipsToBounds = true
+        }
         
         rightButtons.addSubview(sendButton)
         
