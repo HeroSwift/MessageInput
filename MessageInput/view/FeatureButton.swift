@@ -11,7 +11,6 @@ class FeatureButton: UIView {
         
         view.translatesAutoresizingMaskIntoConstraints = false
         
-        view.centerImage = image
         view.centerColor = configuration.featureButtonBackgroundColorNormal
         view.borderRadius = configuration.featureButtonBorderRadius
         view.borderWidth = configuration.featureButtonBorderWidth
@@ -43,7 +42,6 @@ class FeatureButton: UIView {
         view.numberOfLines = 1
         view.lineBreakMode = .byTruncatingTail
         view.textAlignment = .center
-        view.text = title
         view.sizeToFit()
         
         addSubview(view)
@@ -59,15 +57,13 @@ class FeatureButton: UIView {
         
     }()
     
-    private var title: String!
-    private var image: UIImage!
     private var configuration: MessageInputConfiguration!
     
     public convenience init(title: String, image: UIImage, configuration: MessageInputConfiguration) {
         self.init()
-        self.title = title
-        self.image = image
         self.configuration = configuration
+        buttonView.centerImage = image
+        titleView.text = title
     }
     
 }

@@ -1,5 +1,6 @@
 
 import UIKit
+import AVFoundation
 
 public class MessageInputConfiguration {
     
@@ -122,6 +123,18 @@ public class MessageInputConfiguration {
     public var cameraFeatureImage = UIImage(named: "message_input_camera")!
     
     public var cameraFeatureTitle = "拍摄"
+    
+    // 录音配置
+    
+    // 声音质量
+    public var audioQuality = AVAudioQuality.high
+    
+    // 码率
+    public var audioBitRate = 320000
+    
+    // 采样率
+    public var audioSampleRate = 44100.0
+    
     
     // 键盘显示、隐藏的动画时长
     public var keyboardAnimationDuration: TimeInterval = 0.2

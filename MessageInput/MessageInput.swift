@@ -105,16 +105,15 @@ public class MessageInput: UIView {
         self.init()
         self.configuration = configuration
         
-        setup()
-        
-    }
-
-    private func setup() {
-        
-        backgroundColor = .gray
+        backgroundColor = configuration.inputBarBackgroundColor
         
         addContentPanel()
         addInputBar()
+        
+    }
+    
+    public override func didMoveToSuperview() {
+        super.didMoveToSuperview()
         
         NotificationCenter.default.addObserver(
             self,
@@ -132,6 +131,23 @@ public class MessageInput: UIView {
         
     }
     
+    public override func removeFromSuperview() {
+        super.removeFromSuperview()
+        
+        NotificationCenter.default.removeObserver(
+            self,
+            name: .UIKeyboardWillShow,
+            object: nil
+        )
+        
+        NotificationCenter.default.removeObserver(
+            self,
+            name: .UIKeyboardWillHide,
+            object: nil
+        )
+        
+    }
+
     public func reset() {
         if viewMode == .keyboard {
             if isKeyboardVisible {
@@ -170,9 +186,7 @@ public class MessageInput: UIView {
 extension MessageInput {
     
     private func addInputBar() {
-        
-        backgroundColor = configuration.inputBarBackgroundColor
-        
+
         addTextarea()
         
         addVoiceButton()
@@ -393,9 +407,9 @@ extension MessageInput {
     private func addVoicePanel() {
         
         voicePanelConfiguration.backgroundColor = configuration.contentPanelBackgroundColor
-        voicePanelConfiguration.audioBitRate = 128000
-        voicePanelConfiguration.audioQuality = .medium
-        voicePanelConfiguration.audioSampleRate = 22050
+        voicePanelConfiguration.audioBitRate = configuration.audioBitRate
+        voicePanelConfiguration.audioQuality = configuration.audioQuality
+        voicePanelConfiguration.audioSampleRate = configuration.audioSampleRate
         
         voicePanel = VoiceInput(configuration: voicePanelConfiguration)
         
