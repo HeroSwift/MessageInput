@@ -1,69 +1,73 @@
 
 import UIKit
 
-import RoundView
-
 class FeatureButton: UIView {
     
-    private let buttonView = RoundView()
-    
-    private let titleView = UILabel()
-    
-    private var configuration: MessageInputConfiguration!
-    
     var onClick: (() -> Void)?
-
-    public convenience init(title: String, image: UIImage, configuration: MessageInputConfiguration) {
-        self.init()
-        self.configuration = configuration
-        setup(title: title, image: image)
-    }
     
-    public override init(frame: CGRect) {
-        super.init(frame: frame)
-    }
-    
-    public required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-    private func setup(title: String, image: UIImage) {
-
-        buttonView.translatesAutoresizingMaskIntoConstraints = false
+    private lazy var buttonView: RoundView = {
         
-        buttonView.centerImage = image
-        buttonView.centerColor = configuration.featureButtonBackgroundColorNormal
-        buttonView.borderRadius = configuration.featureButtonBorderRadius
-        buttonView.borderWidth = configuration.featureButtonBorderWidth
-        buttonView.borderColor = configuration.featureButtonBorderColor
-        buttonView.width = configuration.featureButtonWidth
-        buttonView.height = configuration.featureButtonHeight
+        let view = RoundView()
         
-        buttonView.delegate = self
+        view.translatesAutoresizingMaskIntoConstraints = false
         
-        titleView.translatesAutoresizingMaskIntoConstraints = false
-        titleView.font = configuration.featureButtonTitleTextFont
-        titleView.textColor = configuration.featureButtonTitleTextColor
-        titleView.numberOfLines = 1
-        titleView.lineBreakMode = .byTruncatingTail
-        titleView.textAlignment = .center
-        titleView.text = title
-        titleView.sizeToFit()
-
-        addSubview(buttonView)
-        addSubview(titleView)
+        view.centerImage = image
+        view.centerColor = configuration.featureButtonBackgroundColorNormal
+        view.borderRadius = configuration.featureButtonBorderRadius
+        view.borderWidth = configuration.featureButtonBorderWidth
+        view.borderColor = configuration.featureButtonBorderColor
+        view.width = configuration.featureButtonWidth
+        view.height = configuration.featureButtonHeight
+        
+        view.delegate = self
+        
+        addSubview(view)
         
         addConstraints([
-            NSLayoutConstraint(item: buttonView, attribute: .top, relatedBy: .equal, toItem: self, attribute: .top, multiplier: 1, constant: 0),
-            NSLayoutConstraint(item: buttonView, attribute: .left, relatedBy: .equal, toItem: self, attribute: .left, multiplier: 1, constant: 0),
-            NSLayoutConstraint(item: buttonView, attribute: .right, relatedBy: .equal, toItem: self, attribute: .right, multiplier: 1, constant: 0),
-            
-            NSLayoutConstraint(item: titleView, attribute: .left, relatedBy: .equal, toItem: self, attribute: .left, multiplier: 1, constant: 0),
-            NSLayoutConstraint(item: titleView, attribute: .right, relatedBy: .equal, toItem: self, attribute: .right, multiplier: 1, constant: 0),
-            NSLayoutConstraint(item: titleView, attribute: .top, relatedBy: .equal, toItem: buttonView, attribute: .bottom, multiplier: 1, constant: configuration.featureButtonTitleMarginTop),
-            NSLayoutConstraint(item: titleView, attribute: .bottom, relatedBy: .equal, toItem: self, attribute: .bottom, multiplier: 1, constant: 0),
+            NSLayoutConstraint(item: view, attribute: .top, relatedBy: .equal, toItem: self, attribute: .top, multiplier: 1, constant: 0),
+            NSLayoutConstraint(item: view, attribute: .left, relatedBy: .equal, toItem: self, attribute: .left, multiplier: 1, constant: 0),
+            NSLayoutConstraint(item: view, attribute: .right, relatedBy: .equal, toItem: self, attribute: .right, multiplier: 1, constant: 0),
         ])
         
+        return view
+        
+    }()
+    
+    private lazy var titleView: UILabel = {
+        
+        let view = UILabel()
+        
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.font = configuration.featureButtonTitleTextFont
+        view.textColor = configuration.featureButtonTitleTextColor
+        view.numberOfLines = 1
+        view.lineBreakMode = .byTruncatingTail
+        view.textAlignment = .center
+        view.text = title
+        view.sizeToFit()
+        
+        addSubview(view)
+        
+        addConstraints([
+            NSLayoutConstraint(item: view, attribute: .left, relatedBy: .equal, toItem: self, attribute: .left, multiplier: 1, constant: 0),
+            NSLayoutConstraint(item: view, attribute: .right, relatedBy: .equal, toItem: self, attribute: .right, multiplier: 1, constant: 0),
+            NSLayoutConstraint(item: view, attribute: .top, relatedBy: .equal, toItem: buttonView, attribute: .bottom, multiplier: 1, constant: configuration.featureButtonTitleMarginTop),
+            NSLayoutConstraint(item: view, attribute: .bottom, relatedBy: .equal, toItem: self, attribute: .bottom, multiplier: 1, constant: 0),
+        ])
+        
+        return view
+        
+    }()
+    
+    private var title: String!
+    private var image: UIImage!
+    private var configuration: MessageInputConfiguration!
+    
+    public convenience init(title: String, image: UIImage, configuration: MessageInputConfiguration) {
+        self.init()
+        self.title = title
+        self.image = image
+        self.configuration = configuration
     }
     
 }
