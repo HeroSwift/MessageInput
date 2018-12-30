@@ -363,7 +363,6 @@
 				9DF4EFB12172175200CA4DE7 /* Frameworks */,
 				9DF4EFB22172175200CA4DE7 /* Headers */,
 				9DF4EFB32172175200CA4DE7 /* Resources */,
-				9D511261218AD73600886938 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -449,22 +448,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
-
-/* Begin PBXShellScriptBuildPhase section */
-		9D511261218AD73600886938 /* ShellScript */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "";
-		};
-/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		9DF4EFB02172175200CA4DE7 /* Sources */ = {
@@ -700,7 +683,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -732,7 +715,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.finstao.MessageInput;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
@@ -755,7 +738,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.finstao.dev;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -778,7 +761,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.finstao.dev;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
