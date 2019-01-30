@@ -420,6 +420,7 @@ extension MessageInput {
         voicePanelConfiguration.audioBitRate = configuration.audioBitRate
         voicePanelConfiguration.audioQuality = configuration.audioQuality
         voicePanelConfiguration.audioSampleRate = configuration.audioSampleRate
+        voicePanelConfiguration.setAudioCategory = configuration.setAudioCategory
         
         voicePanel = VoiceInput(configuration: voicePanelConfiguration)
         
