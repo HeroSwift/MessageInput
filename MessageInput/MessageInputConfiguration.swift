@@ -90,11 +90,11 @@ public class MessageInputConfiguration {
     public var contentPanelBackgroundColor = UIColor(red: 0.96, green: 0.96, blue: 0.96, alpha: 1)
     
     // 特性面板内边距
-    public var featurePanelPaddingHorizontal: CGFloat = 34
     public var featurePanelPaddingVertical: CGFloat = 30
     
     // 特性按钮之间的间距
-    public var featureButtonSpacing: CGFloat = 30
+    public var featureButtonRowSpacing: CGFloat = 40
+    public var featureButtonColumnSpacing: CGFloat = 28
     
     // 图标按钮尺寸
     public var featureButtonWidth: CGFloat = 56
@@ -107,7 +107,7 @@ public class MessageInputConfiguration {
     // 图标按钮边框
     public var featureButtonBorderRadius: CGFloat = 12
     public var featureButtonBorderWidth: CGFloat = 1 / UIScreen.main.scale
-    public var featureButtonBorderColor = UIColor(red: 0.7, green: 0.7, blue: 0.7, alpha: 1)
+    public var featureButtonBorderColor = UIColor(red: 0.7, green: 0.7, blue: 0.7, alpha: 0.7)
     
     // 特性按钮标题
     public var featureButtonTitleMarginTop: CGFloat = 8
@@ -116,13 +116,36 @@ public class MessageInputConfiguration {
     
     // 图片按钮
     public var photoFeatureImage = UIImage(named: "message_input_photo")!
-    
     public var photoFeatureTitle = "图片"
     
     // 拍摄按钮
     public var cameraFeatureImage = UIImage(named: "message_input_camera")!
-    
     public var cameraFeatureTitle = "拍摄"
+    
+    // 文件按钮
+    public var fileFeatureImage = UIImage(named: "message_input_file")!
+    public var fileFeatureTitle = "文件"
+    
+    // 用户按钮
+    public var userFeatureImage = UIImage(named: "message_input_user")!
+    public var userFeatureTitle = "名片"
+    
+    // 视频通话
+    public var movieFeatureImage = UIImage(named: "message_input_movie")!
+    public var movieFeatureTitle = "视频通话"
+    
+    // 语音通话
+    public var phoneFeatureImage = UIImage(named: "message_input_phone")!
+    public var phoneFeatureTitle = "语音通话"
+    
+    // 位置按钮
+    public var locationFeatureImage = UIImage(named: "message_input_location")!
+    public var locationFeatureTitle = "位置"
+    
+    public var featureList = [
+        FeatureType.photo, FeatureType.camera, FeatureType.file, FeatureType.user,
+        FeatureType.movie, FeatureType.phone, FeatureType.location, FeatureType.user
+    ]
     
     // 录音配置
     
