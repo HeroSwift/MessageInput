@@ -43,6 +43,7 @@
 		9D76B84121CEA25B00A516C6 /* CaptureView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D76B83821CEA25B00A516C6 /* CaptureView.swift */; };
 		9D76B84221CEA25B00A516C6 /* CameraManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D76B83921CEA25B00A516C6 /* CameraManager.swift */; };
 		9D9B4DBC21A28DBA006110EE /* ViewMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D9B4DBB21A28DBA006110EE /* ViewMode.swift */; };
+		9DE94D07222E846C00DE079F /* FeatureType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DE94D06222E846C00DE079F /* FeatureType.swift */; };
 		9DF4EFC72172176D00CA4DE7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DF4EFC62172176D00CA4DE7 /* AppDelegate.swift */; };
 		9DF4EFC92172176D00CA4DE7 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DF4EFC82172176D00CA4DE7 /* ViewController.swift */; };
 		9DF4EFCC2172176D00CA4DE7 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9DF4EFCA2172176D00CA4DE7 /* Main.storyboard */; };
@@ -106,6 +107,7 @@
 		9D76B83821CEA25B00A516C6 /* CaptureView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CaptureView.swift; sourceTree = "<group>"; };
 		9D76B83921CEA25B00A516C6 /* CameraManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CameraManager.swift; sourceTree = "<group>"; };
 		9D9B4DBB21A28DBA006110EE /* ViewMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewMode.swift; sourceTree = "<group>"; };
+		9DE94D06222E846C00DE079F /* FeatureType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeatureType.swift; sourceTree = "<group>"; };
 		9DF4EFB52172175200CA4DE7 /* MessageInput.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = MessageInput.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		9DF4EFB92172175200CA4DE7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		9DF4EFC42172176D00CA4DE7 /* Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Example.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -285,6 +287,7 @@
 			isa = PBXGroup;
 			children = (
 				9D9B4DBB21A28DBA006110EE /* ViewMode.swift */,
+				9DE94D06222E846C00DE079F /* FeatureType.swift */,
 			);
 			path = enum;
 			sourceTree = "<group>";
@@ -480,6 +483,7 @@
 				9D76B81F21CEA22F00A516C6 /* EmojiFilter.swift in Sources */,
 				9DF4EFD9217218BC00CA4DE7 /* MessageInput.swift in Sources */,
 				9D76B81C21CEA22F00A516C6 /* EmotionGrid.swift in Sources */,
+				9DE94D07222E846C00DE079F /* FeatureType.swift in Sources */,
 				9D76B81521CEA22F00A516C6 /* EmotionIcon.swift in Sources */,
 				9D9B4DBC21A28DBA006110EE /* ViewMode.swift in Sources */,
 				9DF4EFE321722EC000CA4DE7 /* FeatureButton.swift in Sources */,
