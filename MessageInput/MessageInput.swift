@@ -520,34 +520,34 @@ extension MessageInput {
             
             switch featureList[i] {
             case .photo:
-                featureButton = createFeatureButton(title: configuration.photoFeatureTitle, image: configuration.photoFeatureImage) {
+                featureButton = createFeatureButton(title: configuration.photoFeatureTitle, icon: configuration.photoFeatureIcon) {
                     self.delegate.messageInputDidClickPhotoFeature()
                 }
                 break;
             case .camera:
-                featureButton = createFeatureButton(title: configuration.cameraFeatureTitle, image: configuration.cameraFeatureImage) {
+                featureButton = createFeatureButton(title: configuration.cameraFeatureTitle, icon: configuration.cameraFeatureIcon) {
                     self.openCamera()
                 }
                 break;
             case .file:
-                featureButton = createFeatureButton(title: configuration.fileFeatureTitle, image: configuration.fileFeatureImage) {
+                featureButton = createFeatureButton(title: configuration.fileFeatureTitle, icon: configuration.fileFeatureIcon) {
                     self.delegate.messageInputDidClickFileFeature()
                 }
                 break;
             case .user:
-                featureButton = createFeatureButton(title: configuration.userFeatureTitle, image: configuration.userFeatureImage) {
+                featureButton = createFeatureButton(title: configuration.userFeatureTitle, icon: configuration.userFeatureIcon) {
                     self.delegate.messageInputDidClickUserFeature()
                 }
             case .movie:
-                featureButton = createFeatureButton(title: configuration.movieFeatureTitle, image: configuration.movieFeatureImage) {
+                featureButton = createFeatureButton(title: configuration.movieFeatureTitle, icon: configuration.movieFeatureIcon) {
                     self.delegate.messageInputDidClickMovieFeature()
                 }
             case .phone:
-                featureButton = createFeatureButton(title: configuration.phoneFeatureTitle, image: configuration.phoneFeatureImage) {
+                featureButton = createFeatureButton(title: configuration.phoneFeatureTitle, icon: configuration.phoneFeatureIcon) {
                     self.delegate.messageInputDidClickPhoneFeature()
                 }
             case .location:
-                featureButton = createFeatureButton(title: configuration.locationFeatureTitle, image: configuration.locationFeatureImage) {
+                featureButton = createFeatureButton(title: configuration.locationFeatureTitle, icon: configuration.locationFeatureIcon) {
                     self.delegate.messageInputDidClickLocationFeature()
                 }
                 break;
@@ -576,9 +576,9 @@ extension MessageInput {
         
     }
     
-    private func createFeatureButton(title: String, image: UIImage, onClick: @escaping () -> Void) -> FeatureButton {
+    private func createFeatureButton(title: String, icon: UIImage, onClick: @escaping () -> Void) -> FeatureButton {
         
-        let feature = FeatureButton(title: title, image: image, configuration: configuration)
+        let feature = FeatureButton(title: title, icon: icon, configuration: configuration)
         feature.translatesAutoresizingMaskIntoConstraints = false
         feature.onClick = onClick
         morePanel.addSubview(feature)
