@@ -32,16 +32,19 @@
 		9D76B82021CEA22F00A516C6 /* BracketFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D76B80D21CEA22F00A516C6 /* BracketFilter.swift */; };
 		9D76B82121CEA22F00A516C6 /* EmotionFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D76B80E21CEA22F00A516C6 /* EmotionFilter.swift */; };
 		9D76B82721CEA23900A516C6 /* DotIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D76B82521CEA23800A516C6 /* DotIndicator.swift */; };
-		9D76B82D21CEA24800A516C6 /* CircleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D76B82A21CEA24800A516C6 /* CircleView.swift */; };
-		9D76B82F21CEA24800A516C6 /* CircleViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D76B82C21CEA24800A516C6 /* CircleViewDelegate.swift */; };
-		9D76B83B21CEA25B00A516C6 /* CameraViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D76B83121CEA25B00A516C6 /* CameraViewDelegate.swift */; };
-		9D76B83C21CEA25B00A516C6 /* CameraViewConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D76B83221CEA25B00A516C6 /* CameraViewConfiguration.swift */; };
-		9D76B83D21CEA25B00A516C6 /* CameraViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D76B83321CEA25B00A516C6 /* CameraViewController.swift */; };
-		9D76B83E21CEA25B00A516C6 /* CameraView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D76B83421CEA25B00A516C6 /* CameraView.swift */; };
-		9D76B83F21CEA25B00A516C6 /* FocusView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D76B83621CEA25B00A516C6 /* FocusView.swift */; };
-		9D76B84021CEA25B00A516C6 /* PreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D76B83721CEA25B00A516C6 /* PreviewView.swift */; };
-		9D76B84121CEA25B00A516C6 /* CaptureView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D76B83821CEA25B00A516C6 /* CaptureView.swift */; };
-		9D76B84221CEA25B00A516C6 /* CameraManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D76B83921CEA25B00A516C6 /* CameraManager.swift */; };
+		9D8CC954223269D800473496 /* CameraViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D8CC948223269D800473496 /* CameraViewDelegate.swift */; };
+		9D8CC955223269D800473496 /* CameraViewConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D8CC949223269D800473496 /* CameraViewConfiguration.swift */; };
+		9D8CC956223269D800473496 /* VideoQuality.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D8CC94B223269D800473496 /* VideoQuality.swift */; };
+		9D8CC957223269D800473496 /* CaptureMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D8CC94C223269D800473496 /* CaptureMode.swift */; };
+		9D8CC958223269D800473496 /* CameraViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D8CC94D223269D800473496 /* CameraViewController.swift */; };
+		9D8CC959223269D800473496 /* CameraView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D8CC94E223269D800473496 /* CameraView.swift */; };
+		9D8CC95A223269D800473496 /* FocusView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D8CC950223269D800473496 /* FocusView.swift */; };
+		9D8CC95B223269D800473496 /* PreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D8CC951223269D800473496 /* PreviewView.swift */; };
+		9D8CC95C223269D800473496 /* CaptureView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D8CC952223269D800473496 /* CaptureView.swift */; };
+		9D8CC95D223269D800473496 /* CameraManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D8CC953223269D800473496 /* CameraManager.swift */; };
+		9D8CC962223269E000473496 /* CircleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D8CC95F223269E000473496 /* CircleView.swift */; };
+		9D8CC963223269E000473496 /* CircleLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D8CC960223269E000473496 /* CircleLayer.swift */; };
+		9D8CC964223269E000473496 /* CircleViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D8CC961223269E000473496 /* CircleViewDelegate.swift */; };
 		9D9B4DBC21A28DBA006110EE /* ViewMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D9B4DBB21A28DBA006110EE /* ViewMode.swift */; };
 		9DE94D07222E846C00DE079F /* FeatureType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DE94D06222E846C00DE079F /* FeatureType.swift */; };
 		9DF4EFC72172176D00CA4DE7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DF4EFC62172176D00CA4DE7 /* AppDelegate.swift */; };
@@ -96,16 +99,19 @@
 		9D76B80D21CEA22F00A516C6 /* BracketFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BracketFilter.swift; sourceTree = "<group>"; };
 		9D76B80E21CEA22F00A516C6 /* EmotionFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmotionFilter.swift; sourceTree = "<group>"; };
 		9D76B82521CEA23800A516C6 /* DotIndicator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DotIndicator.swift; sourceTree = "<group>"; };
-		9D76B82A21CEA24800A516C6 /* CircleView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CircleView.swift; sourceTree = "<group>"; };
-		9D76B82C21CEA24800A516C6 /* CircleViewDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CircleViewDelegate.swift; sourceTree = "<group>"; };
-		9D76B83121CEA25B00A516C6 /* CameraViewDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CameraViewDelegate.swift; sourceTree = "<group>"; };
-		9D76B83221CEA25B00A516C6 /* CameraViewConfiguration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CameraViewConfiguration.swift; sourceTree = "<group>"; };
-		9D76B83321CEA25B00A516C6 /* CameraViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CameraViewController.swift; sourceTree = "<group>"; };
-		9D76B83421CEA25B00A516C6 /* CameraView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CameraView.swift; sourceTree = "<group>"; };
-		9D76B83621CEA25B00A516C6 /* FocusView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FocusView.swift; sourceTree = "<group>"; };
-		9D76B83721CEA25B00A516C6 /* PreviewView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreviewView.swift; sourceTree = "<group>"; };
-		9D76B83821CEA25B00A516C6 /* CaptureView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CaptureView.swift; sourceTree = "<group>"; };
-		9D76B83921CEA25B00A516C6 /* CameraManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CameraManager.swift; sourceTree = "<group>"; };
+		9D8CC948223269D800473496 /* CameraViewDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CameraViewDelegate.swift; sourceTree = "<group>"; };
+		9D8CC949223269D800473496 /* CameraViewConfiguration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CameraViewConfiguration.swift; sourceTree = "<group>"; };
+		9D8CC94B223269D800473496 /* VideoQuality.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VideoQuality.swift; sourceTree = "<group>"; };
+		9D8CC94C223269D800473496 /* CaptureMode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CaptureMode.swift; sourceTree = "<group>"; };
+		9D8CC94D223269D800473496 /* CameraViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CameraViewController.swift; sourceTree = "<group>"; };
+		9D8CC94E223269D800473496 /* CameraView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CameraView.swift; sourceTree = "<group>"; };
+		9D8CC950223269D800473496 /* FocusView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FocusView.swift; sourceTree = "<group>"; };
+		9D8CC951223269D800473496 /* PreviewView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreviewView.swift; sourceTree = "<group>"; };
+		9D8CC952223269D800473496 /* CaptureView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CaptureView.swift; sourceTree = "<group>"; };
+		9D8CC953223269D800473496 /* CameraManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CameraManager.swift; sourceTree = "<group>"; };
+		9D8CC95F223269E000473496 /* CircleView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CircleView.swift; sourceTree = "<group>"; };
+		9D8CC960223269E000473496 /* CircleLayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CircleLayer.swift; sourceTree = "<group>"; };
+		9D8CC961223269E000473496 /* CircleViewDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CircleViewDelegate.swift; sourceTree = "<group>"; };
 		9D9B4DBB21A28DBA006110EE /* ViewMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewMode.swift; sourceTree = "<group>"; };
 		9DE94D06222E846C00DE079F /* FeatureType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeatureType.swift; sourceTree = "<group>"; };
 		9DF4EFB52172175200CA4DE7 /* MessageInput.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = MessageInput.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -243,38 +249,6 @@
 			path = DotIndicator;
 			sourceTree = "<group>";
 		};
-		9D76B82921CEA24800A516C6 /* CircleView */ = {
-			isa = PBXGroup;
-			children = (
-				9D76B82A21CEA24800A516C6 /* CircleView.swift */,
-				9D76B82C21CEA24800A516C6 /* CircleViewDelegate.swift */,
-			);
-			path = CircleView;
-			sourceTree = "<group>";
-		};
-		9D76B83021CEA25B00A516C6 /* CameraView */ = {
-			isa = PBXGroup;
-			children = (
-				9D76B83121CEA25B00A516C6 /* CameraViewDelegate.swift */,
-				9D76B83221CEA25B00A516C6 /* CameraViewConfiguration.swift */,
-				9D76B83321CEA25B00A516C6 /* CameraViewController.swift */,
-				9D76B83421CEA25B00A516C6 /* CameraView.swift */,
-				9D76B83521CEA25B00A516C6 /* view */,
-				9D76B83921CEA25B00A516C6 /* CameraManager.swift */,
-			);
-			path = CameraView;
-			sourceTree = "<group>";
-		};
-		9D76B83521CEA25B00A516C6 /* view */ = {
-			isa = PBXGroup;
-			children = (
-				9D76B83621CEA25B00A516C6 /* FocusView.swift */,
-				9D76B83721CEA25B00A516C6 /* PreviewView.swift */,
-				9D76B83821CEA25B00A516C6 /* CaptureView.swift */,
-			);
-			path = view;
-			sourceTree = "<group>";
-		};
 		9D86CADD2189442A00C8F5CB /* view */ = {
 			isa = PBXGroup;
 			children = (
@@ -282,6 +256,50 @@
 			);
 			path = view;
 			sourceTree = "<group>";
+		};
+		9D8CC947223269D800473496 /* CameraView */ = {
+			isa = PBXGroup;
+			children = (
+				9D8CC948223269D800473496 /* CameraViewDelegate.swift */,
+				9D8CC949223269D800473496 /* CameraViewConfiguration.swift */,
+				9D8CC94A223269D800473496 /* enum */,
+				9D8CC94D223269D800473496 /* CameraViewController.swift */,
+				9D8CC94E223269D800473496 /* CameraView.swift */,
+				9D8CC94F223269D800473496 /* view */,
+				9D8CC953223269D800473496 /* CameraManager.swift */,
+			);
+			path = CameraView;
+			sourceTree = "<group>";
+		};
+		9D8CC94A223269D800473496 /* enum */ = {
+			isa = PBXGroup;
+			children = (
+				9D8CC94B223269D800473496 /* VideoQuality.swift */,
+				9D8CC94C223269D800473496 /* CaptureMode.swift */,
+			);
+			path = enum;
+			sourceTree = "<group>";
+		};
+		9D8CC94F223269D800473496 /* view */ = {
+			isa = PBXGroup;
+			children = (
+				9D8CC950223269D800473496 /* FocusView.swift */,
+				9D8CC951223269D800473496 /* PreviewView.swift */,
+				9D8CC952223269D800473496 /* CaptureView.swift */,
+			);
+			path = view;
+			sourceTree = "<group>";
+		};
+		9D8CC95E223269E000473496 /* CircleView */ = {
+			isa = PBXGroup;
+			children = (
+				9D8CC95F223269E000473496 /* CircleView.swift */,
+				9D8CC960223269E000473496 /* CircleLayer.swift */,
+				9D8CC961223269E000473496 /* CircleViewDelegate.swift */,
+			);
+			name = CircleView;
+			path = MessageInput/CircleView;
+			sourceTree = SOURCE_ROOT;
 		};
 		9D9B4DBA21A28DA9006110EE /* enum */ = {
 			isa = PBXGroup;
@@ -314,8 +332,8 @@
 		9DF4EFB72172175200CA4DE7 /* MessageInput */ = {
 			isa = PBXGroup;
 			children = (
-				9D76B83021CEA25B00A516C6 /* CameraView */,
-				9D76B82921CEA24800A516C6 /* CircleView */,
+				9D8CC95E223269E000473496 /* CircleView */,
+				9D8CC947223269D800473496 /* CameraView */,
 				9D76B82421CEA23800A516C6 /* DotIndicator */,
 				9D76B7FA21CEA22F00A516C6 /* EmotionInput */,
 				9D76B7E721CEA22100A516C6 /* VoiceInput */,
@@ -458,42 +476,45 @@
 			buildActionMask = 2147483647;
 			files = (
 				9D76B81221CEA22F00A516C6 /* EmotionPagerConfiguration.swift in Sources */,
+				9D8CC956223269D800473496 /* VideoQuality.swift in Sources */,
 				9D76B7F621CEA22100A516C6 /* VoiceInputConfiguration.swift in Sources */,
+				9D8CC962223269E000473496 /* CircleView.swift in Sources */,
+				9D8CC959223269D800473496 /* CameraView.swift in Sources */,
 				9D76B81D21CEA22F00A516C6 /* EmotionAttachment.swift in Sources */,
 				9D76B82721CEA23900A516C6 /* DotIndicator.swift in Sources */,
 				9D76B81A21CEA22F00A516C6 /* EmotionToolbar.swift in Sources */,
+				9D8CC95B223269D800473496 /* PreviewView.swift in Sources */,
 				9D76B81B21CEA22F00A516C6 /* EmotionTextarea.swift in Sources */,
 				9D76B81E21CEA22F00A516C6 /* EmotionPager.swift in Sources */,
-				9D76B82F21CEA24800A516C6 /* CircleViewDelegate.swift in Sources */,
 				9D76B81821CEA22F00A516C6 /* EmotionPage.swift in Sources */,
-				9D76B84221CEA25B00A516C6 /* CameraManager.swift in Sources */,
-				9D76B83B21CEA25B00A516C6 /* CameraViewDelegate.swift in Sources */,
 				9D76B7F321CEA22100A516C6 /* VoiceInput.swift in Sources */,
 				9D76B7F721CEA22100A516C6 /* VoiceInputDelegate.swift in Sources */,
+				9D8CC958223269D800473496 /* CameraViewController.swift in Sources */,
 				9D76B7E021CEA20C00A516C6 /* RoundViewDelegate.swift in Sources */,
-				9D76B83C21CEA25B00A516C6 /* CameraViewConfiguration.swift in Sources */,
-				9D76B84121CEA25B00A516C6 /* CaptureView.swift in Sources */,
 				9DF4EFE52172348900CA4DE7 /* MessageInputConfiguration.swift in Sources */,
-				9D76B83D21CEA25B00A516C6 /* CameraViewController.swift in Sources */,
 				9D76B7DF21CEA20C00A516C6 /* RoundView.swift in Sources */,
 				9D76B82121CEA22F00A516C6 /* EmotionFilter.swift in Sources */,
 				9D0A79762194095B009696D0 /* MessageInputDelegate.swift in Sources */,
-				9D76B84021CEA25B00A516C6 /* PreviewView.swift in Sources */,
-				9D76B83E21CEA25B00A516C6 /* CameraView.swift in Sources */,
 				9D76B81F21CEA22F00A516C6 /* EmojiFilter.swift in Sources */,
 				9DF4EFD9217218BC00CA4DE7 /* MessageInput.swift in Sources */,
 				9D76B81C21CEA22F00A516C6 /* EmotionGrid.swift in Sources */,
 				9DE94D07222E846C00DE079F /* FeatureType.swift in Sources */,
 				9D76B81521CEA22F00A516C6 /* EmotionIcon.swift in Sources */,
+				9D8CC963223269E000473496 /* CircleLayer.swift in Sources */,
+				9D8CC957223269D800473496 /* CaptureMode.swift in Sources */,
+				9D8CC955223269D800473496 /* CameraViewConfiguration.swift in Sources */,
 				9D9B4DBC21A28DBA006110EE /* ViewMode.swift in Sources */,
 				9DF4EFE321722EC000CA4DE7 /* FeatureButton.swift in Sources */,
-				9D76B83F21CEA25B00A516C6 /* FocusView.swift in Sources */,
+				9D8CC954223269D800473496 /* CameraViewDelegate.swift in Sources */,
+				9D8CC95C223269D800473496 /* CaptureView.swift in Sources */,
 				9D0A79B0219809C0009696D0 /* ImageFile.swift in Sources */,
-				9D76B82D21CEA24800A516C6 /* CircleView.swift in Sources */,
 				9D76B7E521CEA21800A516C6 /* SimpleButton.swift in Sources */,
 				9D76B81621CEA22F00A516C6 /* EmotionSet.swift in Sources */,
 				9D76B7F921CEA22100A516C6 /* VoiceManager.swift in Sources */,
+				9D8CC95D223269D800473496 /* CameraManager.swift in Sources */,
+				9D8CC964223269E000473496 /* CircleViewDelegate.swift in Sources */,
 				9D76B81321CEA22F00A516C6 /* EmotionTextareaConfiguration.swift in Sources */,
+				9D8CC95A223269D800473496 /* FocusView.swift in Sources */,
 				9D76B81721CEA22F00A516C6 /* Emotion.swift in Sources */,
 				9D76B81921CEA22F00A516C6 /* EmotionCell.swift in Sources */,
 				9D76B82021CEA22F00A516C6 /* BracketFilter.swift in Sources */,
@@ -683,6 +704,7 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
+				MACH_O_TYPE = mh_dylib;
 				PRODUCT_BUNDLE_IDENTIFIER = com.finstao.MessageInput;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -717,6 +739,7 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
+				MACH_O_TYPE = mh_dylib;
 				PRODUCT_BUNDLE_IDENTIFIER = com.finstao.MessageInput;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
