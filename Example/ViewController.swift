@@ -126,7 +126,7 @@ class ViewController: UIViewController {
 
 extension ViewController: MessageInputDelegate {
     
-    func messageInputWillRecordAudioWithoutPermissions() { }
+    func messageInputDidRecordAudioPermissionsNotGranted() { }
     
     func messageInputDidRecordAudioDurationLessThanMinDuration() { }
     

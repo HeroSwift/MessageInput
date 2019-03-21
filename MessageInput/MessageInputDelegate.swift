@@ -3,21 +3,24 @@ import UIKit
 
 public protocol MessageInputDelegate {
     
-    func messageInputWillRecordAudioWithoutPermissions()
-    
     func messageInputDidRecordAudioDurationLessThanMinDuration()
+    
+    func messageInputDidRecordAudioPermissionsNotGranted()
     
     func messageInputDidRecordAudioPermissionsGranted()
     
     func messageInputDidRecordAudioPermissionsDenied()
     
-    func messageInputWillUseCameraWithoutPermissions()
+    
     
     func messageInputDidRecordVideoDurationLessThanMinDuration()
+    
+    func messageInputDidRecordVideoPermissionsNotGranted()
     
     func messageInputDidRecordVideoPermissionsGranted()
     
     func messageInputDidRecordVideoPermissionsDenied()
+    
     
     func messageInputWillUseAudio()
     
@@ -66,16 +69,16 @@ public protocol MessageInputDelegate {
 }
 
 public extension MessageInputDelegate {
-    
-    func messageInputWillRecordAudioWithoutPermissions() { }
-    
+
     func messageInputDidRecordAudioDurationLessThanMinDuration() { }
+    
+    func messageInputDidRecordAudioPermissionsNotGranted() { }
     
     func messageInputDidRecordAudioPermissionsGranted() { }
     
     func messageInputDidRecordAudioPermissionsDenied() { }
     
-    func messageInputWillUseCameraWithoutPermissions() { }
+    func messageInputDidRecordVideoPermissionsNotGranted() { }
     
     func messageInputDidRecordVideoDurationLessThanMinDuration() { }
     
