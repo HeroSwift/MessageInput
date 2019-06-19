@@ -148,7 +148,7 @@ public class MessageInputConfiguration {
     
     public var featureList = [
         FeatureType.photo, FeatureType.camera, FeatureType.file, FeatureType.user,
-        FeatureType.movie, FeatureType.phone, FeatureType.location
+        FeatureType.movie, FeatureType.phone, FeatureType.location, FeatureType.favor
     ]
     
     // 录音配置
