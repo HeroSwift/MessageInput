@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		9D0A79762194095B009696D0 /* MessageInputDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D0A79752194095B009696D0 /* MessageInputDelegate.swift */; };
-		9D0A79B0219809C0009696D0 /* ImageFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D0A79AF219809BF009696D0 /* ImageFile.swift */; };
 		9D76B7DF21CEA20C00A516C6 /* RoundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D76B7DC21CEA20C00A516C6 /* RoundView.swift */; };
 		9D76B7E021CEA20C00A516C6 /* RoundViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D76B7DD21CEA20C00A516C6 /* RoundViewDelegate.swift */; };
 		9D76B7E521CEA21800A516C6 /* SimpleButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D76B7E321CEA21800A516C6 /* SimpleButton.swift */; };
@@ -32,16 +31,6 @@
 		9D76B82021CEA22F00A516C6 /* BracketFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D76B80D21CEA22F00A516C6 /* BracketFilter.swift */; };
 		9D76B82121CEA22F00A516C6 /* EmotionFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D76B80E21CEA22F00A516C6 /* EmotionFilter.swift */; };
 		9D76B82721CEA23900A516C6 /* DotIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D76B82521CEA23800A516C6 /* DotIndicator.swift */; };
-		9D8CC954223269D800473496 /* CameraViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D8CC948223269D800473496 /* CameraViewDelegate.swift */; };
-		9D8CC955223269D800473496 /* CameraViewConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D8CC949223269D800473496 /* CameraViewConfiguration.swift */; };
-		9D8CC956223269D800473496 /* VideoQuality.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D8CC94B223269D800473496 /* VideoQuality.swift */; };
-		9D8CC957223269D800473496 /* CaptureMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D8CC94C223269D800473496 /* CaptureMode.swift */; };
-		9D8CC958223269D800473496 /* CameraViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D8CC94D223269D800473496 /* CameraViewController.swift */; };
-		9D8CC959223269D800473496 /* CameraView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D8CC94E223269D800473496 /* CameraView.swift */; };
-		9D8CC95A223269D800473496 /* FocusView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D8CC950223269D800473496 /* FocusView.swift */; };
-		9D8CC95B223269D800473496 /* PreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D8CC951223269D800473496 /* PreviewView.swift */; };
-		9D8CC95C223269D800473496 /* CaptureView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D8CC952223269D800473496 /* CaptureView.swift */; };
-		9D8CC95D223269D800473496 /* CameraManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D8CC953223269D800473496 /* CameraManager.swift */; };
 		9D8CC962223269E000473496 /* CircleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D8CC95F223269E000473496 /* CircleView.swift */; };
 		9D8CC963223269E000473496 /* CircleLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D8CC960223269E000473496 /* CircleLayer.swift */; };
 		9D8CC964223269E000473496 /* CircleViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D8CC961223269E000473496 /* CircleViewDelegate.swift */; };
@@ -70,7 +59,6 @@
 /* Begin PBXFileReference section */
 		9D0A79752194095B009696D0 /* MessageInputDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageInputDelegate.swift; sourceTree = "<group>"; };
 		9D0A79AA21943727009696D0 /* RoundView.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RoundView.framework; path = Carthage/Build/iOS/RoundView.framework; sourceTree = "<group>"; };
-		9D0A79AF219809BF009696D0 /* ImageFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageFile.swift; sourceTree = "<group>"; };
 		9D511264218AD7A400886938 /* VoiceInput.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = VoiceInput.framework; path = Carthage/Build/iOS/VoiceInput.framework; sourceTree = "<group>"; };
 		9D511265218AD7A400886938 /* SimpleButton.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SimpleButton.framework; path = Carthage/Build/iOS/SimpleButton.framework; sourceTree = "<group>"; };
 		9D51127B218AEA5600886938 /* EmotionInput.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = EmotionInput.framework; path = Carthage/Build/iOS/EmotionInput.framework; sourceTree = "<group>"; };
@@ -99,16 +87,6 @@
 		9D76B80D21CEA22F00A516C6 /* BracketFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BracketFilter.swift; sourceTree = "<group>"; };
 		9D76B80E21CEA22F00A516C6 /* EmotionFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmotionFilter.swift; sourceTree = "<group>"; };
 		9D76B82521CEA23800A516C6 /* DotIndicator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DotIndicator.swift; sourceTree = "<group>"; };
-		9D8CC948223269D800473496 /* CameraViewDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CameraViewDelegate.swift; sourceTree = "<group>"; };
-		9D8CC949223269D800473496 /* CameraViewConfiguration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CameraViewConfiguration.swift; sourceTree = "<group>"; };
-		9D8CC94B223269D800473496 /* VideoQuality.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VideoQuality.swift; sourceTree = "<group>"; };
-		9D8CC94C223269D800473496 /* CaptureMode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CaptureMode.swift; sourceTree = "<group>"; };
-		9D8CC94D223269D800473496 /* CameraViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CameraViewController.swift; sourceTree = "<group>"; };
-		9D8CC94E223269D800473496 /* CameraView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CameraView.swift; sourceTree = "<group>"; };
-		9D8CC950223269D800473496 /* FocusView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FocusView.swift; sourceTree = "<group>"; };
-		9D8CC951223269D800473496 /* PreviewView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreviewView.swift; sourceTree = "<group>"; };
-		9D8CC952223269D800473496 /* CaptureView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CaptureView.swift; sourceTree = "<group>"; };
-		9D8CC953223269D800473496 /* CameraManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CameraManager.swift; sourceTree = "<group>"; };
 		9D8CC95F223269E000473496 /* CircleView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CircleView.swift; sourceTree = "<group>"; };
 		9D8CC960223269E000473496 /* CircleLayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CircleLayer.swift; sourceTree = "<group>"; };
 		9D8CC961223269E000473496 /* CircleViewDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CircleViewDelegate.swift; sourceTree = "<group>"; };
@@ -146,14 +124,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		9D0A79AE2198099F009696D0 /* model */ = {
-			isa = PBXGroup;
-			children = (
-				9D0A79AF219809BF009696D0 /* ImageFile.swift */,
-			);
-			path = model;
-			sourceTree = "<group>";
-		};
 		9D511262218AD7A300886938 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -257,39 +227,6 @@
 			path = view;
 			sourceTree = "<group>";
 		};
-		9D8CC947223269D800473496 /* CameraView */ = {
-			isa = PBXGroup;
-			children = (
-				9D8CC948223269D800473496 /* CameraViewDelegate.swift */,
-				9D8CC949223269D800473496 /* CameraViewConfiguration.swift */,
-				9D8CC94A223269D800473496 /* enum */,
-				9D8CC94D223269D800473496 /* CameraViewController.swift */,
-				9D8CC94E223269D800473496 /* CameraView.swift */,
-				9D8CC94F223269D800473496 /* view */,
-				9D8CC953223269D800473496 /* CameraManager.swift */,
-			);
-			path = CameraView;
-			sourceTree = "<group>";
-		};
-		9D8CC94A223269D800473496 /* enum */ = {
-			isa = PBXGroup;
-			children = (
-				9D8CC94B223269D800473496 /* VideoQuality.swift */,
-				9D8CC94C223269D800473496 /* CaptureMode.swift */,
-			);
-			path = enum;
-			sourceTree = "<group>";
-		};
-		9D8CC94F223269D800473496 /* view */ = {
-			isa = PBXGroup;
-			children = (
-				9D8CC950223269D800473496 /* FocusView.swift */,
-				9D8CC951223269D800473496 /* PreviewView.swift */,
-				9D8CC952223269D800473496 /* CaptureView.swift */,
-			);
-			path = view;
-			sourceTree = "<group>";
-		};
 		9D8CC95E223269E000473496 /* CircleView */ = {
 			isa = PBXGroup;
 			children = (
@@ -333,14 +270,12 @@
 			isa = PBXGroup;
 			children = (
 				9D8CC95E223269E000473496 /* CircleView */,
-				9D8CC947223269D800473496 /* CameraView */,
 				9D76B82421CEA23800A516C6 /* DotIndicator */,
 				9D76B7FA21CEA22F00A516C6 /* EmotionInput */,
 				9D76B7E721CEA22100A516C6 /* VoiceInput */,
 				9D76B7E221CEA21800A516C6 /* SimpleButton */,
 				9D76B7DB21CEA20C00A516C6 /* RoundView */,
 				9D9B4DBA21A28DA9006110EE /* enum */,
-				9D0A79AE2198099F009696D0 /* model */,
 				9D86CADD2189442A00C8F5CB /* view */,
 				9DF4EFB92172175200CA4DE7 /* Info.plist */,
 				9DF4EFD8217218BC00CA4DE7 /* MessageInput.swift */,
@@ -476,20 +411,16 @@
 			buildActionMask = 2147483647;
 			files = (
 				9D76B81221CEA22F00A516C6 /* EmotionPagerConfiguration.swift in Sources */,
-				9D8CC956223269D800473496 /* VideoQuality.swift in Sources */,
 				9D76B7F621CEA22100A516C6 /* VoiceInputConfiguration.swift in Sources */,
 				9D8CC962223269E000473496 /* CircleView.swift in Sources */,
-				9D8CC959223269D800473496 /* CameraView.swift in Sources */,
 				9D76B81D21CEA22F00A516C6 /* EmotionAttachment.swift in Sources */,
 				9D76B82721CEA23900A516C6 /* DotIndicator.swift in Sources */,
 				9D76B81A21CEA22F00A516C6 /* EmotionToolbar.swift in Sources */,
-				9D8CC95B223269D800473496 /* PreviewView.swift in Sources */,
 				9D76B81B21CEA22F00A516C6 /* EmotionTextarea.swift in Sources */,
 				9D76B81E21CEA22F00A516C6 /* EmotionPager.swift in Sources */,
 				9D76B81821CEA22F00A516C6 /* EmotionPage.swift in Sources */,
 				9D76B7F321CEA22100A516C6 /* VoiceInput.swift in Sources */,
 				9D76B7F721CEA22100A516C6 /* VoiceInputDelegate.swift in Sources */,
-				9D8CC958223269D800473496 /* CameraViewController.swift in Sources */,
 				9D76B7E021CEA20C00A516C6 /* RoundViewDelegate.swift in Sources */,
 				9DF4EFE52172348900CA4DE7 /* MessageInputConfiguration.swift in Sources */,
 				9D76B7DF21CEA20C00A516C6 /* RoundView.swift in Sources */,
@@ -501,20 +432,13 @@
 				9DE94D07222E846C00DE079F /* FeatureType.swift in Sources */,
 				9D76B81521CEA22F00A516C6 /* EmotionIcon.swift in Sources */,
 				9D8CC963223269E000473496 /* CircleLayer.swift in Sources */,
-				9D8CC957223269D800473496 /* CaptureMode.swift in Sources */,
-				9D8CC955223269D800473496 /* CameraViewConfiguration.swift in Sources */,
 				9D9B4DBC21A28DBA006110EE /* ViewMode.swift in Sources */,
 				9DF4EFE321722EC000CA4DE7 /* FeatureButton.swift in Sources */,
-				9D8CC954223269D800473496 /* CameraViewDelegate.swift in Sources */,
-				9D8CC95C223269D800473496 /* CaptureView.swift in Sources */,
-				9D0A79B0219809C0009696D0 /* ImageFile.swift in Sources */,
 				9D76B7E521CEA21800A516C6 /* SimpleButton.swift in Sources */,
 				9D76B81621CEA22F00A516C6 /* EmotionSet.swift in Sources */,
 				9D76B7F921CEA22100A516C6 /* VoiceManager.swift in Sources */,
-				9D8CC95D223269D800473496 /* CameraManager.swift in Sources */,
 				9D8CC964223269E000473496 /* CircleViewDelegate.swift in Sources */,
 				9D76B81321CEA22F00A516C6 /* EmotionTextareaConfiguration.swift in Sources */,
-				9D8CC95A223269D800473496 /* FocusView.swift in Sources */,
 				9D76B81721CEA22F00A516C6 /* Emotion.swift in Sources */,
 				9D76B81921CEA22F00A516C6 /* EmotionCell.swift in Sources */,
 				9D76B82021CEA22F00A516C6 /* BracketFilter.swift in Sources */,
